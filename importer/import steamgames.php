@@ -106,4 +106,4 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath): void {
 
 // ─── RUN ──────────────────────────────────────────────────────────────────────
 createSteamGamesTable($conn);
-importSteamGamesFromJson($conn, dirname(__DIR__) . 'databases/SteamGames_incomplete.json');
+importSteamGamesFromJson($conn, dirname(__DIR__) . 'databases/games.json');
