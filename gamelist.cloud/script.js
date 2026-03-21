@@ -220,26 +220,38 @@ document.addEventListener('DOMContentLoaded', function () {
         fd.append('tagsExcluded', JSON.stringify([...excludedTags]));
 
         fetch('fetch_games.php', { method: 'POST', body: fd })
-            .then(res => res.json())
+            .then(async res => {
+                const text = await res.text();
+                if (!res.ok) {
+                    throw new Error(`fetch_games.php error ${res.status}: ${text}`);
+                }
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    throw new Error(`Invalid JSON from fetch_games.php:\n${text}`);
+                }
+            })
             .then(data => {
+                if (!data || !Array.isArray(data.games)) {
+                    throw new Error('Unexpected payload from fetch_games.php: ' + JSON.stringify(data));
+                }
                 renderGames(data.games);
                 renderPagination(data.total, parseInt(perPageSelect.value));
                 resultCount.textContent = `(${data.total} total)`;
             })
             .catch(err => {
                 gamesContainer.innerHTML = '<p>Error loading games.</p>';
-                console.error(err);
+                console.error('loadGames error:', err);
             });
     }
 
     // ── STAR GAUGE ────────────────────────────────────────────────────────────
-    function starGauge(positive, negative) {
-        const total = positive + negative;
-        if (total === 0) return '<span class="stars-na">No score</span>';
-        const ratio = positive / total;
+    function starGauge(ratio, reviewCount) {
+        if (ratio === null || ratio === undefined) return '<span class="stars-na">No score</span>';
         const pct   = Math.round(ratio * 100);
         const width = (ratio * 100).toFixed(2);
-        return `<span class="stars-gauge" title="${pct}% (${total} votes)">
+        const title = reviewCount ? `${pct}% (${reviewCount} votes)` : `${pct}%`;
+        return `<span class="stars-gauge" title="${title}">
                     <span class="stars-empty">★★★★★</span>
                     <span class="stars-filled" style="width:${width}%">★★★★★</span>
                 </span>`;
@@ -274,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         ).join('')}
                     </div>
                     <p class="description">${escHtml(game.description || '')}</p>
-                    <div class="score">${starGauge(game.positive, game.negative)}</div>
+                    <div class="score">${starGauge(game.percent_positive / 100, game.review_count)}</div>
                 </div>
             </div>
         `).join('');

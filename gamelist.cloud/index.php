@@ -23,14 +23,16 @@ while ($row = $genreQuery->fetch(PDO::FETCH_ASSOC)) {
 $allGenres = array_unique($allGenres);
 sort($allGenres);
 
-// ─── BUILD TAG LIST from JSON objects stored in DB ────────────────────────────
+// ─── BUILD TAG LIST from JSON arrays stored in DB ────────────────────────────
 $tagQuery = $conn->query("SELECT tags FROM steamgames WHERE tags IS NOT NULL");
 $allTags  = [];
 while ($row = $tagQuery->fetch(PDO::FETCH_ASSOC)) {
     $tags = json_decode($row['tags'], true);
     if (is_array($tags)) {
-        foreach (array_keys($tags) as $tag) {
-            $allTags[] = trim($tag);
+        foreach ($tags as $tag) {
+            if (is_string($tag) && $tag !== '') {
+                $allTags[] = trim($tag);
+            }
         }
     }
 }

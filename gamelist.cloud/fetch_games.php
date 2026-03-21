@@ -1,22 +1,19 @@
 <?php
 header('Content-Type: application/json');
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
 require_once __DIR__ . '/config.php';
-
 
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-    exit;
-}
 
-// ─── INPUTS ───────────────────────────────────────────────────────────────────
-$search    = trim($_POST['search']    ?? '');
+    // ─── INPUTS ───────────────────────────────────────────────────────────────────
+    $search    = trim($_POST['search']    ?? '');
 $developer = trim($_POST['developer'] ?? '');
 $genre     = trim($_POST['genre']     ?? '');
-$minScore  = (float)($_POST['minScore'] ?? 0) / 100;
+$minScore  = (int)($_POST['minScore'] ?? 0);
 $sortBy    = $_POST['sortBy']  ?? 'weighted';
 $sortDir   = strtoupper($_POST['sortDir'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
 $page      = max(1, (int)($_POST['page']    ?? 1));
@@ -51,7 +48,7 @@ if ($genre !== '') {
     $params[':genre'] = '%' . $genre . '%';
 }
 if ($minScore > 0) {
-    $conditions[] = "positive / NULLIF(positive + negative, 0) >= :minScore";
+    $conditions[] = "percent_positive >= :minScore";
     $params[':minScore'] = $minScore;
 }
 
@@ -74,12 +71,10 @@ $where = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
 
 // ─── SORT ─────────────────────────────────────────────────────────────────────
-// Weighted formula simplifies to: positive / (positive + negative + m)
-// A game with 1 vote at 100% ranks lower than 50 votes at 90%
-$m = 10; // minimum vote threshold
+// Rank by percent_positive and review_count bias.
 $sortMap = [
-    'weighted' => "positive / NULLIF(positive + negative + $m, 0)",
-    'score'    => "positive / NULLIF(positive + negative, 0)",
+    'weighted' => "percent_positive * (1 + LEAST(review_count, 200) / 200)",
+    'score'    => "percent_positive",
     'name'     => "name",
     'date'     => "publication_date",
 ];
@@ -93,7 +88,7 @@ $total = (int)$countStmt->fetchColumn();
 
 // ─── FETCH PAGE ───────────────────────────────────────────────────────────────
 $sql = "SELECT id, name, publication_date, developer, genres, tags,
-               description, positive, negative, banner, screenshots
+               description, percent_positive, review_count, banner, screenshots
         FROM steamgames
         $where
         ORDER BY $order
@@ -110,14 +105,25 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // ─── DECODE ───────────────────────────────────────────────────────────────────
 foreach ($games as &$game) {
-    $game['developer']   = json_decode($game['developer'],   true) ?? [];
-    $game['genres']      = json_decode($game['genres'],      true) ?? [];
-    $game['tags']        = $game['tags'] ? array_keys(json_decode($game['tags'], true)) : [];
-    $game['screenshots'] = json_decode($game['screenshots'], true) ?? [];
-    // FIX: correct null-check before casting
-    $game['positive']    = $game['positive'] !== null ? (int)$game['positive'] : 0;
-    $game['negative']    = $game['negative'] !== null ? (int)$game['negative'] : 0;
+    $game['developer']   = is_string($game['developer']) ? (json_decode($game['developer'], true) ?? []) : [];
+    $game['genres']      = is_string($game['genres']) ? (json_decode($game['genres'], true) ?? []) : [];
+    $tagsArr             = is_string($game['tags']) ? json_decode($game['tags'], true) : [];
+    $game['tags']        = is_array($tagsArr) ? array_values($tagsArr) : [];
+    $game['screenshots'] = is_string($game['screenshots']) ? (json_decode($game['screenshots'], true) ?? []) : [];
+    $game['percent_positive'] = $game['percent_positive'] !== null ? (int)$game['percent_positive'] : 0;
+    $game['review_count']     = $game['review_count'] !== null ? (int)$game['review_count'] : 0;
 }
 unset($game);
 
-echo json_encode(['total' => $total, 'games' => $games]);
+    $payload = json_encode(['total' => $total, 'games' => $games], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    if ($payload === false) {
+        http_response_code(500);
+        echo json_encode(['error' => 'JSON encode failed']);
+        exit;
+    }
+    echo $payload;
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
+    exit;
+}

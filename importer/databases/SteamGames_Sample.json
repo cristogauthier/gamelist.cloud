@@ -1,188 +1,2899 @@
 {
-    "666640": {
-        "name": "Empire - Wargame of new Century",
-        "release_date": "Nov 6, 2018",
-        "required_age": 0,
-        "price": 6.99,
-        "dlc_count": 0,
-        "detailed_description": "Empire - remake of the 80' bestseller 'Empire - Wargame of the century'. This strategy game allows You to build armies, planes and ships in order to conquer the world and defeat all enemies. Capture cities to build more armies. Build transport ships to invade islands. Build aircraft carriers and planes to protect those armies. Build warships to prevent enemy to invade Your islands. - Huge maps with up to 4000x4000 squares (2000x2000 for 32bit version). - 8 types of units - Up to 7 players - Up to 100000 units per player. - Built-in map editor - Selectable AI level",
-        "about_the_game": "Empire - remake of the 80' bestseller 'Empire - Wargame of the century'. This strategy game allows You to build armies, planes and ships in order to conquer the world and defeat all enemies. Capture cities to build more armies. Build transport ships to invade islands. Build aircraft carriers and planes to protect those armies. Build warships to prevent enemy to invade Your islands. - Huge maps with up to 4000x4000 squares (2000x2000 for 32bit version). - 8 types of units - Up to 7 players - Up to 100000 units per player. - Built-in map editor - Selectable AI level",
-        "short_description": "Empire - remake of the 80' bestseller 'Empire - Wargame of the century'.",
-        "reviews": "",
-        "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/666640/header.jpg?t=1541794206",
-        "website": "http://www.linkartgames.com",
-        "support_url": "http://www.linkartgames.com",
-        "support_email": "support@linkartgames.com",
-        "windows": true,
-        "mac": false,
-        "linux": false,
-        "metacritic_score": 0,
-        "metacritic_url": "",
-        "achievements": 0,
-        "recommendations": 0,
-        "notes": "",
-        "supported_languages": [
-            "English",
-            "German",
-            "Polish"
+    "575050": {
+        "item_type": 0,
+        "id": 575050,
+        "success": 1,
+        "visible": true,
+        "name": "Little Triangle",
+        "store_url_path": "app/575050/Little_Triangle",
+        "appid": 575050,
+        "type": 0,
+        "tagids": [
+            3798,
+            3834,
+            5379,
+            4036,
+            1775,
+            6730,
+            4026,
+            1625,
+            9,
+            3871,
+            4726,
+            7481,
+            19,
+            4252,
+            4305,
+            6815,
+            3968,
+            21,
+            1685,
+            3841
         ],
-        "full_audio_languages": [
-            "English",
-            "German",
-            "Polish"
-        ],
-        "packages": [
+        "categories": {
+            "supported_player_categoryids": [
+                2,
+                1,
+                49,
+                37,
+                9,
+                39
+            ],
+            "feature_categoryids": [
+                22,
+                29,
+                13,
+                23,
+                25,
+                41,
+                42,
+                43,
+                44,
+                62
+            ],
+            "controller_categoryids": [
+                28
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 404,
+                "percent_positive": 89,
+                "review_score": 8,
+                "review_score_label": "Very Positive"
+            }
+        },
+        "basic_info": {
+            "short_description": "Little Triangle has the most complete platformer experience among many others. All three game modes including single player mode, local co-op mode and local mini Battle Royale mode are all well polished and hilarious!",
+            "publishers": [
+                {
+                    "name": "Cotton Game",
+                    "creator_clan_account_id": 41206640
+                }
+            ],
+            "developers": [
+                {
+                    "name": "Cotton Game",
+                    "creator_clan_account_id": 41206640
+                }
+            ],
+            "franchises": [
+                {
+                    "name": "Cotton Game",
+                    "creator_clan_account_id": 41206640
+                }
+            ]
+        },
+        "tags": [
             {
-                "title": "Buy Empire - Wargame of new Century",
-                "description": "",
-                "subs": [
-                    {
-                        "text": "Empire - Wargame of new Century - $6.99",
-                        "description": "",
-                        "price": 6.99
-                    },
-                    {
-                        "text": "Empire - Wargame of new Century - Commercial License - $9.99",
-                        "description": "",
-                        "price": 9.99
-                    }
-                ]
+                "tagid": 3798,
+                "weight": 655
+            },
+            {
+                "tagid": 3834,
+                "weight": 632
+            },
+            {
+                "tagid": 5379,
+                "weight": 626
+            },
+            {
+                "tagid": 4036,
+                "weight": 613
+            },
+            {
+                "tagid": 1775,
+                "weight": 600
+            },
+            {
+                "tagid": 6730,
+                "weight": 581
+            },
+            {
+                "tagid": 4026,
+                "weight": 568
+            },
+            {
+                "tagid": 1625,
+                "weight": 555
+            },
+            {
+                "tagid": 9,
+                "weight": 539
+            },
+            {
+                "tagid": 3871,
+                "weight": 526
+            },
+            {
+                "tagid": 4726,
+                "weight": 519
+            },
+            {
+                "tagid": 7481,
+                "weight": 503
+            },
+            {
+                "tagid": 19,
+                "weight": 497
+            },
+            {
+                "tagid": 4252,
+                "weight": 452
+            },
+            {
+                "tagid": 4305,
+                "weight": 413
+            },
+            {
+                "tagid": 6815,
+                "weight": 393
+            },
+            {
+                "tagid": 3968,
+                "weight": 361
+            },
+            {
+                "tagid": 21,
+                "weight": 348
+            },
+            {
+                "tagid": 1685,
+                "weight": 306
+            },
+            {
+                "tagid": 3841,
+                "weight": 303
             }
         ],
-        "developers": [
-            "Artur Podzorski"
+        "release": {
+            "steam_release_date": 1484970900,
+            "original_release_date": 0
+        },
+        "platforms": {
+            "windows": true,
+            "mac": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 0,
+            "steam_os_compat_category": 0
+        },
+        "game_rating": {
+            "type": "esrb",
+            "rating": "rp",
+            "required_age": 0,
+            "use_age_gate": false,
+            "image_url": "public/shared/images/game_ratings/ESRB/rp.png"
+        },
+        "best_purchase_option": {
+            "packageid": 146500,
+            "purchase_option_name": "Little Triangle",
+            "final_price_in_cents": "999",
+            "formatted_final_price": "$9.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 146500,
+                "purchase_option_name": "Little Triangle",
+                "final_price_in_cents": "999",
+                "formatted_final_price": "$9.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 50826,
+                "purchase_option_name": "Little Triangle And Reviver",
+                "final_price_in_cents": "1518",
+                "formatted_final_price": "$15.18",
+                "bundle_discount_pct": 20,
+                "price_before_bundle_discount": "1898",
+                "formatted_price_before_bundle_discount": "$18.98",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 2,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 12544,
+                "purchase_option_name": "南瓜先生和他的朋友",
+                "final_price_in_cents": "1597",
+                "formatted_final_price": "$15.97",
+                "bundle_discount_pct": 20,
+                "price_before_bundle_discount": "1997",
+                "formatted_price_before_bundle_discount": "$19.97",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 3,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 28655,
+                "purchase_option_name": "The Cotton Games Bundle",
+                "final_price_in_cents": "5235",
+                "formatted_final_price": "$52.35",
+                "bundle_discount_pct": 25,
+                "price_before_bundle_discount": "6985",
+                "formatted_price_before_bundle_discount": "$69.85",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 15,
+                "must_purchase_as_set": false
+            }
         ],
-        "publishers": [
-            "Linkart Artur Podzorski"
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/575050/ss_0ff3abb8f3a0c1379d2fbe01da5edf4cb690d075.jpg?t=1741930383",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/575050/ss_463d504c5d8b940bac1a49cbce2e6943861f7cf1.jpg?t=1741930383",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/575050/ss_23e6439a1bf11a342e9eff94da0f751e956e706b.jpg?t=1741930383",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/575050/ss_77b06c2f3b9aab4a50a6a370981b2fa9939a0a06.jpg?t=1741930383",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/575050/ss_123892bf452d3d4d1d9b37f7dc8f4d5932447892.jpg?t=1741930383",
+                    "ordinal": 5
+                },
+                {
+                    "filename": "steam/apps/575050/ss_9358f7f0592bd3e40c4248d2383462e3e357a710.jpg?t=1741930383",
+                    "ordinal": 6
+                },
+                {
+                    "filename": "steam/apps/575050/ss_4d133bf306540c1ea3b27b4b02c96df0e11d5803.jpg?t=1741930383",
+                    "ordinal": 7
+                },
+                {
+                    "filename": "steam/apps/575050/ss_391c9ddf89d351cb7b48eb3209a9821beccc9c66.jpg?t=1741930383",
+                    "ordinal": 8
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "GDC-recording",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1495866544",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "575050/105076/bd4f721195d2cfcbd82b1d9608f02427cdb20ba6/1751303837/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "575050/105076/bd4f721195d2cfcbd82b1d9608f02427cdb20ba6/1751303837/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "575050/105076/bd4f721195d2cfcbd82b1d9608f02427cdb20ba6/1751303837/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "575050/105076/bd4f721195d2cfcbd82b1d9608f02427cdb20ba6/1751303837/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "575050/105076/bd4f721195d2cfcbd82b1d9608f02427cdb20ba6/1751303837/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256685875/movie.293x165.jpg",
+                    "screenshot_full": "256685875/movie_full.jpg",
+                    "trailer_base_id": 105076,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 6,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 2,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 3,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 1,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 5,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 10,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 4,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 12,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 11,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 8,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            },
+            {
+                "elanguage": 7,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": true
+            }
         ],
-        "categories": [
-            "Single-player",
-            "Multi-player",
-            "PvP",
-            "Shared/Split Screen PvP",
-            "Shared/Split Screen",
-            "Includes level editor",
-            "Remote Play Together",
-            "Family Sharing"
+        "full_description": "Little Triangle has the most complete platformer experience among many others. All three game modes including single player mode, local co-op mode and local mini Battle Royale mode are all well polished and hilarious! \r\n\r\nWe originally target the same price with only the single player content! We listened to test players' feedback and added the hilarious multiplayer content! All the content were tested by many players and polished to make sure they are fun before the release!\r\n\r\nThe game offers more than 60 cute and funny triangle skins, countless kinds of enemies, a bunch of bosses and amusing level designs with tons of details. This game is extremely easy to pick up and the fun comes immediately when you start to play. It aims to be one of the most exciting and hilarious party game while also retain great fun in solo mode.\r\n\r\nThe solo and 2-4 player platformer mode features jumping as its core playing experience and two difficulty levels, casual or hardcore, are available for players to choose from. You can play solo or invite up to four friends to start a multiplayer game. The gameplay appears simple, just control little triangle to clear the level using jump or double jump. However, it can be quite challenging especially since each level offers a dramatically different design.\r\n\r\nThe mini Battle Royale is an enhanced mode with different mechanics and is aiming to deliver a hilarious experience. The move and jump are the same as the platformer mode, but to win you must learn how to attack and hide. It is proved to be the most engaging mode that friends and family can always enjoy and have fun. You can attack opponents by either jumping onto their heads or using various kinds of weapons and utilizing different mechanics in each map.",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/575050/${FILENAME}?t=1741930383",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "hero_capsule": "hero_capsule.jpg",
+            "library_capsule": "library_600x900.jpg",
+            "library_capsule_2x": "library_600x900_2x.jpg",
+            "library_hero": "library_hero.jpg",
+            "community_icon": "e97bb80188c474ace2bd4294d7f47d4ae98562c4",
+            "page_background_path": "app/575050?t=1741930383"
+        },
+        "links": [
+            {
+                "link_type": 3,
+                "url": "https://x.com/CottonStudio"
+            },
+            {
+                "link_type": 5,
+                "url": "https://discord.gg/7V9xSXDPB4"
+            },
+            {
+                "link_type": 1,
+                "url": "https://www.youtube.com/@cottongame1153/"
+            },
+            {
+                "link_type": 8,
+                "url": "https://space.bilibili.com/56370014"
+            },
+            {
+                "link_type": 6,
+                "text": "809226087"
+            },
+            {
+                "link_type": 11,
+                "url": "https://www.instagram.com/CottonGame_Studio/"
+            },
+            {
+                "link_type": 2,
+                "url": "https://www.facebook.com/CottonGameStudio/"
+            }
+        ]
+    },
+    "356520": {
+        "item_type": 0,
+        "id": 356520,
+        "success": 1,
+        "visible": true,
+        "name": "Port of Call",
+        "store_url_path": "app/356520/Port_of_Call",
+        "appid": 356520,
+        "type": 0,
+        "is_free": true,
+        "tagids": [
+            492,
+            21,
+            113,
+            4234,
+            13782,
+            1667,
+            4166,
+            3839,
+            5900,
+            4182,
+            1721,
+            5716
         ],
-        "genres": [
-            "Strategy"
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "feature_categoryids": [
+                22
+            ],
+            "controller_categoryids": [
+                18
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 1271,
+                "percent_positive": 88,
+                "review_score": 8,
+                "review_score_label": "Very Positive"
+            }
+        },
+        "basic_info": {
+            "short_description": "Imagine waking up on a small dock with no recollection of who you are or how you got there. The first person you find is a grumpy, old man who enlists you to work on his ferry boat which seems to have materialized behind you. But not all is as it seems on this strange ship, and the people you meet may know more about your past than they let on.",
+            "publishers": [
+                {
+                    "name": "Underdog Games"
+                }
+            ],
+            "developers": [
+                {
+                    "name": "Underdog Games"
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 492,
+                "weight": 1678
+            },
+            {
+                "tagid": 21,
+                "weight": 1654
+            },
+            {
+                "tagid": 113,
+                "weight": 1362
+            },
+            {
+                "tagid": 4234,
+                "weight": 1070
+            },
+            {
+                "tagid": 13782,
+                "weight": 1046
+            },
+            {
+                "tagid": 1667,
+                "weight": 802
+            },
+            {
+                "tagid": 4166,
+                "weight": 754
+            },
+            {
+                "tagid": 3839,
+                "weight": 608
+            },
+            {
+                "tagid": 5900,
+                "weight": 462
+            },
+            {
+                "tagid": 4182,
+                "weight": 243
+            },
+            {
+                "tagid": 1721,
+                "weight": 170
+            },
+            {
+                "tagid": 5716,
+                "weight": 145
+            }
         ],
-        "screenshots": [
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/666640/ss_571f5df07a99845906304f395ab1d595dbabc335.1920x1080.jpg?t=1541794206",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/666640/ss_3716f52e5ee51a73513c02b62339cd1b3955b460.1920x1080.jpg?t=1541794206",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/666640/ss_f6dbde765d600f177c5df0e61946295c0233760b.1920x1080.jpg?t=1541794206",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/666640/ss_86d16283758a7f54199f616cf41a4d1ea88ad25a.1920x1080.jpg?t=1541794206",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/666640/ss_13bf7d5c30e9ac259fcf0f091c7f09a68047eedc.1920x1080.jpg?t=1541794206"
+        "release": {
+            "steam_release_date": 1440768098
+        },
+        "platforms": {
+            "windows": true,
+            "mac": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 0,
+            "steam_os_compat_category": 0
+        },
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/356520/ss_371f2ce6b049a8db1749f7d4d0a099dc176b2972.jpg?t=1447370834",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/356520/ss_b08484abfc15078ae687913325b417473eecfea5.jpg?t=1447370834",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/356520/ss_5ee0c082747329a940ec424c1cdb8d36768ec89a.jpg?t=1447370834",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/356520/ss_f46459a0f81378cdaba739c9614a89dd89ac78ea.jpg?t=1447370834",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/356520/ss_87f5f909ea53b92e146b534e13844b35b44e0586.jpg?t=1447370834",
+                    "ordinal": 5
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "Port of Call - Trailer",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1447377600",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "356520/41254/fedc2c17a2e6da60e2a227442d2f7ffc9b1cf8e7/1751269579/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "356520/41254/fedc2c17a2e6da60e2a227442d2f7ffc9b1cf8e7/1751269579/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "356520/41254/fedc2c17a2e6da60e2a227442d2f7ffc9b1cf8e7/1751269579/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "356520/41254/fedc2c17a2e6da60e2a227442d2f7ffc9b1cf8e7/1751269579/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "356520/41254/fedc2c17a2e6da60e2a227442d2f7ffc9b1cf8e7/1751269579/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256655697/movie.293x165.jpg",
+                    "screenshot_full": "256655697/movie_full.jpg",
+                    "trailer_base_id": 41254,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": true
+            }
         ],
-        "movies": [],
-        "user_score": 0,
-        "score_rank": "",
-        "positive": 7,
-        "negative": 8,
-        "estimated_owners": "0 - 20000",
-        "average_playtime_forever": 0,
-        "average_playtime_2weeks": 0,
-        "median_playtime_forever": 0,
-        "median_playtime_2weeks": 0,
-        "discount": "0",
-        "peak_ccu": 2,
-        "tags": {
-            "Strategy": 22
+        "full_description": "Imagine waking up on a small dock with no recollection of who you are or how you got there. The first person you find is a grumpy, old man who enlists you to work on his ferry boat which seems to have materialized behind you. But not all is as it seems on this strange ship, and the people you meet may know more about your past than they let on.\r\n\r\nPort of Call is a narrative exploration game that focuses on telling the player an immersive story. The game is an experiment in short-form storytelling in an immersive media. Interact with the ship's passengers and explore your surroundings in first person to try to uncover the secret of your past.",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/356520/${FILENAME}?t=1447370834",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "page_background": "page_bg_generated_v6b.jpg",
+            "library_capsule": "portrait.png",
+            "community_icon": "146a7ffeebbe15f06759463dfd4311aad58dca21",
+            "page_background_path": "app/356520?t=1447370834",
+            "raw_page_background": "page_bg_raw.jpg"
         }
     },
-    "1796410": {
-        "name": "The Touryst",
-        "release_date": "Dec 10, 2021",
-        "required_age": 0,
-        "price": 19.99,
-        "dlc_count": 0,
-        "detailed_description": "You are just arriving at the Monument Islands. Want to go swimming? Or rather take a dive into the deep sea? Or do you want to visit the amusement arcade, do some shopping, dance at the beach party? Fancy some surfing? Or will you talk with the strange old tourist and listen what he has to say about these ancient mysterious monuments.. Discover exotic islands and explore ancient monuments Climb into deep mines and uncover secret passages Make the trip you always wanted and enjoy the tourist life An action adventure as varied as real life 240fps supported Enjoy your vacation! ",
-        "about_the_game": "You are just arriving at the Monument Islands. Want to go swimming? Or rather take a dive into the deep sea? Or do you want to visit the amusement arcade, do some shopping, dance at the beach party? Fancy some surfing? Or will you talk with the strange old tourist and listen what he has to say about these ancient mysterious monuments.. Discover exotic islands and explore ancient monuments Climb into deep mines and uncover secret passages Make the trip you always wanted and enjoy the tourist life An action adventure as varied as real life 240fps supported Enjoy your vacation! ",
-        "short_description": "Discover exotic islands and explore ancient monuments - Climb into deep mines and uncover secret passages - Make the trip you always wanted and enjoy the tourist life - An action adventure as varied as real life - 240fps supported - Enjoy your vacation!",
-        "reviews": "86/100 – 4Players 9/10 – Nintendolife “The Touryst is Stunning on Xbox One And PC - A Superb Port of a Brilliant Switch Game” Digital Foundry ",
-        "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1796410/header.jpg?t=1639230671",
-        "website": "http://thetouryst.shinen.com/",
-        "support_url": "https://www.shinen.com/home/",
-        "support_email": "support@shinen.com",
-        "windows": true,
-        "mac": false,
-        "linux": false,
-        "metacritic_score": 0,
-        "metacritic_url": "",
-        "achievements": 10,
-        "recommendations": 120,
-        "notes": "",
-        "supported_languages": [
-            "English",
-            "French",
-            "German",
-            "Spanish - Spain",
-            "Spanish - Latin America"
+    "358270": {
+        "item_type": 0,
+        "id": 358270,
+        "success": 1,
+        "visible": true,
+        "name": "Death Rally (Classic)",
+        "store_url_path": "app/358270/Death_Rally_Classic",
+        "appid": 358270,
+        "type": 0,
+        "is_free": true,
+        "tagids": [
+            699,
+            4004,
+            4791,
+            19,
+            1693,
+            6691,
+            113,
+            11104,
+            1773,
+            3871,
+            1644,
+            4182
         ],
-        "full_audio_languages": [],
-        "packages": [
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "controller_categoryids": [
+                18
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 827,
+                "percent_positive": 91,
+                "review_score": 8,
+                "review_score_label": "Very Positive"
+            }
+        },
+        "basic_info": {
+            "short_description": "You start out from the bottom of the ranking list. Your objective: earn money in the fast-paced battle races. Fight hard for each precious championship point. Fellow competitors are showering you in a constant hail of bullets. Each race is deadly contest - a matter of life or death.",
+            "publishers": [
+                {
+                    "name": "3D Realms (Apogee Software)"
+                }
+            ],
+            "developers": [
+                {
+                    "name": "Remedy",
+                    "creator_clan_account_id": 34087437
+                }
+            ]
+        },
+        "tags": [
             {
-                "title": "Buy The Touryst",
-                "description": "",
-                "subs": [
-                    {
-                        "text": "The Touryst - $19.99",
-                        "description": "",
-                        "price": 19.99
-                    }
-                ]
+                "tagid": 699,
+                "weight": 2924
+            },
+            {
+                "tagid": 4004,
+                "weight": 849
+            },
+            {
+                "tagid": 4791,
+                "weight": 801
+            },
+            {
+                "tagid": 19,
+                "weight": 754
+            },
+            {
+                "tagid": 1693,
+                "weight": 754
+            },
+            {
+                "tagid": 6691,
+                "weight": 660
+            },
+            {
+                "tagid": 113,
+                "weight": 660
+            },
+            {
+                "tagid": 11104,
+                "weight": 660
+            },
+            {
+                "tagid": 1773,
+                "weight": 613
+            },
+            {
+                "tagid": 3871,
+                "weight": 613
+            },
+            {
+                "tagid": 1644,
+                "weight": 377
+            },
+            {
+                "tagid": 4182,
+                "weight": 330
             }
         ],
-        "developers": [
-            "Shin'en Multimedia"
+        "release": {
+            "steam_release_date": 1399308180,
+            "original_release_date": 841993200
+        },
+        "platforms": {
+            "windows": true,
+            "mac": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 2,
+            "steam_os_compat_category": 2
+        },
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/358270/ss_febdaac0c8ce0097ad07d18b81f20e0eea1514aa.jpg?t=1667485515",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/358270/ss_a6b38c212e225432c53230ce02dd4f98aa6ea214.jpg?t=1667485515",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/358270/ss_af0d6d932375236f72cbd47b4a4158c1d7df3686.jpg?t=1667485515",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/358270/ss_3cc9e6da6868392d749381ee09fe7253bfa6e9f9.jpg?t=1667485515",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/358270/ss_6b5c45472938397c73db4ca638ac487fdcf5e78b.jpg?t=1667485515",
+                    "ordinal": 5
+                },
+                {
+                    "filename": "steam/apps/358270/ss_f43b6a73218f586dcc1b5a994251cef92efb0f8b.jpg?t=1667485515",
+                    "ordinal": 6
+                },
+                {
+                    "filename": "steam/apps/358270/ss_673ac0bdfd83eb166df16c2927685aa455456ca8.jpg?t=1667485515",
+                    "ordinal": 7
+                },
+                {
+                    "filename": "steam/apps/358270/ss_099010431c28f0dabdf00fbdd61c10815487c1f4.jpg?t=1667485515",
+                    "ordinal": 8
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "Death Rally Trailer",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1447371625",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "358270/33321/24d946b4380354eaf6680a32fc483a606d7e4d46/1751269671/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "358270/33321/24d946b4380354eaf6680a32fc483a606d7e4d46/1751269671/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "358270/33321/24d946b4380354eaf6680a32fc483a606d7e4d46/1751269671/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "358270/33321/24d946b4380354eaf6680a32fc483a606d7e4d46/1751269671/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "358270/33321/24d946b4380354eaf6680a32fc483a606d7e4d46/1751269671/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "2038052/movie.293x165.jpg",
+                    "screenshot_full": "2038052/movie_full.jpg",
+                    "trailer_base_id": 33321,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            }
         ],
-        "publishers": [
-            "Shin'en Multimedia"
-        ],
-        "categories": [
-            "Single-player",
-            "Steam Achievements",
-            "Full controller support",
-            "Steam Cloud",
-            "Family Sharing"
-        ],
-        "genres": [
-            "Action",
-            "Adventure"
-        ],
-        "screenshots": [
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1796410/ss_6834302e9b91ed7992309736e1e1fcbac369d724.1920x1080.jpg?t=1639230671",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1796410/ss_228137af7c30c3b4475ab285dbbe5477f25baffb.1920x1080.jpg?t=1639230671",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1796410/ss_b326c2f3f97030be24e387fc2505b0dc2bbf4348.1920x1080.jpg?t=1639230671",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1796410/ss_a138f445b439de274e0bbdb8056ae76835227608.1920x1080.jpg?t=1639230671",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1796410/ss_4e0f909935567c31696446bd61bc8c5d85bcfe10.1920x1080.jpg?t=1639230671",
-            "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1796410/ss_57c7b595c3f6364498d4974be6ec8a67749cc7a7.1920x1080.jpg?t=1639230671"
-        ],
-        "movies": [],
-        "user_score": 0,
-        "score_rank": "",
-        "positive": 94,
-        "negative": 12,
-        "estimated_owners": "0 - 20000",
-        "average_playtime_forever": 0,
-        "average_playtime_2weeks": 0,
-        "median_playtime_forever": 0,
-        "median_playtime_2weeks": 0,
-        "discount": "0",
-        "peak_ccu": 1,
-        "tags": {
-            "Action": 56,
-            "Adventure": 53,
-            "Action-Adventure": 48,
-            "Voxel": 46,
-            "Exploration": 41,
-            "3D": 29,
-            "Third Person": 27,
-            "Mystery": 24,
-            "Relaxing": 23,
-            "Nature": 23,
-            "Singleplayer": 19
+        "full_description": "Prepare to be blown away, literally. Race for the finish line, leaving a trail of burnt rubber and spent brass behind you… along with the flaming wreckage of anyone reckless enough to get in your way.\r\nPick up more ammo and turbo from the side of the track, and floor the pedal while performing some shady deals for The Dealer. No trick is too dirty when you're preparing for The Final Confrontation. Only the hardest armor, the most powerful engine and the biggest guns will see you through the ultimate battle against The Adversary.\r\n\r\nAnd when you feel you can't take it anymore, you can check out the underground market. Spiked bumpers, landmines, rocket fuel or sabotage can provide a way to create some nasty accidents for the competition.\r\n\r\nPlay alone or with friends! Death Rally supports network multiplayer for up to 4 players and serial or modem connection for two players.\r\n\r\nFeatures\r\n\r\nDrive Crazy: Death and diversity with 19 different race tracks and 6 different cars.\r\n\r\nEquipped to Kill: Each car is equipped with different weapons.\r\n\r\nPimp Your Ride: Upgradable engines, tyres and armor.\r\n\r\nCar Nut: Over 20 megs of action-packed animation.\r\n\r\nController Support: Partial Xbox 360 Controller support.",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/358270/${FILENAME}?t=1667485515",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "hero_capsule": "hero_capsule.jpg",
+            "library_capsule": "library_600x900.jpg",
+            "library_capsule_2x": "library_600x900_2x.jpg",
+            "library_hero": "library_hero.jpg",
+            "community_icon": "bee288de9618f208b5da80e2f2a837537a7d3b0f",
+            "page_background_path": "app/358270?t=1667485515"
         }
+    },
+    "360510":{
+        "item_type": 0,
+        "id": 360510,
+        "success": 1,
+        "visible": true,
+        "name": "Into the Stars",
+        "store_url_path": "app/360510/Into_the_Stars",
+        "appid": 360510,
+        "type": 0,
+        "tagids": [
+            599,
+            9,
+            1755,
+            492,
+            21,
+            1662,
+            19,
+            1716,
+            493,
+            3942
+        ],
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "feature_categoryids": [
+                22,
+                29,
+                62
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 398,
+                "percent_positive": 37,
+                "review_score": 4,
+                "review_score_label": "Mostly Negative"
+            }
+        },
+        "basic_info": {
+            "short_description": "Take the role of Captain in this Space Survival Simulation as you explore a massive star system in search of a new home for humanity. Outfit your ship, hand pick your crew and set off on a journey through an open-world where you must scavenge resources, shelter civilians and outrun a hostile alien force.",
+            "publishers": [
+                {
+                    "name": "Iceberg Interactive",
+                    "creator_clan_account_id": 1137099
+                }
+            ],
+            "developers": [
+                {
+                    "name": "Fugitive Games",
+                    "creator_clan_account_id": 1137099
+                }
+            ],
+            "franchises": [
+                {
+                    "name": "Iceberg Interactive",
+                    "creator_clan_account_id": 1137099
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 599,
+                "weight": 1600
+            },
+            {
+                "tagid": 9,
+                "weight": 1514
+            },
+            {
+                "tagid": 1755,
+                "weight": 1428
+            },
+            {
+                "tagid": 492,
+                "weight": 1314
+            },
+            {
+                "tagid": 21,
+                "weight": 1000
+            },
+            {
+                "tagid": 1662,
+                "weight": 971
+            },
+            {
+                "tagid": 19,
+                "weight": 942
+            },
+            {
+                "tagid": 1716,
+                "weight": 657
+            },
+            {
+                "tagid": 493,
+                "weight": 400
+            },
+            {
+                "tagid": 3942,
+                "weight": 171
+            }
+        ],
+        "release": {
+            "steam_release_date": 1457112420
+        },
+        "platforms": {
+            "windows": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 0,
+            "steam_os_compat_category": 0
+        },
+        "game_rating": {
+            "type": "esrb",
+            "rating": "e",
+            "required_age": 0,
+            "use_age_gate": false,
+            "image_url": "public/shared/images/game_ratings/ESRB/e.png"
+        },
+        "best_purchase_option": {
+            "packageid": 64408,
+            "purchase_option_name": "Into the Stars",
+            "final_price_in_cents": "1999",
+            "formatted_final_price": "$19.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 64408,
+                "purchase_option_name": "Into the Stars",
+                "final_price_in_cents": "1999",
+                "formatted_final_price": "$19.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            },
+            {
+                "packageid": 96518,
+                "purchase_option_name": "Into the Stars Digital Deluxe Edition",
+                "final_price_in_cents": "2999",
+                "formatted_final_price": "$29.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            }
+        ],
+        "accessories": [
+            {
+                "packageid": 95661,
+                "purchase_option_name": "Into The Stars Upgrade To Digital Deluxe Edition",
+                "final_price_in_cents": "999",
+                "formatted_final_price": "$9.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 0,
+                "must_purchase_as_set": false
+            }
+        ],
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/360510/ss_ffa3474240da2d8f7c99ae971343d81c29fb295f.jpg?t=1725032440",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/360510/ss_659bde24c3f90aab9bf3371a2e3ba56f12eef758.jpg?t=1725032440",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/360510/ss_26107bfdf3588328262ef7dd7bebff9cb8a31d6c.jpg?t=1725032440",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/360510/ss_a26aa75e323adb73e47c0de88041f0238d99f937.jpg?t=1725032440",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/360510/ss_cbfe40f4080db3b85c6fd5498386db6dd9ec9e9f.jpg?t=1725032440",
+                    "ordinal": 5
+                },
+                {
+                    "filename": "steam/apps/360510/ss_828472c9f1e945b4f0c552324e17a58575fc1eca.jpg?t=1725032440",
+                    "ordinal": 6
+                },
+                {
+                    "filename": "steam/apps/360510/ss_6dbdb74cbe0c1741c4a924a7ef3b1b6fc4da42a4.jpg?t=1725032440",
+                    "ordinal": 7
+                },
+                {
+                    "filename": "steam/apps/360510/ss_f23bd2dafdc772f3c0dca02f42b163c20899daeb.jpg?t=1725032440",
+                    "ordinal": 8
+                },
+                {
+                    "filename": "steam/apps/360510/ss_88ff188c32538047f61522d589fa30b5f5cf8118.jpg?t=1725032440",
+                    "ordinal": 9
+                },
+                {
+                    "filename": "steam/apps/360510/ss_14de11d57e7c035c8d4967669dda8fc0d77ccaa3.jpg?t=1725032440",
+                    "ordinal": 10
+                },
+                {
+                    "filename": "steam/apps/360510/ss_54373e0bf8b806606a20cd13fbf8c51e873de1a0.jpg?t=1725032440",
+                    "ordinal": 11
+                },
+                {
+                    "filename": "steam/apps/360510/ss_60a080e7576a81f5e00f97ee2a2b0e736d797446.jpg?t=1725032440",
+                    "ordinal": 12
+                },
+                {
+                    "filename": "steam/apps/360510/ss_12e33d08507a695e510d19b28299e1d912eec311.jpg?t=1725032440",
+                    "ordinal": 13
+                },
+                {
+                    "filename": "steam/apps/360510/ss_2a553b6451bccf74ab8f10f77f85569ac6b2f4a8.jpg?t=1725032440",
+                    "ordinal": 14
+                },
+                {
+                    "filename": "steam/apps/360510/ss_43ea1dad7e412d34e32123abf30870db06f8b04f.jpg?t=1725032440",
+                    "ordinal": 15
+                },
+                {
+                    "filename": "steam/apps/360510/ss_4c69cc76a05e2208ce6f7aa620d706705250c15c.jpg?t=1725032440",
+                    "ordinal": 16
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "Release Trailer",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1457112473",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "360510/53587/b5a0a58fbd0d3d751a3b21b8cecdb82fe24a12a6/1751269872/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "360510/53587/b5a0a58fbd0d3d751a3b21b8cecdb82fe24a12a6/1751269872/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "360510/53587/b5a0a58fbd0d3d751a3b21b8cecdb82fe24a12a6/1751269872/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "360510/53587/b5a0a58fbd0d3d751a3b21b8cecdb82fe24a12a6/1751269872/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "360510/53587/b5a0a58fbd0d3d751a3b21b8cecdb82fe24a12a6/1751269872/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256661373/movie.293x165.jpg",
+                    "screenshot_full": "256661373/movie_full.jpg",
+                    "trailer_base_id": 53587,
+                    "all_ages": true
+                },
+                {
+                    "trailer_name": "Captain Academy 2",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1457112534",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "360510/53663/157953e382fc14fbda30aaf579710366b3471f5e/1751269874/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "360510/53663/157953e382fc14fbda30aaf579710366b3471f5e/1751269874/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "360510/53663/157953e382fc14fbda30aaf579710366b3471f5e/1751269874/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "360510/53663/157953e382fc14fbda30aaf579710366b3471f5e/1751269874/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "360510/53663/157953e382fc14fbda30aaf579710366b3471f5e/1751269874/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256661419/movie.293x165.jpg",
+                    "screenshot_full": "256661419/movie_full.jpg",
+                    "trailer_base_id": 53663,
+                    "all_ages": true
+                },
+                {
+                    "trailer_name": "Captain Academy 3",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1457119846",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "360510/53684/dd262e53ff83ee9052afa7d46d0b81c1c0eccd6c/1751269874/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "360510/53684/dd262e53ff83ee9052afa7d46d0b81c1c0eccd6c/1751269874/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "360510/53684/dd262e53ff83ee9052afa7d46d0b81c1c0eccd6c/1751269874/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "360510/53684/dd262e53ff83ee9052afa7d46d0b81c1c0eccd6c/1751269874/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "360510/53684/dd262e53ff83ee9052afa7d46d0b81c1c0eccd6c/1751269874/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256661429/movie.293x165.jpg",
+                    "screenshot_full": "256661429/movie_full.jpg",
+                    "trailer_base_id": 53684,
+                    "all_ages": true
+                },
+                {
+                    "trailer_name": "Captain Academy 4",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1457119857",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "360510/53685/389f5bc82e28462bda47deb34bf3035556cd6cd9/1751269875/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "360510/53685/389f5bc82e28462bda47deb34bf3035556cd6cd9/1751269875/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "360510/53685/389f5bc82e28462bda47deb34bf3035556cd6cd9/1751269875/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "360510/53685/389f5bc82e28462bda47deb34bf3035556cd6cd9/1751269875/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "360510/53685/389f5bc82e28462bda47deb34bf3035556cd6cd9/1751269875/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256661430/movie.293x165.jpg",
+                    "screenshot_full": "256661430/movie_full.jpg",
+                    "trailer_base_id": 53685,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": false
+            },
+            {
+                "elanguage": 2,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": false
+            },
+            {
+                "elanguage": 3,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": false
+            },
+            {
+                "elanguage": 1,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": false
+            },
+            {
+                "elanguage": 5,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": false
+            },
+            {
+                "elanguage": 12,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": false
+            },
+            {
+                "elanguage": 8,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": false
+            }
+        ],
+        "full_description": "We’ve been under attack for 10 years now. Every 6 months the Skorn arrive, set on destroying our planet, and now few of us remain to defend what’s left. The massive Ark ships we’ve built in hopes of escaping them have all gone, save one. You must take the role of Captain of our final vessel, the Ark 13, and guide a hand-picked, but inexperienced crew on a journey fraught with intrigue and danger. The fate of the Endurance Coalition is uncertain and you could well be our last hope. How will you fare once you set out Into the Stars?\r\n\r\nInto the Stars is an open-world Space Survival Simulation built in Unreal Engine 4, featuring an original score from Jack Wall. \r\n\r\nTake the role of Captain as you explore a massive star system in search of a new home for humanity. Outfit your ship, hand pick your crew and set off on a journey where you must scavenge resources, shelter civilians and either outrun, or outgun a hostile alien force, in order to survive. \r\n\r\nKey Features\r\nComplete Control: Take command of your hand-picked, but inexperienced crew, and guide them through a star system packed with mystery and danger. Difficulty Settings allow you to tune the intensity of the enemy threat and the pace of your journey.\r\nExplore a Massive Star System: You have the freedom to set your course for salvation, but no approach is free from peril. Each of the 90 zones in this system present unique opportunities, along with challenges, and only you can find the path to success.\r\nChallenging volley-based Combat: A number of foes, who are unwilling to negotiate, await you on this voyage. That's why your ship is equipped with weapon systems that speak for the human race, in a language everyone can understand. Choose your target points, battle stations and crew wisely, if you want to survive numerous alien encounters.\r\nMusic by Jack Wall: Driven by an original score from the legendary composer behind the music for Mass Effect, Call of Duty and Lost Planet.\r\nReplayability: Every decision you make as Captain, and every randomly generated obstacle the crew encounters, can affect the outcome of a mission, creating a different experience, every time you play.",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/360510/${FILENAME}?t=1725032440",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "page_background": "page_bg_generated_v6b.jpg",
+            "library_capsule": "library_600x900.jpg",
+            "library_capsule_2x": "library_600x900_2x.jpg",
+            "library_hero": "library_hero.jpg",
+            "community_icon": "e78fa9e64b3fbf3df434c2c4c3ade1eed202393d",
+            "page_background_path": "app/360510?t=1725032440",
+            "raw_page_background": "page_bg_raw.jpg"
+        }
+    },
+    "360550": {
+        "item_type": 0,
+        "id": 360550,
+        "success": 1,
+        "visible": true,
+        "name": "Cursed Sight",
+        "store_url_path": "app/360550/Cursed_Sight",
+        "appid": 360550,
+        "type": 0,
+        "related_items": {
+            "demo_appid": [
+                360560
+            ]
+        },
+        "content_descriptorids": [
+            5
+        ],
+        "tagids": [
+            492,
+            3799,
+            4085,
+            1742
+        ],
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "feature_categoryids": [
+                22,
+                29,
+                62
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 152,
+                "percent_positive": 83,
+                "review_score": 8,
+                "review_score_label": "Very Positive"
+            }
+        },
+        "basic_info": {
+            "short_description": "Being able to control fate would be a blessing for many. To Miyon, it is her greatest curse.",
+            "publishers": [
+                {
+                    "name": "InvertMouse"
+                }
+            ],
+            "developers": [
+                {
+                    "name": "InvertMouse"
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 492,
+                "weight": 3711
+            },
+            {
+                "tagid": 3799,
+                "weight": 2886
+            },
+            {
+                "tagid": 4085,
+                "weight": 2061
+            },
+            {
+                "tagid": 1742,
+                "weight": 1340
+            }
+        ],
+        "release": {
+            "steam_release_date": 1438602160
+        },
+        "platforms": {
+            "windows": true,
+            "mac": true,
+            "steamos_linux": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 2,
+            "steam_os_compat_category": 2
+        },
+        "best_purchase_option": {
+            "packageid": 64421,
+            "purchase_option_name": "Cursed Sight",
+            "final_price_in_cents": "499",
+            "formatted_final_price": "$4.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 64421,
+                "purchase_option_name": "Cursed Sight",
+                "final_price_in_cents": "499",
+                "formatted_final_price": "$4.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 2684,
+                "purchase_option_name": "InvertMouse Bundle",
+                "final_price_in_cents": "8985",
+                "formatted_final_price": "$89.85",
+                "bundle_discount_pct": 15,
+                "price_before_bundle_discount": "10575",
+                "formatted_price_before_bundle_discount": "$105.75",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 9,
+                "must_purchase_as_set": false
+            }
+        ],
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/360550/ss_1e6ec8694a4468228d0f5b5b5d85901220c526d9.jpg?t=1737937005",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/360550/ss_d12b637b25f1ff9f0d6a875f338d05fde41ac171.jpg?t=1737937005",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/360550/ss_0f522181fa982b5036893bfae61347e6693d4330.jpg?t=1737937005",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/360550/ss_6c5663e17265aec367aab17d959785d6b1a05b3c.jpg?t=1737937005",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/360550/ss_81c9cd4fd37666a6c59bcac4dd2830e0c74fdc79.jpg?t=1737937005",
+                    "ordinal": 5
+                },
+                {
+                    "filename": "steam/apps/360550/ss_47bbc348f2226c77d6ba8fd0a459044c6078298b.jpg?t=1737937005",
+                    "ordinal": 6
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "Cursed Sight - Trailer",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1447371918",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "360550/33515/f08b93077f661643877a566dc02e8755b93998f6/1751269876/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "360550/33515/f08b93077f661643877a566dc02e8755b93998f6/1751269876/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "360550/33515/f08b93077f661643877a566dc02e8755b93998f6/1751269876/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "360550/33515/f08b93077f661643877a566dc02e8755b93998f6/1751269876/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "360550/33515/f08b93077f661643877a566dc02e8755b93998f6/1751269876/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "2038161/movie.293x165.jpg",
+                    "screenshot_full": "2038161/movie_full.jpg",
+                    "trailer_base_id": 33515,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            }
+        ],
+        "full_description": "\r\n\r\nBeing able to control fate would be a blessing for many. To Miyon, it is her greatest curse.\r\n\r\nEast and West Taria are in conflict, and Miyon's power is the key to their victory. Meanwhile, Gai has been sold by his family into Miyon's temple. Will the two save or destroy one another?\r\n\r\n* * *\r\n\r\nThe third game developed by InvertMouse, this time with branching narratives. Join Gai and Miyon in their struggle against fate. May you find the experience worthwhile!",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/360550/${FILENAME}?t=1737937005",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "library_capsule": "library_600x900.jpg",
+            "library_capsule_2x": "library_600x900_2x.jpg",
+            "library_hero": "library_hero.jpg",
+            "community_icon": "ddad27f6774b3a76d0cd35b48580816306e0252f",
+            "page_background_path": "app/360550?t=1737937005"
+        }
+    },
+    "363490": {
+        "item_type": 0,
+        "id": 363490,
+        "success": 1,
+        "visible": true,
+        "name": "Escape Machines",
+        "store_url_path": "app/363490/Escape_Machines",
+        "appid": 363490,
+        "type": 0,
+        "is_early_access": true,
+        "tagids": [
+            493,
+            19,
+            492,
+            9,
+            21,
+            122,
+            5752,
+            3942
+        ],
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "feature_categoryids": [
+                17,
+                62
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 405,
+                "percent_positive": 41,
+                "review_score": 5,
+                "review_score_label": "Mixed"
+            }
+        },
+        "basic_info": {
+            "short_description": "Escape Machines is an addictive Science Fiction single/multi-player/co-op adventure shooter in the near future! \r\nArtificial intellect and robots fight against their creators. You must take control of the robots and save people.",
+            "publishers": [
+                {
+                    "name": "Back To Basics Gaming"
+                }
+            ],
+            "developers": [
+                {
+                    "name": "Mint Age Studios"
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 493,
+                "weight": 2517
+            },
+            {
+                "tagid": 19,
+                "weight": 1363
+            },
+            {
+                "tagid": 492,
+                "weight": 1328
+            },
+            {
+                "tagid": 9,
+                "weight": 1293
+            },
+            {
+                "tagid": 21,
+                "weight": 1153
+            },
+            {
+                "tagid": 122,
+                "weight": 1118
+            },
+            {
+                "tagid": 5752,
+                "weight": 629
+            },
+            {
+                "tagid": 3942,
+                "weight": 594
+            }
+        ],
+        "release": {
+            "steam_release_date": 1429031143,
+            "is_early_access": true
+        },
+        "platforms": {
+            "windows": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 0,
+            "steam_os_compat_category": 0
+        },
+        "best_purchase_option": {
+            "packageid": 65333,
+            "purchase_option_name": "Escape Machines",
+            "final_price_in_cents": "199",
+            "formatted_final_price": "$1.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 65333,
+                "purchase_option_name": "Escape Machines",
+                "final_price_in_cents": "199",
+                "formatted_final_price": "$1.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 825,
+                "purchase_option_name": "Back To Basics Mixer Bundle 2",
+                "final_price_in_cents": "468",
+                "formatted_final_price": "$4.68",
+                "bundle_discount_pct": 41,
+                "price_before_bundle_discount": "796",
+                "formatted_price_before_bundle_discount": "$7.96",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 4,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 1021,
+                "purchase_option_name": "Back To Basics Sci Fi Bundle",
+                "final_price_in_cents": "763",
+                "formatted_final_price": "$7.63",
+                "bundle_discount_pct": 45,
+                "price_before_bundle_discount": "1393",
+                "formatted_price_before_bundle_discount": "$13.93",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 7,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 481,
+                "purchase_option_name": "Mega Game Pack Bundle",
+                "final_price_in_cents": "9460",
+                "formatted_final_price": "$94.60",
+                "bundle_discount_pct": 50,
+                "price_before_bundle_discount": "19010",
+                "formatted_price_before_bundle_discount": "$190.10",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 90,
+                "must_purchase_as_set": false
+            }
+        ],
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/363490/ss_eb986801b9dd2bb52c6b9f44cfb56726a52d8137.jpg?t=1567901745",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/363490/ss_ad60303f242a9eae32abc59d0ed34a1dcd4de207.jpg?t=1567901745",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/363490/ss_a946ecc5628278689ea7a33668413d4fbfb20465.jpg?t=1567901745",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/363490/ss_0101c0a792a44336c05a931289eb9e290e761d2a.jpg?t=1567901745",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/363490/ss_b33fd2c172c487e113f440fbcc0cbe26c0b442d9.jpg?t=1567901745",
+                    "ordinal": 5
+                },
+                {
+                    "filename": "steam/apps/363490/ss_3ababe92056eb349f7b942a3bcc0520bce903d96.jpg?t=1567901745",
+                    "ordinal": 6
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "Escape Machines beta game-play",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1447372697",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "363490/34165/89aebad6fedb16b80a0a4d5de88d327549635a71/1751277481/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "363490/34165/89aebad6fedb16b80a0a4d5de88d327549635a71/1751277481/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "363490/34165/89aebad6fedb16b80a0a4d5de88d327549635a71/1751277481/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "363490/34165/89aebad6fedb16b80a0a4d5de88d327549635a71/1751277481/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "363490/34165/89aebad6fedb16b80a0a4d5de88d327549635a71/1751277481/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "2038492/movie.293x165.jpg",
+                    "screenshot_full": "2038492/movie_full.jpg",
+                    "trailer_base_id": 34165,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 1,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 5,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 11,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 8,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            }
+        ],
+        "full_description": "Escape Machines is an addictive Science Fiction single/multi-player/co-op adventure shooter in the near future! \r\nArtificial intellect and robots fight against their creators. You must take control of the robots and save people.\r\n\r\nThe game is currently in early beta, some features may be unfinished.\r\nFeatures:\r\nPlay with friends in co-op and VS multi-player.*Currently unavailable* \r\nBuild robots and command them to win in battle. \r\nUpgrade your weapons and armour. \r\nBattle huge robot bosses. \r\nUse vehicles to travel, add turrets to your vehicles. \r\nCustomize your armour, weapons and stats. Buy/upgrade equipment in the 'Armourer shop' \r\nLevel editor - create levels, share and play them with friends. \r\nOriginal soundtrack/SFX ~ bit-music mixed with progressive trance and electro-funk.",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/363490/${FILENAME}?t=1567901745",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "library_capsule": "portrait.png",
+            "community_icon": "4d246c919d80261f0dbe19dc68f66e4fde85cb9a",
+            "page_background_path": "app/363490?t=1567901745"
+        }
+    },
+    "365800": {
+        "item_type": 0,
+        "id": 365800,
+        "success": 1,
+        "visible": true,
+        "name": "AdvertCity",
+        "store_url_path": "app/365800/AdvertCity",
+        "appid": 365800,
+        "type": 0,
+        "tagids": [
+            492,
+            599,
+            9,
+            12472,
+            4115,
+            4328,
+            5030,
+            6052,
+            5125,
+            8945,
+            3835
+        ],
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "feature_categoryids": [
+                22,
+                29,
+                31,
+                23,
+                42,
+                62
+            ],
+            "controller_categoryids": [
+                18
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 47,
+                "percent_positive": 38,
+                "review_score": 4,
+                "review_score_label": "Mostly Negative"
+            }
+        },
+        "basic_info": {
+            "short_description": "A cyberpunk advertising tycoon game.  Explore a massive procedural city, and plaster your adverts all over it.  Float around cyberspace and post links online.  Watch the economy of the city evolve with the effects of your decisions.",
+            "publishers": [
+                {
+                    "name": "VoxelStorm"
+                },
+                {
+                    "name": "Armchair Software"
+                }
+            ],
+            "developers": [
+                {
+                    "name": "VoxelStorm"
+                },
+                {
+                    "name": "Armchair Software"
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 492,
+                "weight": 1627
+            },
+            {
+                "tagid": 599,
+                "weight": 1255
+            },
+            {
+                "tagid": 9,
+                "weight": 1162
+            },
+            {
+                "tagid": 12472,
+                "weight": 976
+            },
+            {
+                "tagid": 4115,
+                "weight": 883
+            },
+            {
+                "tagid": 4328,
+                "weight": 790
+            },
+            {
+                "tagid": 5030,
+                "weight": 697
+            },
+            {
+                "tagid": 6052,
+                "weight": 697
+            },
+            {
+                "tagid": 5125,
+                "weight": 651
+            },
+            {
+                "tagid": 8945,
+                "weight": 651
+            },
+            {
+                "tagid": 3835,
+                "weight": 604
+            }
+        ],
+        "release": {
+            "steam_release_date": 1433502003,
+            "original_release_date": 1429254000
+        },
+        "platforms": {
+            "windows": true,
+            "mac": true,
+            "steamos_linux": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 2,
+            "steam_os_compat_category": 2
+        },
+        "best_purchase_option": {
+            "packageid": 66039,
+            "purchase_option_name": "AdvertCity",
+            "final_price_in_cents": "499",
+            "formatted_final_price": "$4.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 66039,
+                "purchase_option_name": "AdvertCity",
+                "final_price_in_cents": "499",
+                "formatted_final_price": "$4.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            },
+            {
+                "packageid": 71326,
+                "purchase_option_name": "AdvertCity and Soundtrack Deluxe Bundle",
+                "final_price_in_cents": "599",
+                "formatted_final_price": "$5.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            }
+        ],
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/365800/ss_b7633c8f4662b4f9ce24af8232309fd0a0487add.jpg?t=1680026442",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/365800/ss_bc6ee62ecda3ebdb26e1b9974f01d0c02a416931.jpg?t=1680026442",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/365800/ss_bd8fa99a1a245a369a65e737d064b0d0c291226c.jpg?t=1680026442",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/365800/ss_28b500a6af87da3e312073e5c1fe1ad524092663.jpg?t=1680026442",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/365800/ss_9d0a289f1682c916382c9974a7c1d107cb1c4014.jpg?t=1680026442",
+                    "ordinal": 5
+                },
+                {
+                    "filename": "steam/apps/365800/ss_2a8a2309e0641b4a3fe8e763bebbe9d6de18b92c.jpg?t=1680026442",
+                    "ordinal": 6
+                },
+                {
+                    "filename": "steam/apps/365800/ss_93154732cd7ab6dc83c87b7669381b4aedc050b8.jpg?t=1680026442",
+                    "ordinal": 7
+                },
+                {
+                    "filename": "steam/apps/365800/ss_201f28c830bc389b4ed89337e8daeedef1be6b8a.jpg?t=1680026442",
+                    "ordinal": 8
+                },
+                {
+                    "filename": "steam/apps/365800/ss_dd151a97137af1086cea0e5faab493093db79dd5.jpg?t=1680026442",
+                    "ordinal": 9
+                },
+                {
+                    "filename": "steam/apps/365800/ss_793afd875ea37e371a88d99602a3da5d6cd3c1a0.jpg?t=1680026442",
+                    "ordinal": 10
+                },
+                {
+                    "filename": "steam/apps/365800/ss_d1483c2d9213f3388f645446d78a3bf20789d45d.jpg?t=1680026442",
+                    "ordinal": 11
+                },
+                {
+                    "filename": "steam/apps/365800/ss_b6c66073e6f9ee648ab1850c11f34470fb06d1f8.jpg?t=1680026442",
+                    "ordinal": 12
+                },
+                {
+                    "filename": "steam/apps/365800/ss_bf6549272c04359e2b2b1d114e5bd8c10557927b.jpg?t=1680026442",
+                    "ordinal": 13
+                },
+                {
+                    "filename": "steam/apps/365800/ss_a071f8b4bb8550e051316465d6666e19d6c7c0f7.jpg?t=1680026442",
+                    "ordinal": 14
+                },
+                {
+                    "filename": "steam/apps/365800/ss_d62659cf3d189b77040e34b87aceaab30dcc51a1.jpg?t=1680026442",
+                    "ordinal": 15
+                },
+                {
+                    "filename": "steam/apps/365800/ss_261482803e308c59564de4749ec2b297830026e4.jpg?t=1680026442",
+                    "ordinal": 16
+                },
+                {
+                    "filename": "steam/apps/365800/ss_54d30f468a08e7a1be2dfadc0a60f7084a3c5d64.jpg?t=1680026442",
+                    "ordinal": 17
+                },
+                {
+                    "filename": "steam/apps/365800/ss_c5293587b9db32f6d00483be9ac7dcbf3eb4067f.jpg?t=1680026442",
+                    "ordinal": 18
+                },
+                {
+                    "filename": "steam/apps/365800/ss_15976a1bbfabaf1e6b97c3a1288c3d87e0dbb48e.jpg?t=1680026442",
+                    "ordinal": 19
+                },
+                {
+                    "filename": "steam/apps/365800/ss_daf60f41179872c59f2bb9cc100220691aad44d8.jpg?t=1680026442",
+                    "ordinal": 20
+                },
+                {
+                    "filename": "steam/apps/365800/ss_a33b1b42c2a78d4cd70dd780c4e24dad83cf116c.jpg?t=1680026442",
+                    "ordinal": 21
+                },
+                {
+                    "filename": "steam/apps/365800/ss_346735777f1e65d4fa2f0a482c09f919ea511b31.jpg?t=1680026442",
+                    "ordinal": 22
+                },
+                {
+                    "filename": "steam/apps/365800/ss_0de412a7f2d432939fcb7f0398d628677ce22b68.jpg?t=1680026442",
+                    "ordinal": 23
+                },
+                {
+                    "filename": "steam/apps/365800/ss_9683e098c3f303f2f6c55d85096907fd61a1244e.jpg?t=1680026442",
+                    "ordinal": 24
+                },
+                {
+                    "filename": "steam/apps/365800/ss_ebbbdb53dc88604ac193c09f933c1afa1ad49751.jpg?t=1680026442",
+                    "ordinal": 25
+                },
+                {
+                    "filename": "steam/apps/365800/ss_331da696a0f5ecb3a728cffd5255450548e559bc.jpg?t=1680026442",
+                    "ordinal": 26
+                },
+                {
+                    "filename": "steam/apps/365800/ss_d717b288323511967b2a38c68a43b7e0c6d0d076.jpg?t=1680026442",
+                    "ordinal": 27
+                },
+                {
+                    "filename": "steam/apps/365800/ss_57206c76ae91d6cded709e1472185949ab6f15d6.jpg?t=1680026442",
+                    "ordinal": 28
+                },
+                {
+                    "filename": "steam/apps/365800/ss_d6ad7a4ed002a0a43388e03b6af05a64569f1db9.jpg?t=1680026442",
+                    "ordinal": 29
+                },
+                {
+                    "filename": "steam/apps/365800/ss_f9fa0f9373709ae204cc95b791e57890c3b3cddb.jpg?t=1680026442",
+                    "ordinal": 30
+                },
+                {
+                    "filename": "steam/apps/365800/ss_e50fbde81f69a6d48385c1bb190ac81d5cc7128d.jpg?t=1680026442",
+                    "ordinal": 31
+                },
+                {
+                    "filename": "steam/apps/365800/ss_c12eb7a673832a7004cfcf724e3a16d9084c166b.jpg?t=1680026442",
+                    "ordinal": 32
+                },
+                {
+                    "filename": "steam/apps/365800/ss_ee9a7be91e98e58b6813e55c1857b7c9ff05a1b2.jpg?t=1680026442",
+                    "ordinal": 33
+                },
+                {
+                    "filename": "steam/apps/365800/ss_217397a21530351bb2edaddac7fcdc1856dce2e7.jpg?t=1680026442",
+                    "ordinal": 34
+                },
+                {
+                    "filename": "steam/apps/365800/ss_6ecfcecdba40a022f9315d5a506c49c0f6aa823e.jpg?t=1680026442",
+                    "ordinal": 35
+                },
+                {
+                    "filename": "steam/apps/365800/ss_63b19b4fc67fdc3a95de9fd24220fd66ccd7b81f.jpg?t=1680026442",
+                    "ordinal": 36
+                },
+                {
+                    "filename": "steam/apps/365800/ss_a0fa2ead3c44e32cb928ece4ab75e5162bb6d5f4.jpg?t=1680026442",
+                    "ordinal": 37
+                },
+                {
+                    "filename": "steam/apps/365800/ss_255b9821b9b8055b55fb0084ac417916e25e8c95.jpg?t=1680026442",
+                    "ordinal": 38
+                },
+                {
+                    "filename": "steam/apps/365800/ss_45c0a21f246ae3776042c5c684eb6bac9e1904e1.jpg?t=1680026442",
+                    "ordinal": 39
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "AdvertCity Trailer",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1447373867",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "365800/35261/a033e5cffdbdb81886daa15cf06573a232e39634/1751270647/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "365800/35261/a033e5cffdbdb81886daa15cf06573a232e39634/1751270647/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "365800/35261/a033e5cffdbdb81886daa15cf06573a232e39634/1751270647/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "365800/35261/a033e5cffdbdb81886daa15cf06573a232e39634/1751270647/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "365800/35261/a033e5cffdbdb81886daa15cf06573a232e39634/1751270647/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "2039048/movie.293x165.jpg",
+                    "screenshot_full": "2039048/movie_full.jpg",
+                    "trailer_base_id": 35261,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": true
+            }
+        ],
+        "full_description": "Broke? Looking to work from THE SKY? Join us in AdvertCity! A huge, procedurally generated place, just waiting to be sold all kinds of junk by YOU!\r\n\r\nAdvertCity is a cyberpunk advertising tycoon game.  Explore a massive procedural city, and plaster your adverts all over it.  Float around cyberspace and post links online.  Watch the economy of the city evolve with the effects of your decisions.\r\n\r\nFEATURES\r\nMassive procedurally generated cities in a procedural landscape.\r\nSwitch between meatspace and cyberspace at will to get a different perspective.\r\nManage an advertising empire, posting ads online and using physical advertising. Choose your clients and adverts wisely, as you have a reputation to uphold.\r\nInfluence the economy and growth of the city with your advertising choices.\r\nBuy buildings and upgrade your headquarters to expand your influence.\r\nHire employees and unlock new advertising technologies.\r\nTake over megacorporations and make the city yours!\r\nSimultaneous synchronised soundtracks, an hour-long original music score featuring postrock, jazz and glitch elements.\r\nRoguelike single-save system.\r\nBeautiful graphics but runs great on older computers - it will even run on that old notebook where nothing else will!\r\nDownload for Windows, Linux or OS X.\r\n\r\nSOUNDTRACK\r\nhttp://store.steampowered.com/app/366130\r\n\r\nTECHNICAL DETAILS\r\nCompletely custom graphics engine written from scratch for the Cyberpunk Jam.\r\nHDR sound, with multi-track synchronous \"deck\" crossfade capability, and full support for EBU R128 2011.\r\nBuilt with VR support in mind from the start, early prototypes tested on the Oculus Rift.\r\nOlder machine compatibility - no special shader requirements, runs on Windows XP (or Linux or OS X), no library requirements or .net.\r\n\r\nThe original build was created in just seven days for the Cyberpunk Jam. After our Alpha build, we launched a successful kickstarter to take the game into Beta and beyond. A year later, the game is finally complete and ready to play!\r\n\r\nDevelopment screenshots: https://www.facebook.com/media/set/?set=a.608993889189575.1073741830.361227683966198&type=1",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/365800/${FILENAME}?t=1680026442",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "library_capsule": "portrait.png",
+            "community_icon": "230a828c2d257d04ff24387d54e0328f2270c1d7",
+            "page_background_path": "app/365800?t=1680026442"
+        }
+    },
+    "367260": {
+        "item_type": 0,
+        "id": 367260,
+        "success": 1,
+        "visible": true,
+        "name": "Dwarven Brawl Bros",
+        "store_url_path": "app/367260/Dwarven_Brawl_Bros",
+        "appid": 367260,
+        "type": 0,
+        "tagids": [
+            7918,
+            4840,
+            7368,
+            19,
+            492,
+            3841,
+            597,
+            7108
+        ],
+        "categories": {
+            "supported_player_categoryids": [
+                1,
+                24
+            ],
+            "feature_categoryids": [
+                22,
+                29,
+                15,
+                44,
+                62
+            ],
+            "controller_categoryids": [
+                28
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 32,
+                "percent_positive": 78,
+                "review_score": 6,
+                "review_score_label": "Mostly Positive"
+            }
+        },
+        "basic_info": {
+            "short_description": "Dwarven Brawl Bros is a local 2 to 6 player 2D fighting (brawling) game with a retroish feel. Play as a dwarf and kill your bros! Fast-paced brawling in all-vs-all and team settings with 31 weapons, 38 stages, 26 game modes!",
+            "publishers": [
+                {
+                    "name": "Dwarves Might Fly"
+                }
+            ],
+            "developers": [
+                {
+                    "name": "Dwarves Might Fly"
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 7918,
+                "weight": 2222
+            },
+            {
+                "tagid": 4840,
+                "weight": 1313
+            },
+            {
+                "tagid": 7368,
+                "weight": 1262
+            },
+            {
+                "tagid": 19,
+                "weight": 1262
+            },
+            {
+                "tagid": 492,
+                "weight": 1161
+            },
+            {
+                "tagid": 3841,
+                "weight": 1161
+            },
+            {
+                "tagid": 597,
+                "weight": 1111
+            },
+            {
+                "tagid": 7108,
+                "weight": 505
+            }
+        ],
+        "release": {
+            "steam_release_date": 1435268646
+        },
+        "platforms": {
+            "windows": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 0,
+            "steam_os_compat_category": 0
+        },
+        "best_purchase_option": {
+            "packageid": 66590,
+            "purchase_option_name": "Dwarven Brawl Bros",
+            "final_price_in_cents": "499",
+            "formatted_final_price": "$4.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 66590,
+                "purchase_option_name": "Dwarven Brawl Bros",
+                "final_price_in_cents": "499",
+                "formatted_final_price": "$4.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            }
+        ],
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/367260/ss_f98870dc7de7848424cc5ec99379f545d75c0ad7.jpg?t=1450807707",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/367260/ss_8db6c9e839435dc1b511931fd89e415bc6ee2b3d.jpg?t=1450807707",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/367260/ss_229738c30057134d7f8b53b3add9168ba93dcac7.jpg?t=1450807707",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/367260/ss_f4dd260df68dd4c70042dd8ad710a034c5f1bf6d.jpg?t=1450807707",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/367260/ss_0a5f59a1361a203b598bcc18f27eba87cefbdf78.jpg?t=1450807707",
+                    "ordinal": 5
+                },
+                {
+                    "filename": "steam/apps/367260/ss_bcac9fc71cb5000f28728f9340d6a1e5f1aed2c4.jpg?t=1450807707",
+                    "ordinal": 6
+                },
+                {
+                    "filename": "steam/apps/367260/ss_73e79964d716d57a364eea4844811f6048b71d4e.jpg?t=1450807707",
+                    "ordinal": 7
+                },
+                {
+                    "filename": "steam/apps/367260/ss_0e9efaeeb0fd1009486cd9b00fbd740a83b844d4.jpg?t=1450807707",
+                    "ordinal": 8
+                },
+                {
+                    "filename": "steam/apps/367260/ss_c5f14367a7d143044bd5ee6a4822e88d4c5c8423.jpg?t=1450807707",
+                    "ordinal": 9
+                },
+                {
+                    "filename": "steam/apps/367260/ss_df950ed4696f467bd761a7bffd3e47c5c074488c.jpg?t=1450807707",
+                    "ordinal": 10
+                },
+                {
+                    "filename": "steam/apps/367260/ss_b066782cf168de5148bea0a1be68b6a34464f9eb.jpg?t=1450807707",
+                    "ordinal": 11
+                },
+                {
+                    "filename": "steam/apps/367260/ss_952a2878f494b195d31506d2535e7d9e0af953f4.jpg?t=1450807707",
+                    "ordinal": 12
+                },
+                {
+                    "filename": "steam/apps/367260/ss_34fab929853491a7529d40fd2d61e476e2814d52.jpg?t=1450807707",
+                    "ordinal": 13
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "Trailer",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1447377942",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "367260/42511/87fa68c8d23434b2cd544b7cb1bb64cf0a6826f6/1751270962/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "367260/42511/87fa68c8d23434b2cd544b7cb1bb64cf0a6826f6/1751270962/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "367260/42511/87fa68c8d23434b2cd544b7cb1bb64cf0a6826f6/1751270962/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "367260/42511/87fa68c8d23434b2cd544b7cb1bb64cf0a6826f6/1751270962/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "367260/42511/87fa68c8d23434b2cd544b7cb1bb64cf0a6826f6/1751270962/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256656197/movie.293x165.jpg",
+                    "screenshot_full": "256656197/movie_full.jpg",
+                    "trailer_base_id": 42511,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 15,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            }
+        ],
+        "full_description": "Dwarven Brawl Bros is a local 2 to 6 player 2D fighting (brawling) party game with a retroish feel.\r\nPlay as a dwarf and kill your bros! DBB offers fast-paced brawling in all-vs-all, all-vs-one, and team settings with 31 weapons, 38 stages, and 26 game modes!\r\n\r\n\r\n\r\nWeapons!\r\nThe gameplay is weapon based. Each weapon has its own pros and cons as well as three different, separate basic attacks - and a special attack to finish off your target (or weaken someone else) once you have successfully hit enough with basic attacks. Smack them from behind and push them into lava or spikes for extra damage: let the beards hit the lava in a slow-mo gorey flight!\r\n\r\n\r\n\r\nJust brawl - it's a party!\r\nDwarven Brawl Bros is a brawler that doesn't limit your gameplay to class spesific skills or weapons. All the characters can use all the weapons and you can change your style and arsenal mid-fight: each dwarf can carry up to three weapons, replacable on-the-fly. The brawling is made non-restricting and insanely fun!\r\n\r\n\r\n\r\nSpice it up!\r\nIf you enjoy specific gameplay, like playing as a zombie or a fake-elf versus dwarves, there are game modes for that too. Matches can also be customized with different gameplay settings, such as setting hit points and special attack unlock damage.\r\n\r\nOn top of that, stages are destructible, making individual bricks break and platform structures collapse by the weapon hits, projectiles, and explosions.\r\n\r\n\r\n\r\nCouch-friendly party game\r\nJust sit back, grab gamepads and beverages: this is a perfect party game to play with your friends (or foes). Team up and go co-op, or fight alone against others!\r\n\r\nDwarven Brawl Brosis fully controller supported, meaning that it can be played through the menus and the gameplay with a controller. No mouse or keyboard required!\r\n\r\nLatest updates:\r\n\r\n\r\n\r\n\r\n\r\n\r\nWhat DBB has:\r\n\r\n31 weapons: melee, ranged and explosives, each with three+one different attacks, with unique damages, knockbacks, and others attributes\r\n38 stages with 3 size variants each, with different destructible structures and damaging elements such as spikes and lavafalls, and physical clutter objects\r\nLocal 2-6 player brawling, with full controller support, but is also playable with keyboard\r\nPlayable in all-vs-all, one-vs-many, 2-vs-2, and 3-vs-3 settings\r\n26 game modes for different parties: All-vs-all, respawn deathmatch, team-vs-team (with or without respawn), Overthrow (\"kill the king\"), Dorf Ball (\"dwarven football\"), Zombie survivor, firearms/melee/explosives only, Happy Hour (\"just specials\"), Identity Crisis (\"kill the elf\"), and more\r\nCustomizable matches beyond modes: set the amount of hit points and spawned weapons, sessions lengths, and so on\r\nPre-made collections with rotating game modes for different play sessions\r\nRetro, cute & brutal pixelated art-style\r\nSemi-cartoonish gore, that can be turned off if the blood and the flying pieces of meats are too much\r\nChiptune-ish sfx and music that you miss once you turn it off\r\nAnnouncer in both floating text and Pixel Display (\"scoreboard\") announcing kills and other events - it's a dwarven party!\r\nEnglish and Finnish translations\r\n\r\n\r\nCan my computer run it?\r\nDwarven Brawl Bros requires just a modernish CPU (~any CPU made within the last five years) to run smoothly and any graphic card capable of running shader model 3.0 (~any card made after 2010) to display all the visuals.\r\n\r\nThere are options to turn down effects, like the physical clutter, so pretty much every modernish configuration can run DBB smoothly.\r\n\r\n\r\nStill unsure?\r\nIf you got any questions, the FAQ blog post might answer them. If you can't find an answer there, ask away!\r\n\r\n/dorf",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/367260/${FILENAME}?t=1450807707",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "library_capsule": "portrait.png",
+            "community_icon": "7864db4e65f88c71f43353b7c74c631e1bea785f",
+            "page_background_path": "app/367260?t=1450807707"
+        }
+    },
+    "368570": {
+        "item_type": 0,
+        "id": 368570,
+        "success": 1,
+        "visible": true,
+        "name": "Beat Da Beat",
+        "store_url_path": "app/368570/Beat_Da_Beat",
+        "appid": 368570,
+        "type": 0,
+        "tagids": [
+            492,
+            4885,
+            1773,
+            1752,
+            1756,
+            3964,
+            1621,
+            19,
+            4182,
+            4026
+        ],
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "feature_categoryids": [
+                22,
+                25,
+                62
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 457,
+                "percent_positive": 92,
+                "review_score": 8,
+                "review_score_label": "Very Positive"
+            }
+        },
+        "basic_info": {
+            "short_description": "Hurrican-like Bullet Hell. Avoid the rain of bullets to the rhythms of \"dubstep\".\r\nHelp the hero to defeat the aliens and to take revenge on the interstellar aggressor!",
+            "publishers": [
+                {
+                    "name": "Nekki Limited"
+                }
+            ],
+            "developers": [
+                {
+                    "name": "2 players"
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 492,
+                "weight": 2944
+            },
+            {
+                "tagid": 4885,
+                "weight": 1595
+            },
+            {
+                "tagid": 1773,
+                "weight": 1104
+            },
+            {
+                "tagid": 1752,
+                "weight": 1042
+            },
+            {
+                "tagid": 1756,
+                "weight": 981
+            },
+            {
+                "tagid": 3964,
+                "weight": 797
+            },
+            {
+                "tagid": 1621,
+                "weight": 552
+            },
+            {
+                "tagid": 19,
+                "weight": 368
+            },
+            {
+                "tagid": 4182,
+                "weight": 306
+            },
+            {
+                "tagid": 4026,
+                "weight": 306
+            }
+        ],
+        "release": {
+            "steam_release_date": 1457611788
+        },
+        "platforms": {
+            "windows": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 0,
+            "steam_os_compat_category": 0
+        },
+        "game_rating": {
+            "type": "esrb",
+            "rating": "e10",
+            "descriptors": [
+                "Mild Cartoon Violence",
+                "Comic Mischief",
+                "Mild Language",
+                "Edutainment"
+            ],
+            "required_age": 0,
+            "use_age_gate": false,
+            "image_url": "public/shared/images/game_ratings/ESRB/e10.png"
+        },
+        "best_purchase_option": {
+            "packageid": 66976,
+            "purchase_option_name": "Beat Da Beat",
+            "final_price_in_cents": "199",
+            "formatted_final_price": "$1.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 66976,
+                "purchase_option_name": "Beat Da Beat",
+                "final_price_in_cents": "199",
+                "formatted_final_price": "$1.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            }
+        ],
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/368570/ss_9161c728a8c35994e4fe2266be27ea7e588f6db5.jpg?t=1728651206",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/368570/ss_19f568c53300e2806efb6d68047f482dcb492ded.jpg?t=1728651206",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/368570/ss_60203900ddfc2025823d6fd3da4c62a137a16d45.jpg?t=1728651206",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/368570/ss_8c7490f6c72cd2ce388edd3598ef2cf686a70594.jpg?t=1728651206",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/368570/ss_03fc31390d8ac5a14c191f83cbf2b4744aff0231.jpg?t=1728651206",
+                    "ordinal": 5
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "Beat Da Beat trailer",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1457611001",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "368570/49972/7fe2d2f6eaa1f0b0e2c0ac7a86b641d217dc2074/1751271196/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "368570/49972/7fe2d2f6eaa1f0b0e2c0ac7a86b641d217dc2074/1751271196/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "368570/49972/7fe2d2f6eaa1f0b0e2c0ac7a86b641d217dc2074/1751271196/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "368570/49972/7fe2d2f6eaa1f0b0e2c0ac7a86b641d217dc2074/1751271196/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "368570/49972/7fe2d2f6eaa1f0b0e2c0ac7a86b641d217dc2074/1751271196/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256659664/movie.293x165.jpg",
+                    "screenshot_full": "256659664/movie_full.jpg",
+                    "trailer_base_id": 49972,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 2,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 3,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 1,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 5,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 11,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 21,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 8,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 10,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 6,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 7,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            },
+            {
+                "elanguage": 4,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": false,
+                "subtitles": false
+            }
+        ],
+        "full_description": "Game producer Nekki, creator of hits like Shadow Fight 2 and Vector, presents you Beat Da Beat - a nail-biting action game to the rhythms of Dubstep tracks!\r\n\r\nEverything that happens on the screen - movement, actions, shootings - are based on the musical composition. Can you imagine anything more awesome than dodging a rain of enemy bullets to a mighty Dubstep beat, turning the alien enemies into atoms, while dancing happily to this?\r\nWhat? Punching the bad guy's face in close combat? No problem!\r\n\r\nWow, slow down! You wanna fight already?\r\nWait. You didn't think that we will let you go with this metallic lemon?\r\nYou have 10 unique spaceships at your service, with each an individual ability.\r\nFor some to unlock, you have to sweat pretty much - but it's totally worth it!\r\nBesides this, if you're attached to your old ship already, you can upgrade it to turn it into a real machine of vengeance.\r\n\r\nSo far, we have:\r\n\r\n- A deep written love-story, which will make you cry\r\n- Pixelart style. You don't see this around often!\r\n- Unbelievable musical levels\r\n- 4 difficulty modes\r\n- Great bosses\r\n- Awesome music from awesome musicians\r\n- A dancing guy in the corner. Wow!\r\n\r\nSeriously?\r\nYou have read until the end and haven't started playing yet? So what if I tell you there are explosions? Lot's of explosions!",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/368570/${FILENAME}?t=1728651206",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "page_background": "page_bg_generated_v6b.jpg",
+            "library_capsule": "portrait.png",
+            "community_icon": "f102d963a4cdbb1aa49788b8c1e42ca57d6de983",
+            "page_background_path": "app/368570?t=1728651206",
+            "raw_page_background": "page_bg_raw.jpg"
+        }
+    },
+    "370270": {
+        "item_type": 0,
+        "id": 370270,
+        "success": 1,
+        "visible": true,
+        "name": "Jim Power -The Lost Dimension",
+        "store_url_path": "app/370270/Jim_Power_The_Lost_Dimension",
+        "appid": 370270,
+        "type": 0,
+        "tagids": [
+            19,
+            21,
+            1625,
+            4004,
+            1693
+        ],
+        "categories": {
+            "supported_player_categoryids": [
+                2
+            ],
+            "feature_categoryids": [
+                29,
+                62
+            ],
+            "controller_categoryids": [
+                18
+            ]
+        },
+        "reviews": {
+            "summary_filtered": {
+                "review_count": 36,
+                "percent_positive": 69,
+                "review_score": 5,
+                "review_score_label": "Mixed"
+            }
+        },
+        "basic_info": {
+            "short_description": "Special Agent Jim Power-The supernatural alien, Vaprak, threatens to defeat our world which is the last planet that stands between him and a dimensional vortex.",
+            "publishers": [
+                {
+                    "name": "Piko Interactive LLC",
+                    "creator_clan_account_id": 33072480
+                },
+                {
+                    "name": "Bleem!",
+                    "creator_clan_account_id": 33072480
+                }
+            ],
+            "developers": [
+                {
+                    "name": "Digital Concepts",
+                    "creator_clan_account_id": 33072480
+                }
+            ]
+        },
+        "tags": [
+            {
+                "tagid": 19,
+                "weight": 3513
+            },
+            {
+                "tagid": 21,
+                "weight": 3108
+            },
+            {
+                "tagid": 1625,
+                "weight": 1621
+            },
+            {
+                "tagid": 4004,
+                "weight": 1081
+            },
+            {
+                "tagid": 1693,
+                "weight": 675
+            }
+        ],
+        "release": {
+            "steam_release_date": 1443656402,
+            "original_release_date": 755510400
+        },
+        "platforms": {
+            "windows": true,
+            "vr_support": {},
+            "steam_deck_compat_category": 2,
+            "steam_os_compat_category": 2
+        },
+        "best_purchase_option": {
+            "packageid": 67666,
+            "purchase_option_name": "Jim Power -The Lost Dimension",
+            "final_price_in_cents": "1799",
+            "formatted_final_price": "$17.99",
+            "user_can_purchase_as_gift": true,
+            "hide_discount_pct_for_compliance": false,
+            "included_game_count": 1,
+            "must_purchase_as_set": false
+        },
+        "purchase_options": [
+            {
+                "packageid": 67666,
+                "purchase_option_name": "Jim Power -The Lost Dimension",
+                "final_price_in_cents": "1799",
+                "formatted_final_price": "$17.99",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 1,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 5256,
+                "purchase_option_name": "RETRO Action SNES Volume 1",
+                "final_price_in_cents": "2786",
+                "formatted_final_price": "$27.86",
+                "bundle_discount_pct": 38,
+                "price_before_bundle_discount": "4496",
+                "formatted_price_before_bundle_discount": "$44.96",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 4,
+                "must_purchase_as_set": false
+            },
+            {
+                "bundleid": 5255,
+                "purchase_option_name": "Retro Action DOS Volume 1",
+                "final_price_in_cents": "2909",
+                "formatted_final_price": "$29.09",
+                "bundle_discount_pct": 38,
+                "price_before_bundle_discount": "4695",
+                "formatted_price_before_bundle_discount": "$46.95",
+                "user_can_purchase_as_gift": true,
+                "hide_discount_pct_for_compliance": false,
+                "included_game_count": 5,
+                "must_purchase_as_set": false
+            }
+        ],
+        "screenshots": {
+            "all_ages_screenshots": [
+                {
+                    "filename": "steam/apps/370270/ss_148567649355dbec8f5fdbe563aaa3ba2ea3d861.jpg?t=1643921418",
+                    "ordinal": 1
+                },
+                {
+                    "filename": "steam/apps/370270/ss_199e78e8978eb8ea1cd0644db1f179f820022124.jpg?t=1643921418",
+                    "ordinal": 2
+                },
+                {
+                    "filename": "steam/apps/370270/ss_b5bff61cd2a7e0da5961ad889e16890ba52c8d33.jpg?t=1643921418",
+                    "ordinal": 3
+                },
+                {
+                    "filename": "steam/apps/370270/ss_967334e4f8cf39043998e5be27c4e074e775f679.jpg?t=1643921418",
+                    "ordinal": 4
+                },
+                {
+                    "filename": "steam/apps/370270/ss_1d808063c4a6db0089de65626a2b9287a4f93cd8.jpg?t=1643921418",
+                    "ordinal": 5
+                }
+            ]
+        },
+        "trailers": {
+            "highlights": [
+                {
+                    "trailer_name": "90s Commercial",
+                    "trailer_url_format": "steam/apps/${FILENAME}?t=1447378019",
+                    "trailer_category": 0,
+                    "microtrailer": [
+                        {
+                            "filename": "370270/42772/35a62ee87fe46d47547779bc9a3eb4391b6340a7/1751276873/microtrailer.webm",
+                            "type": "video/webm"
+                        },
+                        {
+                            "filename": "370270/42772/35a62ee87fe46d47547779bc9a3eb4391b6340a7/1751276873/microtrailer.mp4",
+                            "type": "video/mp4"
+                        }
+                    ],
+                    "adaptive_trailers": [
+                        {
+                            "cdn_path": "370270/42772/35a62ee87fe46d47547779bc9a3eb4391b6340a7/1751276873/dash_av1.mpd",
+                            "encoding": "dash_av1"
+                        },
+                        {
+                            "cdn_path": "370270/42772/35a62ee87fe46d47547779bc9a3eb4391b6340a7/1751276873/dash_h264.mpd",
+                            "encoding": "dash_h264"
+                        },
+                        {
+                            "cdn_path": "370270/42772/35a62ee87fe46d47547779bc9a3eb4391b6340a7/1751276873/hls_264_master.m3u8",
+                            "encoding": "hls_h264"
+                        }
+                    ],
+                    "screenshot_medium": "256656329/movie.293x165.jpg",
+                    "screenshot_full": "256656329/movie_full.jpg",
+                    "trailer_base_id": 42772,
+                    "all_ages": true
+                }
+            ]
+        },
+        "supported_languages": [
+            {
+                "elanguage": 0,
+                "eadditionallanguage": -1,
+                "supported": true,
+                "full_audio": true,
+                "subtitles": true
+            }
+        ],
+        "full_description": "Special Agent Jim Power-The supernatural alien, Vaprak, threatens to defeat our world which is the last planet that stands between him and a dimensional vortex. This vortex leads to a fifth and, up until now, lost dimension. If he succeeds in defeating us, he will destroy our world, opening a gateway for his kind as well as the strange mutating effect that this dimension has on all organic life forms. His forces are far too strong for us to defeat in a frontal attack which is why we must send you to slip past his Omni-eye scanners and make an assassination attempt on the greatest evil that man has ever known. It will take absolutely all of your wits and skill but it is imperative you reach his fortress and send him back to the sulphurous plane from whence he came.\r\n\r\nGame purchase includes-\r\n\r\n-Original PC version\r\n-Original SNES Version\r\n-Enhanced SNES Version \r\n          - Enhanced SNES Version has had the gameplay polished. \r\n          - Hit hearts have been added, as well as the \"3D\" parallax scrolling has been turned off between other things.\r\n-Original Unreleased Sega Genesis Version\r\n          -Unreleased Sega Genesis version coming in future update \r\n\r\nFuture DLC-\r\n\r\n-High Quality Soundtrack by Chris Huelsback!\r\n-8 bit NES version!",
+        "assets_without_overrides": {
+            "asset_url_format": "steam/apps/370270/${FILENAME}?t=1643921418",
+            "main_capsule": "capsule_616x353.jpg",
+            "small_capsule": "capsule_231x87.jpg",
+            "header": "header.jpg",
+            "library_capsule": "portrait.png",
+            "community_icon": "076e4ded14c851cddb14ff0ce442322ff5da404c",
+            "page_background_path": "app/370270?t=1643921418"
+        },
+        "links": [
+            {
+                "link_type": 5,
+                "url": "https://discord.com/invite/RgnSqyvvpG"
+            }
+        ]
     }
 }

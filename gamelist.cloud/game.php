@@ -30,19 +30,19 @@ $developers  = json_decode($game['developer'],   true) ?? [];
 $genres      = json_decode($game['genres'],      true) ?? [];
 $tagsRaw     = json_decode($game['tags'],        true) ?? [];
 $screenshots = json_decode($game['screenshots'], true) ?? [];
-$tags        = array_keys($tagsRaw); // just the names, not the vote counts
-$positive = (int)($game['positive'] ?? 0);
-$negative = (int)($game['negative'] ?? 0);
-$total    = $positive + $negative;
-$ratio    = $total > 0 ? $positive / $total : null;  // 0–1 float for starGauge
+$tags        = is_array($tagsRaw) ? array_values($tagsRaw) : [];
+$percentPositive = $game['percent_positive'] !== null ? (int)$game['percent_positive'] : null;
+$reviewCount     = $game['review_count'] !== null ? (int)$game['review_count'] : null;
+$ratio = $percentPositive !== null ? $percentPositive / 100 : null;  // 0–1 float for starGauge
 
-function starGauge($note) {
-    if ($note === null) {
+function starGauge($ratio, $reviewCount) {
+    if ($ratio === null) {
         return '<span class="stars-na">No score</span>';
     }
-    $pct   = round($note * 100);
-    $width = number_format($note * 100, 2);
-    return '<span class="stars-gauge" title="' . $pct . '%">
+    $pct   = round($ratio * 100);
+    $width = number_format($ratio * 100, 2);
+    $title = $reviewCount !== null ? "$pct% ({$reviewCount} votes)" : "$pct%";
+    return '<span class="stars-gauge" title="' . $title . '">
                 <span class="stars-empty">☆☆☆☆☆</span>
                 <span class="stars-filled" style="width:' . $width . '%">★★★★★</span>
             </span>';
@@ -87,7 +87,7 @@ function starGauge($note) {
                 </a>    
 
 
-                <span class="detail-score"><?= starGauge($ratio) ?></span>
+                <span class="detail-score"><?= starGauge($ratio, $reviewCount) ?></span>
             </p>
 
             <!-- Genres → link to index with genre filter -->
