@@ -1,2 +1,9 @@
-../importer/databases/games.json
-./gamelist.cloud/config.php
+# ─── Sensitive / environment ──────────────────────────────────────────────────
+gamelist.cloud/config.php
+
+# ─── Large data files ─────────────────────────────────────────────────────────
+importer/databases/games.json
+
+# ─── Logs & OS clutter ────────────────────────────────────────────────────────
+*.log
+.DS_Store

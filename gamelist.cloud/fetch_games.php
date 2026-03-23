@@ -17,8 +17,8 @@ $minScore  = (int)($_POST['minScore'] ?? 0);
 $sortBy    = $_POST['sortBy']  ?? 'weighted';
 $sortDir   = strtoupper($_POST['sortDir'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
 $page      = max(1, (int)($_POST['page']    ?? 1));
-$perPage   = in_array((int)($_POST['perPage'] ?? 24), [12, 24, 48, 96])
-             ? (int)$_POST['perPage'] : 24;
+$perPage   = in_array((int)($_POST['perPage'] ?? 20), [10, 20, 50, 100])
+             ? (int)$_POST['perPage'] : 20;
 $offset    = ($page - 1) * $perPage;
 
 $maxReviewCount = (int)$conn->query("SELECT COALESCE(MAX(review_count), 0) FROM steamgames")->fetchColumn();

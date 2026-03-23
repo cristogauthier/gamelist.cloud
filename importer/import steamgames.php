@@ -137,23 +137,18 @@ function buildAssetPathFromFormat(?string $assetUrlFormat, string $filename): ?s
     return $filename;
 }
 
-function extractAssetFilenameLeaf(string $value): string {
+function extractAssetLeafFilename(string $value): string {
     $value = trim($value);
     if ($value === '') {
         return '';
     }
 
     $path = parse_url($value, PHP_URL_PATH);
-    if (!is_string($path) || $path === '') {
-        $path = $value;
+    if (is_string($path) && $path !== '') {
+        $value = $path;
     }
 
-    $path = trim($path, "/\\");
-    if ($path === '') {
-        return '';
-    }
-
-    return basename($path);
+    return basename($value);
 }
 
 function startParallelJsonCounter(string $jsonFilePath): ?array {
@@ -418,14 +413,13 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
         $screenshotsData = null;
         if (isset($game['screenshots']) && is_array($game['screenshots'])) {
             $appendScreenshotPath = static function (string $bucket, string $filename) use (&$screenshotUrls, $assetUrlFormat): void {
-                $leaf = extractAssetFilenameLeaf($filename);
-                if ($leaf === '') {
+                $leafName = extractAssetLeafFilename($filename);
+                if ($leafName === '') {
                     return;
                 }
 
-                // Always inject a clean leaf filename into screenshots/{bucket}/...
-                // then let asset_url_format add the app path and cache-buster once.
-                $candidate = "screenshots/{$bucket}/{$leaf}";
+                // Build from normalized leaf filename only; asset_url_format provides the surrounding path.
+                $candidate = $leafName;
 
                 $built = buildAssetPathFromFormat($assetUrlFormat, $candidate);
                 if ($built !== null) {

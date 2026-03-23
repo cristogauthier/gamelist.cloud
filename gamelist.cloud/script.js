@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
         minScoreInput.value        = 0;
         scoreValueSpan.textContent = '0';
         sortBySelect.value         = 'weighted';
-        perPageSelect.value        = '24';
+        perPageSelect.value        = '20';
         sortDir                    = 'DESC';
         sortDirBtn.textContent     = '↓';
         includedTags.clear();
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
         minScoreInput.value        = s.minScore  ?? 0;
         scoreValueSpan.textContent = s.minScore  ?? 0;
         sortBySelect.value         = s.sortBy    || 'weighted';
-        perPageSelect.value        = s.perPage   || '24';
+        perPageSelect.value        = s.perPage   || '20';
         currentPage                = s.page      || 1;
         sortDir                    = s.sortDir   || 'DESC';
         sortDirBtn.textContent     = sortDir === 'DESC' ? '↓' : '↑';

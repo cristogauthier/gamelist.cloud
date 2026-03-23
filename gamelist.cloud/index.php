@@ -90,10 +90,10 @@ sort($allTags);
     <!-- Items per page -->
     <label for="perPage">Per page</label>
     <select id="perPage">
-        <option value="12">12</option>
-        <option value="24" selected>24</option>
-        <option value="48">48</option>
-        <option value="96">96</option>
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
     </select>
 
     <button id="applyFilters">Apply</button>
