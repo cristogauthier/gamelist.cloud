@@ -5,6 +5,54 @@ error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
 require_once __DIR__ . '/config.php';
 
+function getGenreWhitelist(): array {
+    $genresJsonPath = __DIR__ . '/genres.json';
+    if (!is_file($genresJsonPath)) {
+        return [];
+    }
+
+    $decoded = json_decode((string)file_get_contents($genresJsonPath), true);
+    if (!is_array($decoded)) {
+        return [];
+    }
+
+    return array_values(array_filter($decoded, 'is_string'));
+}
+
+function lowerSafe(string $value): string {
+    return function_exists('mb_strtolower') ? mb_strtolower($value, 'UTF-8') : strtolower($value);
+}
+
+function buildGenreLookupMap(array $genres): array {
+    $lookup = [];
+    foreach ($genres as $genre) {
+        $lookup[lowerSafe($genre)] = $genre;
+    }
+    return $lookup;
+}
+
+function deriveGenresFromTags(array $tags, array $genreWhitelist): array {
+    $tagLookup = [];
+    foreach ($tags as $tag) {
+        if (!is_string($tag)) {
+            continue;
+        }
+        $key = lowerSafe(trim($tag));
+        if ($key !== '') {
+            $tagLookup[$key] = true;
+        }
+    }
+
+    $derived = [];
+    foreach ($genreWhitelist as $genre) {
+        if (isset($tagLookup[lowerSafe($genre)])) {
+            $derived[] = $genre;
+        }
+    }
+
+    return $derived;
+}
+
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -20,6 +68,9 @@ $page      = max(1, (int)($_POST['page']    ?? 1));
 $perPage   = in_array((int)($_POST['perPage'] ?? 20), [10, 20, 50, 100])
              ? (int)$_POST['perPage'] : 20;
 $offset    = ($page - 1) * $perPage;
+
+$genreWhitelist = getGenreWhitelist();
+$genreLookup = buildGenreLookupMap($genreWhitelist);
 
 $maxReviewCount = (int)$conn->query("SELECT COALESCE(MAX(review_count), 0) FROM steamgames")->fetchColumn();
 $maxReviewCountDivisor = max(1, $maxReviewCount);
@@ -47,12 +98,20 @@ if ($developer !== '') {
     $params[':developer'] = '%' . $developer . '%';
 }
 if ($genre !== '') {
-    $conditions[] = "genres LIKE :genre";
-    $params[':genre'] = '%' . $genre . '%';
+    $genreKey = lowerSafe($genre);
+    if (isset($genreLookup[$genreKey])) {
+        $conditions[] = "tags LIKE :genre";
+        $params[':genre'] = '%"' . str_replace('"', '', $genreLookup[$genreKey]) . '"%';
+    }
 }
 if ($minScore > 0) {
     $conditions[] = "percent_positive >= :minScore";
     $params[':minScore'] = $minScore;
+}
+
+// Weighted mode excludes perfect-score items to reduce skew.
+if ($sortBy === 'weighted') {
+    $conditions[] = "percent_positive < 100";
 }
 
 // Each included tag must be present (AND)
@@ -90,7 +149,7 @@ $countStmt->execute($params);
 $total = (int)$countStmt->fetchColumn();
 
 // ─── FETCH PAGE ───────────────────────────────────────────────────────────────
-$sql = "SELECT id, name, publication_date, developer, genres, tags,
+$sql = "SELECT id, name, publication_date, developer, tags,
                description, percent_positive, review_count, banner, screenshots
         FROM steamgames
         $where
@@ -109,9 +168,9 @@ $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // ─── DECODE ───────────────────────────────────────────────────────────────────
 foreach ($games as &$game) {
     $game['developer']   = is_string($game['developer']) ? (json_decode($game['developer'], true) ?? []) : [];
-    $game['genres']      = is_string($game['genres']) ? (json_decode($game['genres'], true) ?? []) : [];
     $tagsArr             = is_string($game['tags']) ? json_decode($game['tags'], true) : [];
     $game['tags']        = is_array($tagsArr) ? array_values($tagsArr) : [];
+    $game['genres']      = deriveGenresFromTags($game['tags'], $genreWhitelist);
     $game['screenshots'] = is_string($game['screenshots']) ? (json_decode($game['screenshots'], true) ?? []) : [];
     $game['percent_positive'] = $game['percent_positive'] !== null ? (int)$game['percent_positive'] : 0;
     $game['review_count']     = $game['review_count'] !== null ? (int)$game['review_count'] : 0;

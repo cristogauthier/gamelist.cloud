@@ -131,7 +131,16 @@ function buildAssetPathFromFormat(?string $assetUrlFormat, string $filename): ?s
     $filename = ltrim($filename, '/');
     if ($assetUrlFormat !== null && $assetUrlFormat !== '') {
         $path = str_replace(['${filename}', '${FILENAME}'], $filename, $assetUrlFormat);
-        return ltrim($path, '/');
+        $path = ltrim($path, '/');
+
+        // Safety normalization: if a full steam/apps/... filename slips into the template,
+        // collapse duplicate app path segments and duplicated ?t query parameters.
+        $path = preg_replace('#(steam/apps/\d+/)(?:steam/apps/\d+/)+#', '$1', $path) ?? $path;
+        if (preg_match('/\?t=\d+\?t=\d+$/', $path)) {
+            $path = preg_replace('/\?t=(\d+)\?t=\d+$/', '?t=$1', $path) ?? $path;
+        }
+
+        return $path;
     }
 
     return $filename;
@@ -413,7 +422,18 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
         $screenshotsData = null;
         if (isset($game['screenshots']) && is_array($game['screenshots'])) {
             $appendScreenshotPath = static function (string $bucket, string $filename) use (&$screenshotUrls, $assetUrlFormat): void {
-                $leafName = extractAssetLeafFilename($filename);
+                $raw = ltrim(trim($filename), '/');
+                if ($raw === '') {
+                    return;
+                }
+
+                // If source already provides full relative screenshot path, keep it as-is.
+                if (strpos($raw, 'steam/apps/') === 0) {
+                    $screenshotUrls[] = $raw;
+                    return;
+                }
+
+                $leafName = extractAssetLeafFilename($raw);
                 if ($leafName === '') {
                     return;
                 }

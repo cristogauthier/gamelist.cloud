@@ -9,19 +9,15 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// ─── BUILD GENRE LIST from JSON arrays stored in DB ───────────────────────────
-$genreQuery = $conn->query("SELECT genres FROM steamgames WHERE genres IS NOT NULL");
-$allGenres  = [];
-while ($row = $genreQuery->fetch(PDO::FETCH_ASSOC)) {
-    $genres = json_decode($row['genres'], true);
-    if (is_array($genres)) {
-        foreach ($genres as $genre) {
-            $allGenres[] = trim($genre);
-        }
+// ─── FIXED GENRE LIST from shared JSON source ───────────────────────────────
+$allGenres = [];
+$genresJsonPath = __DIR__ . '/genres.json';
+if (is_file($genresJsonPath)) {
+    $decoded = json_decode((string)file_get_contents($genresJsonPath), true);
+    if (is_array($decoded)) {
+        $allGenres = array_values(array_filter($decoded, 'is_string'));
     }
 }
-$allGenres = array_unique($allGenres);
-sort($allGenres);
 
 // ─── BUILD TAG LIST from JSON arrays stored in DB ────────────────────────────
 $tagQuery = $conn->query("SELECT tags FROM steamgames WHERE tags IS NOT NULL");
