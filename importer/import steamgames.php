@@ -122,6 +122,172 @@ function getTopTwoWeightedGenreNames(array $game, array $tagMap): array {
     return array_values(array_unique(array_column($top, 'name')));
 }
 
+function buildAssetPathFromFormat(?string $assetUrlFormat, string $filename): ?string {
+    $filename = trim($filename);
+    if ($filename === '') {
+        return null;
+    }
+
+    $filename = ltrim($filename, '/');
+    if ($assetUrlFormat !== null && $assetUrlFormat !== '') {
+        $path = str_replace(['${filename}', '${FILENAME}'], $filename, $assetUrlFormat);
+        return ltrim($path, '/');
+    }
+
+    return $filename;
+}
+
+function extractAssetFilenameLeaf(string $value): string {
+    $value = trim($value);
+    if ($value === '') {
+        return '';
+    }
+
+    $path = parse_url($value, PHP_URL_PATH);
+    if (!is_string($path) || $path === '') {
+        $path = $value;
+    }
+
+    $path = trim($path, "/\\");
+    if ($path === '') {
+        return '';
+    }
+
+    return basename($path);
+}
+
+function startParallelJsonCounter(string $jsonFilePath): ?array {
+    if (!function_exists('proc_open')) {
+        return null;
+    }
+
+    $tmpDir = sys_get_temp_dir();
+    $token = uniqid('steamgames_counter_', true);
+    $counterScriptPath = $tmpDir . DIRECTORY_SEPARATOR . $token . '.php';
+    $counterOutputPath = $tmpDir . DIRECTORY_SEPARATOR . $token . '.count';
+
+    $counterScript = <<<'PHP'
+<?php
+if ($argc < 4) {
+    exit(1);
+}
+
+require_once $argv[1];
+
+use JsonMachine\Items;
+use JsonMachine\JsonDecoder\ExtJsonDecoder;
+
+$jsonFile = $argv[2];
+$outputFile = $argv[3];
+
+$count = 0;
+foreach (Items::fromFile($jsonFile, ['decoder' => new ExtJsonDecoder(true)]) as $_key => $_value) {
+    $count++;
+}
+
+file_put_contents($outputFile, (string)$count);
+PHP;
+
+    if (file_put_contents($counterScriptPath, $counterScript) === false) {
+        return null;
+    }
+
+    $phpBinary = defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
+    $cmd = escapeshellarg($phpBinary)
+        . ' ' . escapeshellarg($counterScriptPath)
+        . ' ' . escapeshellarg(__DIR__ . '/vendor/autoload.php')
+        . ' ' . escapeshellarg($jsonFilePath)
+        . ' ' . escapeshellarg($counterOutputPath);
+
+    $nullDev = PHP_OS_FAMILY === 'Windows' ? 'NUL' : '/dev/null';
+    $desc = [
+        0 => ['pipe', 'r'],
+        1 => ['file', $nullDev, 'w'],
+        2 => ['file', $nullDev, 'w'],
+    ];
+    $proc = proc_open($cmd, $desc, $pipes, __DIR__);
+    if (!is_resource($proc)) {
+        @unlink($counterScriptPath);
+        return null;
+    }
+
+    if (isset($pipes[0]) && is_resource($pipes[0])) {
+        fclose($pipes[0]);
+    }
+
+    return [
+        'proc' => $proc,
+        'countFile' => $counterOutputPath,
+        'scriptFile' => $counterScriptPath,
+        'total' => null,
+    ];
+}
+
+function refreshParallelJsonCounterTotal(?array &$counter): ?int {
+    if ($counter === null) {
+        return null;
+    }
+
+    if (isset($counter['total']) && is_int($counter['total'])) {
+        return $counter['total'];
+    }
+
+    $countFile = $counter['countFile'] ?? '';
+    if ($countFile !== '' && is_file($countFile)) {
+        $raw = trim((string)@file_get_contents($countFile));
+        if ($raw !== '' && ctype_digit($raw)) {
+            $counter['total'] = (int)$raw;
+            return $counter['total'];
+        }
+    }
+
+    return null;
+}
+
+function stopParallelJsonCounter(?array $counter): void {
+    if ($counter === null) {
+        return;
+    }
+
+    if (isset($counter['proc']) && is_resource($counter['proc'])) {
+        proc_close($counter['proc']);
+    }
+
+    if (!empty($counter['countFile']) && is_file($counter['countFile'])) {
+        @unlink($counter['countFile']);
+    }
+    if (!empty($counter['scriptFile']) && is_file($counter['scriptFile'])) {
+        @unlink($counter['scriptFile']);
+    }
+}
+
+function waitParallelJsonCounter(?array &$counter): void {
+    if ($counter === null) {
+        return;
+    }
+
+    if (isset($counter['proc']) && is_resource($counter['proc'])) {
+        proc_close($counter['proc']);
+        $counter['proc'] = null;
+    }
+}
+
+function formatDurationSeconds(int $seconds): string {
+    if ($seconds < 60) {
+        return $seconds . 's';
+    }
+
+    $minutes = intdiv($seconds, 60);
+    $remSeconds = $seconds % 60;
+    if ($minutes < 60) {
+        return $minutes . 'm ' . $remSeconds . 's';
+    }
+
+    $hours = intdiv($minutes, 60);
+    $remMinutes = $minutes % 60;
+    return $hours . 'h ' . $remMinutes . 'm ' . $remSeconds . 's';
+}
+
 // ─── IMPORT FUNCTION ──────────────────────────────────────────────────────────
 function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap): void {
     if (!file_exists($jsonFilePath)) {
@@ -150,8 +316,40 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
                 screenshots      = VALUES(screenshots)";
 
     $stmt     = $conn->prepare($sql);
+    $processed = 0;
     $inserted = 0;
     $updated  = 0;
+    $startedAt = microtime(true);
+    $reportEvery = 500;
+    $parallelCounter = startParallelJsonCounter($jsonFilePath);
+
+    $printProgress = static function (int $processed, int $inserted, int $updated, float $startedAt, ?int $knownTotal, bool $final = false): void {
+        $elapsed = max(0.001, microtime(true) - $startedAt);
+        $rate = $processed / $elapsed;
+
+        $leftText = 'calculating...';
+        $totalText = '?';
+        $etaText = 'ETA: calculating...';
+        if ($knownTotal !== null) {
+            $left = max(0, $knownTotal - $processed);
+            $leftText = (string)$left;
+            $totalText = (string)$knownTotal;
+            $etaSeconds = (int)ceil($left / max($rate, 0.001));
+            $etaText = 'ETA: ' . formatDurationSeconds($etaSeconds);
+        }
+
+        if ($final) {
+            if ($knownTotal !== null) {
+                echo "\rProcessed: {$processed}/{$knownTotal} | Inserted: {$inserted} | Updated: {$updated} | Left: 0 | ETA: 0s";
+            } else {
+                echo "\rProcessed: {$processed} | Inserted: {$inserted} | Updated: {$updated} | Left: 0";
+            }
+            echo "\n";
+            return;
+        }
+
+        echo "\rProcessed: {$processed}/{$totalText} | Inserted: {$inserted} | Updated: {$updated} | Left: {$leftText} | " . number_format($rate, 1) . " rows/s | {$etaText}";
+    };
 
     foreach ($data as $appId => $game) {
         if (!is_array($game)) {
@@ -202,26 +400,62 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
 
         $description = $game['basic_info']['short_description'] ?? $game['short_description'] ?? $game['full_description'] ?? null;
 
-        // Banner link from appid
-        $banner = "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/{$appId}/header.jpg";
+        $assetUrlFormat = isset($game['assets_without_overrides']['asset_url_format'])
+            ? (string)$game['assets_without_overrides']['asset_url_format']
+            : null;
 
-        // Screenshots: extract filename(s) and map to steamstatic URLs.
+        // Store only relative asset path; webapp prepends CDN domain.
+        $bannerFilename = isset($game['assets_without_overrides']['header'])
+            ? (string)$game['assets_without_overrides']['header']
+            : '';
+        $banner = buildAssetPathFromFormat($assetUrlFormat, $bannerFilename);
+        if ($banner === null) {
+            $banner = "steam/apps/{$appId}/header.jpg";
+        }
+
+        // Screenshots: store relative asset paths built from asset_url_format.
         $screenshotUrls = [];
         $screenshotsData = null;
         if (isset($game['screenshots']) && is_array($game['screenshots'])) {
+            $appendScreenshotPath = static function (string $bucket, string $filename) use (&$screenshotUrls, $assetUrlFormat): void {
+                $leaf = extractAssetFilenameLeaf($filename);
+                if ($leaf === '') {
+                    return;
+                }
+
+                // Always inject a clean leaf filename into screenshots/{bucket}/...
+                // then let asset_url_format add the app path and cache-buster once.
+                $candidate = "screenshots/{$bucket}/{$leaf}";
+
+                $built = buildAssetPathFromFormat($assetUrlFormat, $candidate);
+                if ($built !== null) {
+                    $screenshotUrls[] = $built;
+                }
+            };
+
             // Some payload uses all_ages_screenshots array
             if (isset($game['screenshots']['all_ages_screenshots']) && is_array($game['screenshots']['all_ages_screenshots'])) {
                 foreach ($game['screenshots']['all_ages_screenshots'] as $shot) {
                     if (is_array($shot) && !empty($shot['filename'])) {
-                        $screenshotUrls[] = "https://shared.akamai.steamstatic.com/store_item_assets/{$shot['filename']}";
+                        $appendScreenshotPath('all_ages_screenshots', (string)$shot['filename']);
                     }
                 }
-            } else {
+            }
+
+            if (isset($game['screenshots']['mature_content_screenshots']) && is_array($game['screenshots']['mature_content_screenshots'])) {
+                foreach ($game['screenshots']['mature_content_screenshots'] as $shot) {
+                    if (is_array($shot) && !empty($shot['filename'])) {
+                        $appendScreenshotPath('mature_content_screenshots', (string)$shot['filename']);
+                    }
+                }
+            }
+
+            if (empty($screenshotUrls)) {
                 foreach ($game['screenshots'] as $shot) {
                     if (is_array($shot) && !empty($shot['filename'])) {
-                        $screenshotUrls[] = "https://shared.akamai.steamstatic.com/store_item_assets/{$shot['filename']}";
+                        $appendScreenshotPath('all_ages_screenshots', (string)$shot['filename']);
                     } elseif (is_string($shot) && trim($shot) !== '') {
-                        $screenshotUrls[] = "https://shared.akamai.steamstatic.com/store_item_assets/{$shot}";
+                        $appendScreenshotPath('all_ages_screenshots', $shot);
                     }
                 }
             }
@@ -262,9 +496,24 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
             2       => $updated++,
             default => null
         };
+
+        $processed++;
+        if (($processed % $reportEvery) === 0) {
+            $total = refreshParallelJsonCounterTotal($parallelCounter);
+            $printProgress($processed, $inserted, $updated, $startedAt, $total);
+        }
     }
 
-    echo "Done — $inserted inserted, $updated updated.\n";
+    $total = refreshParallelJsonCounterTotal($parallelCounter);
+    if ($total === null) {
+        waitParallelJsonCounter($parallelCounter);
+        $total = refreshParallelJsonCounterTotal($parallelCounter);
+    }
+
+    $printProgress($processed, $inserted, $updated, $startedAt, $total, true);
+    stopParallelJsonCounter($parallelCounter);
+
+    echo "Done - $inserted inserted, $updated updated.\n";
 }
 
 // ─── RUN ──────────────────────────────────────────────────────────────────────

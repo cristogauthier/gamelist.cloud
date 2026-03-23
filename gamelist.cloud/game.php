@@ -35,6 +35,17 @@ $percentPositive = $game['percent_positive'] !== null ? (int)$game['percent_posi
 $reviewCount     = $game['review_count'] !== null ? (int)$game['review_count'] : null;
 $ratio = $percentPositive !== null ? $percentPositive / 100 : null;  // 0–1 float for starGauge
 
+function mediaFastlyUrl(?string $path): string {
+    $path = is_string($path) ? trim($path) : '';
+    if ($path === '') {
+        return '';
+    }
+    if (preg_match('/^https?:\/\//i', $path)) {
+        return $path;
+    }
+    return 'https://shared.fastly.steamstatic.com/store_item_assets/' . ltrim($path, '/');
+}
+
 function starGauge($ratio, $reviewCount) {
     if ($ratio === null) {
         return '<span class="stars-na">No score</span>';
@@ -65,8 +76,9 @@ function starGauge($ratio, $reviewCount) {
 
     <!-- ── HERO ──────────────────────────────────────────────────────────── -->
     <div class="detail-hero">
-        <img src="<?= htmlspecialchars($game['banner'] ?? '') ?>"
+           <img src="<?= htmlspecialchars(mediaFastlyUrl($game['banner'] ?? '')) ?>"
              alt="<?= htmlspecialchars($game['name']) ?>"
+               onerror="fallbackToAkamai(this)"
              class="detail-banner">
 
         <div class="detail-hero-info">
@@ -133,11 +145,13 @@ function starGauge($ratio, $reviewCount) {
         <h2>Screenshots</h2>
         <div class="screenshots-strip">
             <?php foreach ($screenshots as $i => $shot): ?>
-                <img src="<?= htmlspecialchars($shot) ?>"
+                <?php $shotUrl = mediaFastlyUrl(is_string($shot) ? $shot : ''); ?>
+                <img src="<?= htmlspecialchars($shotUrl) ?>"
                      alt="Screenshot <?= $i + 1 ?>"
                      loading="lazy"
                      class="screenshot-thumb"
-                     data-src="<?= htmlspecialchars($shot) ?>">
+                     onerror="fallbackToAkamai(this)"
+                     data-src="<?= htmlspecialchars($shotUrl) ?>">
             <?php endforeach; ?>
         </div>
     </section>
@@ -155,10 +169,28 @@ function starGauge($ratio, $reviewCount) {
 
 <script>
 (function () {
+    const FASTLY_BASE = 'https://shared.fastly.steamstatic.com/store_item_assets/';
+    const AKAMAI_BASE = 'https://shared.akamai.steamstatic.com/store_item_assets/';
+
+    window.fallbackToAkamai = function (img) {
+        if (!img || !img.src || img.dataset.cdnFallbackDone === '1') {
+            return;
+        }
+        if (img.src.indexOf(FASTLY_BASE) !== 0) {
+            return;
+        }
+        img.dataset.cdnFallbackDone = '1';
+        img.src = AKAMAI_BASE + img.src.substring(FASTLY_BASE.length);
+    };
+
     const thumbs   = Array.from(document.querySelectorAll('.screenshot-thumb'));
     const lightbox = document.getElementById('lightbox');
     const lbImg    = document.getElementById('lightboxImg');
     let current    = 0;
+
+    lbImg.addEventListener('error', function () {
+        window.fallbackToAkamai(lbImg);
+    });
 
     function open(index) {
         current = index;

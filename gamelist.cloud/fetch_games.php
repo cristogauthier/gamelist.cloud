@@ -21,6 +21,9 @@ $perPage   = in_array((int)($_POST['perPage'] ?? 24), [12, 24, 48, 96])
              ? (int)$_POST['perPage'] : 24;
 $offset    = ($page - 1) * $perPage;
 
+$maxReviewCount = (int)$conn->query("SELECT COALESCE(MAX(review_count), 0) FROM steamgames")->fetchColumn();
+$maxReviewCountDivisor = max(1, $maxReviewCount);
+
 // Decode multi-tag arrays — sanitize to plain strings only
 $tagsIncluded = json_decode($_POST['tagsIncluded'] ?? '[]', true);
 $tagsExcluded = json_decode($_POST['tagsExcluded'] ?? '[]', true);
@@ -73,7 +76,7 @@ $where = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
 // ─── SORT ─────────────────────────────────────────────────────────────────────
 // Rank by percent_positive and review_count bias.
 $sortMap = [
-    'weighted' => "percent_positive * (1 + LEAST(review_count, 200) / 200)",
+    'weighted' => "percent_positive * (1 + LEAST(review_count, {$maxReviewCountDivisor}) / {$maxReviewCountDivisor})",
     'score'    => "percent_positive",
     'name'     => "name",
     'date'     => "publication_date",

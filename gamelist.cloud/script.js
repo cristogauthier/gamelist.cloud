@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const FASTLY_BASE = 'https://shared.fastly.steamstatic.com/store_item_assets/';
+    const AKAMAI_BASE = 'https://shared.akamai.steamstatic.com/store_item_assets/';
 
     // ── ELEMENT REFS ─────────────────────────────────────────────────────────
     const searchInput    = document.getElementById('search');
@@ -257,6 +259,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 </span>`;
     }
 
+    function toFastlyMediaUrl(path) {
+        const raw = String(path || '').trim();
+        if (!raw) return '';
+        if (/^https?:\/\//i.test(raw)) return raw;
+        return FASTLY_BASE + raw.replace(/^\/+/, '');
+    }
+
+    window.fallbackToAkamai = function (img) {
+        if (!img || !img.src || img.dataset.cdnFallbackDone === '1') return;
+        if (!img.src.startsWith(FASTLY_BASE)) return;
+        img.dataset.cdnFallbackDone = '1';
+        img.src = AKAMAI_BASE + img.src.slice(FASTLY_BASE.length);
+    };
+
     // ── RENDER CARDS ─────────────────────────────────────────────────────────
     function renderGames(games) {
         if (!games || games.length === 0) {
@@ -265,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         gamesContainer.innerHTML = games.map(game => `
             <div class="game-card" data-id="${game.id}">
-                <img src="${game.banner || ''}" alt="${escHtml(game.name)}" loading="lazy">
+                <img src="${escAttr(toFastlyMediaUrl(game.banner || ''))}" alt="${escHtml(game.name)}" loading="lazy" onerror="window.fallbackToAkamai(this)">
                 <div class="game-info">
                     <h3>${escHtml(game.name)}</h3>
                     <p class="meta">
