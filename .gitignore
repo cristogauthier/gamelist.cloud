@@ -1,5 +1,6 @@
 # ─── Sensitive / environment ──────────────────────────────────────────────────
 gamelist.cloud/config.php
+importer/config.php
 
 # ─── Large data files ─────────────────────────────────────────────────────────
 importer/databases/games.json

@@ -7,7 +7,7 @@ use JsonMachine\Items;
 use JsonMachine\JsonDecoder\ExtJsonDecoder;
 
 // ─── DB CONNECTION (match your index.php credentials) ────────────────────────
-require_once __DIR__ . '/../gamelist.cloud/config.php';
+require_once __DIR__ . '/config.php';
 
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);

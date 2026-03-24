@@ -245,14 +245,37 @@ function starGauge($ratio, $reviewCount)
             }
 
             function navigate(dir) {
-                $genresJsonPath = __DIR__ . '/genres.json';
-                if (!is_file($genresJsonPath)) {
-                    return [];
-                }
+                current = (current + dir + thumbs.length) % thumbs.length;
+                lbImg.src = thumbs[current].dataset.src;
+            }
 
-                $decoded = json_decode((string)file_get_contents($genresJsonPath), true);
-                if (!is_array($decoded)) {
-                    return [];
-                }
+            // Screenshot thumb click listeners
+            thumbs.forEach((thumb, idx) => {
+                thumb.addEventListener('click', function () {
+                    open(idx);
+                });
+            });
 
-                return array_values(array_filter($decoded, 'is_string'));
+            // Lightbox controls
+            document.getElementById('lightboxClose').addEventListener('click', close);
+            document.getElementById('lightboxPrev').addEventListener('click', () => navigate(-1));
+            document.getElementById('lightboxNext').addEventListener('click', () => navigate(1));
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function (e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') close();
+                if (e.key === 'ArrowLeft') navigate(-1);
+                if (e.key === 'ArrowRight') navigate(1);
+            });
+
+            // Click outside to close
+            lightbox.addEventListener('click', function (e) {
+                if (e.target === lightbox) close();
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

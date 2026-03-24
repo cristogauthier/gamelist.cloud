@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const genreSelect    = document.getElementById('genre');
     const minScoreInput  = document.getElementById('minScore');
     const scoreValueSpan = document.getElementById('scoreValue');
+    const minVotesInput  = document.getElementById('minVotes');
+    const votesValueSpan = document.getElementById('votesValue');
     const sortBySelect   = document.getElementById('sortBy');
     const sortDirBtn     = document.getElementById('sortDir');
     const perPageSelect  = document.getElementById('perPage');
@@ -126,6 +128,9 @@ document.addEventListener('DOMContentLoaded', function () {
     minScoreInput.addEventListener('input', () => {
         scoreValueSpan.textContent = minScoreInput.value;
     });
+    minVotesInput.addEventListener('input', () => {
+        votesValueSpan.textContent = minVotesInput.value;
+    });
     applyBtn.addEventListener('click',          () => { currentPage = 1; loadGames(); });
     genreSelect.addEventListener('change',      () => { currentPage = 1; loadGames(); });
     sortBySelect.addEventListener('change',     () => { currentPage = 1; loadGames(); });
@@ -140,6 +145,8 @@ document.addEventListener('DOMContentLoaded', function () {
         genreSelect.value          = '';
         minScoreInput.value        = 0;
         scoreValueSpan.textContent = '0';
+        minVotesInput.value        = 500;
+        votesValueSpan.textContent = '500';
         sortBySelect.value         = 'weighted';
         perPageSelect.value        = '20';
         sortDir                    = 'DESC';
@@ -169,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
             developer: developerInput.value,
             genre:     genreSelect.value,
             minScore:  minScoreInput.value,
+            minVotes:  minVotesInput.value,
             sortBy:    sortBySelect.value,
             sortDir:   sortDir,
             perPage:   perPageSelect.value,
@@ -190,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function () {
         genreSelect.value          = s.genre     || '';
         minScoreInput.value        = s.minScore  ?? 0;
         scoreValueSpan.textContent = s.minScore  ?? 0;
+        minVotesInput.value        = s.minVotes  ?? 500;
+        votesValueSpan.textContent = s.minVotes  ?? 500;
         sortBySelect.value         = s.sortBy    || 'weighted';
         perPageSelect.value        = s.perPage   || '20';
         currentPage                = s.page      || 1;
@@ -214,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fd.append('developer',    developerInput.value.trim());
         fd.append('genre',        genreSelect.value);
         fd.append('minScore',     minScoreInput.value);
+        fd.append('minVotes',     minVotesInput.value);
         fd.append('sortBy',       sortBySelect.value);
         fd.append('sortDir',      sortDir);
         fd.append('page',         currentPage);

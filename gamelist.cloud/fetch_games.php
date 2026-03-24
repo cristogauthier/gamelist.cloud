@@ -62,6 +62,7 @@ try {
 $developer = trim($_POST['developer'] ?? '');
 $genre     = trim($_POST['genre']     ?? '');
 $minScore  = (int)($_POST['minScore'] ?? 0);
+$minVotes  = (int)($_POST['minVotes'] ?? 500);
 $sortBy    = $_POST['sortBy']  ?? 'weighted';
 $sortDir   = strtoupper($_POST['sortDir'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
 $page      = max(1, (int)($_POST['page']    ?? 1));
@@ -108,10 +109,9 @@ if ($minScore > 0) {
     $conditions[] = "percent_positive >= :minScore";
     $params[':minScore'] = $minScore;
 }
-
-// Weighted mode excludes perfect-score items to reduce skew.
-if ($sortBy === 'weighted') {
-    $conditions[] = "percent_positive < 100";
+if ($minVotes > 0) {
+    $conditions[] = "review_count >= :minVotes";
+    $params[':minVotes'] = $minVotes;
 }
 
 // Each included tag must be present (AND)
@@ -134,8 +134,10 @@ $where = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
 // ─── SORT ─────────────────────────────────────────────────────────────────────
 // Rank by percent_positive and review_count bias.
+// Vote bonus: +0.01 weight per 10x multiplier, capped at 2
+// Formula: 0.01 * floor(log10(review_count)), max 2
 $sortMap = [
-    'weighted' => "percent_positive * (1 + LEAST(review_count, {$maxReviewCountDivisor}) / {$maxReviewCountDivisor})",
+    'weighted' => "LEAST(2, percent_positive/100 * (1 + LEAST(review_count, {$maxReviewCountDivisor}) / {$maxReviewCountDivisor}) +  0.01 * FLOOR(LOG10(GREATEST(1, review_count))) )",
     'score'    => "percent_positive",
     'name'     => "name",
     'date'     => "publication_date",

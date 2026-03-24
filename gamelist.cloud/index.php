@@ -71,6 +71,9 @@ sort($allTags);
     <label for="minScore">Min score: <span id="scoreValue">0</span>%</label>
     <input type="range" id="minScore" min="0" max="100" value="0">
 
+    <label for="minVotes">Min votes: <span id="votesValue">500</span></label>
+    <input type="range" id="minVotes" min="0" max="10000" step="100" value="500">
+
     <!-- Sort field -->
     <label for="sortBy">Sort by</label>
     <div class="sort-row">
