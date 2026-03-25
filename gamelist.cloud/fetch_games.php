@@ -1,28 +1,89 @@
 <?php
+session_start(); // NOTE: Must precede any output; required for CSRF token access.
 header('Content-Type: application/json');
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/common.php';
 
-function getGenreWhitelist(): array {
-    $genresJsonPath = __DIR__ . '/genres.json';
-    if (!is_file($genresJsonPath)) {
-        return [];
+// [GUARD] Request validation — runs before DB connection or any expensive work.
+
+/**
+ * Verify the CSRF token from POST matches the session-stored token.
+ *
+ * Terminates with HTTP 403 on mismatch to block cross-site request forgery.
+ */
+function verifyCsrfToken(): void {
+    $submitted = $_POST['csrf_token'] ?? '';
+    $expected  = $_SESSION['csrf_token'] ?? '';
+    if ($expected === '' || !hash_equals($expected, $submitted)) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Invalid or expired request token.']);
+        exit;
     }
-
-    $decoded = json_decode((string)file_get_contents($genresJsonPath), true);
-    if (!is_array($decoded)) {
-        return [];
-    }
-
-    return array_values(array_filter($decoded, 'is_string'));
 }
 
-function lowerSafe(string $value): string {
-    return function_exists('mb_strtolower') ? mb_strtolower($value, 'UTF-8') : strtolower($value);
+/**
+ * Enforce a sliding-window request rate limit per IP address.
+ *
+ * Requires the APCu extension; silently skips enforcement if unavailable.
+ *
+ * @param string $clientIp      Caller IP used as the rate-limit key.
+ * @param int    $maxRequests   Maximum requests allowed per window.
+ * @param int    $windowSeconds Window length in seconds.
+ */
+function checkRateLimit(string $clientIp, int $maxRequests = 30, int $windowSeconds = 60): void {
+    if (!function_exists('apcu_fetch')) {
+        // NOTE: APCu not available; rate limiting is inactive on this server.
+        return;
+    }
+    // NOTE: Hash IP before caching to avoid storing raw user network data.
+    $key     = 'api_rl:' . hash('sha256', $clientIp);
+    $current = apcu_fetch($key);
+    if ($current === false) {
+        apcu_store($key, 1, $windowSeconds);
+        return;
+    }
+    if ((int)$current >= $maxRequests) {
+        http_response_code(429);
+        echo json_encode(['error' => 'Too many requests. Please slow down.']);
+        exit;
+    }
+    apcu_inc($key);
 }
 
+/**
+ * Validate and truncate free-text search inputs to safe lengths.
+ *
+ * Terminates with HTTP 400 when the hard limit is exceeded (likely automated probing).
+ * Silently truncates values within the soft limit to avoid user-visible errors.
+ *
+ * @param string $search    Passed by reference; truncated to soft limit.
+ * @param string $developer Passed by reference; truncated to soft limit.
+ */
+function validateInputLengths(string &$search, string &$developer): void {
+    $softLimit = 100;
+    $hardLimit = 500; // NOTE: Payloads beyond this are unlikely to be legitimate queries.
+    if (strlen($search) > $hardLimit || strlen($developer) > $hardLimit) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Input exceeds maximum allowed length.']);
+        exit;
+    }
+    $search    = mb_substr($search,    0, $softLimit, 'UTF-8');
+    $developer = mb_substr($developer, 0, $softLimit, 'UTF-8');
+}
+
+$clientIp = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+checkRateLimit($clientIp);
+verifyCsrfToken();
+
+/**
+ * Build a case-insensitive lookup map of allowed genres.
+ *
+ * @param array<int, string> $genres
+ * @return array<string, string>
+ */
 function buildGenreLookupMap(array $genres): array {
     $lookup = [];
     foreach ($genres as $genre) {
@@ -31,44 +92,23 @@ function buildGenreLookupMap(array $genres): array {
     return $lookup;
 }
 
-function deriveGenresFromTags(array $tags, array $genreWhitelist): array {
-    $tagLookup = [];
-    foreach ($tags as $tag) {
-        if (!is_string($tag)) {
-            continue;
-        }
-        $key = lowerSafe(trim($tag));
-        if ($key !== '') {
-            $tagLookup[$key] = true;
-        }
-    }
-
-    $derived = [];
-    foreach ($genreWhitelist as $genre) {
-        if (isset($tagLookup[lowerSafe($genre)])) {
-            $derived[] = $genre;
-        }
-    }
-
-    return $derived;
-}
-
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // ─── INPUTS ───────────────────────────────────────────────────────────────────
+    // [INPUTS] Read and normalize request filters.
     $search    = trim($_POST['search']    ?? '');
-$developer = trim($_POST['developer'] ?? '');
-$genre     = trim($_POST['genre']     ?? '');
-$minScore  = (int)($_POST['minScore'] ?? 0);
-$minVotes  = (int)($_POST['minVotes'] ?? 500);
-$sortBy    = $_POST['sortBy']  ?? 'weighted';
-$sortDir   = strtoupper($_POST['sortDir'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
-$page      = max(1, (int)($_POST['page']    ?? 1));
-$perPage   = in_array((int)($_POST['perPage'] ?? 20), [10, 20, 50, 100])
-             ? (int)$_POST['perPage'] : 20;
-$offset    = ($page - 1) * $perPage;
+    $developer = trim($_POST['developer'] ?? '');
+    $genre     = trim($_POST['genre']     ?? '');
+    $minScore  = (int)($_POST['minScore'] ?? 0);
+    $minVotes  = (int)($_POST['minVotes'] ?? 500);
+    $sortBy    = $_POST['sortBy']  ?? 'weighted';
+    $sortDir   = strtoupper($_POST['sortDir'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
+    $page      = max(1, (int)($_POST['page']    ?? 1));
+    $perPage   = in_array((int)($_POST['perPage'] ?? 20), [10, 20, 50, 100])
+                 ? (int)$_POST['perPage'] : 20;
+    $offset    = ($page - 1) * $perPage;
+    validateInputLengths($search, $developer); // NOTE: Reject or truncate oversized inputs before query construction.
 
 $genreWhitelist = getGenreWhitelist();
 $genreLookup = buildGenreLookupMap($genreWhitelist);
@@ -76,7 +116,7 @@ $genreLookup = buildGenreLookupMap($genreWhitelist);
 $maxReviewCount = (int)$conn->query("SELECT COALESCE(MAX(review_count), 0) FROM steamgames")->fetchColumn();
 $maxReviewCountDivisor = max(1, $maxReviewCount);
 
-// Decode multi-tag arrays — sanitize to plain strings only
+// NOTE: Keep only plain string tags from JSON arrays.
 $tagsIncluded = json_decode($_POST['tagsIncluded'] ?? '[]', true);
 $tagsExcluded = json_decode($_POST['tagsExcluded'] ?? '[]', true);
 $tagsIncluded = is_array($tagsIncluded)
@@ -86,7 +126,7 @@ $tagsExcluded = is_array($tagsExcluded)
     ? array_values(array_filter($tagsExcluded, 'is_string'))
     : [];
 
-// ─── WHERE ────────────────────────────────────────────────────────────────────
+// [WHERE] Build SQL predicates from active filters.
 $conditions = [];
 $params     = [];
 
@@ -114,15 +154,15 @@ if ($minVotes > 0) {
     $params[':minVotes'] = $minVotes;
 }
 
-// Each included tag must be present (AND)
+// NOTE: Included tags use AND logic (all must match).
 foreach ($tagsIncluded as $i => $tag) {
     $key = ":tagInc{$i}";
     $conditions[] = "tags LIKE $key";
-    // Match JSON key format: "TagName": — strips any quotes from user input first
+    // NOTE: Strip quotes to keep the LIKE pattern stable.
     $params[$key] = '%"' . str_replace('"', '', $tag) . '"%';
 }
 
-// Each excluded tag must be absent (AND NOT)
+// NOTE: Excluded tags must all be absent.
 foreach ($tagsExcluded as $i => $tag) {
     $key = ":tagExc{$i}";
     $conditions[] = "tags NOT LIKE $key";
@@ -132,10 +172,9 @@ foreach ($tagsExcluded as $i => $tag) {
 $where = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
 
-// ─── SORT ─────────────────────────────────────────────────────────────────────
-// Rank by percent_positive and review_count bias.
-// Vote bonus: +0.01 weight per 10x multiplier, capped at 2
-// Formula: 0.01 * floor(log10(review_count)), max 2
+// [SORT] Use weighted ranking by default.
+// NOTE: Weighted score biases toward strong rating plus review volume.
+// NOTE: Vote bonus is 0.01 * floor(log10(review_count)), capped in expression.
 $sortMap = [
     'weighted' => "LEAST(2, percent_positive/100 * (1 + LEAST(review_count, {$maxReviewCountDivisor}) / {$maxReviewCountDivisor}) +  0.01 * FLOOR(LOG10(GREATEST(1, review_count))) )",
     'score'    => "percent_positive",
@@ -145,12 +184,12 @@ $sortMap = [
 $sortExpr = $sortMap[$sortBy] ?? $sortMap['weighted'];
 $order    = "$sortExpr $sortDir";
 
-// ─── TOTAL COUNT ──────────────────────────────────────────────────────────────
+// [COUNT] Read total rows for pagination.
 $countStmt = $conn->prepare("SELECT COUNT(*) FROM steamgames $where");
 $countStmt->execute($params);
 $total = (int)$countStmt->fetchColumn();
 
-// ─── FETCH PAGE ───────────────────────────────────────────────────────────────
+// [PAGE] Fetch a single page of games.
 $sql = "SELECT id, name, publication_date, developer, tags,
                description, percent_positive, review_count, banner, screenshots
         FROM steamgames
@@ -167,7 +206,7 @@ $stmt->bindValue(':offset', $offset,  PDO::PARAM_INT);
 $stmt->execute();
 $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// ─── DECODE ───────────────────────────────────────────────────────────────────
+// [DECODE] Normalize JSON columns to typed response fields.
 foreach ($games as &$game) {
     $game['developer']   = is_string($game['developer']) ? (json_decode($game['developer'], true) ?? []) : [];
     $tagsArr             = is_string($game['tags']) ? json_decode($game['tags'], true) : [];

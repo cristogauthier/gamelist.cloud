@@ -1,5 +1,15 @@
 <?php
-// ─── DB CONNECTION ────────────────────────────────────────────────────────────
+// [GUARD] Start session and generate a CSRF token for this page load.
+session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// [SECURITY] Restrict content sources to avoid XSS via injected scripts or framing.
+// NOTE: unsafe-inline required for the inline ALL_TAGS script block below.
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; img-src 'self' https://shared.fastly.steamstatic.com https://shared.akamai.steamstatic.com; connect-src 'self'");
+
+// [DB] Open database connection.
 require_once __DIR__ . '/config.php';
 
 try {
@@ -9,7 +19,7 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// ─── FIXED GENRE LIST from shared JSON source ───────────────────────────────
+// [DATA] Load canonical genres from shared JSON source.
 $allGenres = [];
 $genresJsonPath = __DIR__ . '/genres.json';
 if (is_file($genresJsonPath)) {
@@ -19,7 +29,7 @@ if (is_file($genresJsonPath)) {
     }
 }
 
-// ─── BUILD TAG LIST from JSON arrays stored in DB ────────────────────────────
+// [DATA] Build tag list from JSON arrays stored in database.
 $tagQuery = $conn->query("SELECT tags FROM steamgames WHERE tags IS NOT NULL");
 $allTags  = [];
 while ($row = $tagQuery->fetch(PDO::FETCH_ASSOC)) {
@@ -40,6 +50,7 @@ sort($allTags);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <title>Steam Games Database</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -54,7 +65,7 @@ sort($allTags);
     <label for="developer">Developer</label>
     <input type="text" id="developer" placeholder="e.g. Valve...">
 
-    <!-- ── TAG FILTER COMPONENT ──────────────────────────────────── -->
+    <!-- Tag filter component -->
     <label>Tags</label>
     <div class="tag-filter">
         <input type="text" id="tagSearch" placeholder="Search tags…" autocomplete="off">

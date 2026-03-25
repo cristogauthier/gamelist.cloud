@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const FASTLY_BASE = 'https://shared.fastly.steamstatic.com/store_item_assets/';
     const AKAMAI_BASE = 'https://shared.akamai.steamstatic.com/store_item_assets/';
 
-    // ── ELEMENT REFS ─────────────────────────────────────────────────────────
+    // [DOM] Cache frequently used elements.
+    const csrfToken      = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
     const searchInput    = document.getElementById('search');
     const developerInput = document.getElementById('developer');
     const genreSelect    = document.getElementById('genre');
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const resultCount    = document.getElementById('resultCount');
     const pagination     = document.getElementById('pagination');
 
-    // Tag component
+    // [STATE] Tag filter state.
     const tagSearchInput      = document.getElementById('tagSearch');
     const tagListEl           = document.getElementById('tagList');
     const includedTagsEl      = document.getElementById('includedTagsContainer');
@@ -31,7 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentPage = 1;
     let sortDir     = 'DESC';
 
-    // ── TAG COMPONENT ────────────────────────────────────────────────────────
+    /**
+     * Render searchable tag options with include/exclude controls.
+     */
     function renderTagList() {
         const q        = tagSearchInput.value.trim().toLowerCase();
         const filtered = q
@@ -62,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /**
+     * Render selected include/exclude tag pills.
+     */
     function renderTagPills() {
         includedTagsEl.innerHTML = [...includedTags].map(tag =>
             `<span class="tag-pill tpinc">${escHtml(tag)}
@@ -105,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // ── URL PARAM PRE-FILL ───────────────────────────────────────────────────
+    // [URL] Pre-fill filters from deep-link query parameters.
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('genre'))     genreSelect.value     = urlParams.get('genre');
     if (urlParams.get('developer')) developerInput.value  = urlParams.get('developer');
@@ -117,14 +123,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if ([...urlParams].length > 0) window.history.replaceState({}, '', 'index.php');
 
-    // ── SORT DIRECTION ───────────────────────────────────────────────────────
+    // [SORT] Toggle sort direction button state.
     sortDirBtn.addEventListener('click', function () {
         sortDir = sortDir === 'DESC' ? 'ASC' : 'DESC';
         this.textContent = sortDir === 'DESC' ? '↓' : '↑';
         currentPage = 1; loadGames();
     });
 
-    // ── EVENT TRIGGERS ───────────────────────────────────────────────────────
+    // [EVENTS] Wire filters to data reload.
     minScoreInput.addEventListener('input', () => {
         scoreValueSpan.textContent = minScoreInput.value;
     });
@@ -159,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
         loadGames();
     });
 
-    // Card click → detail page (ignore inner link clicks)
+    // NOTE: Card click opens detail page, but keep anchor clicks intact.
     gamesContainer.addEventListener('click', function (e) {
         if (e.target.closest('a')) return;
         const card = e.target.closest('.game-card');
@@ -169,7 +175,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // ── SAVE / RESTORE FILTER STATE ───────────────────────────────────────────
+    /**
+     * Save active filters before opening the detail page.
+     */
     function saveFilterState() {
         const state = {
             search:    searchInput.value,
@@ -187,10 +195,15 @@ document.addEventListener('DOMContentLoaded', function () {
         sessionStorage.setItem('gameListState', JSON.stringify(state));
     }
 
+    /**
+     * Restore filters from session storage after returning to the list page.
+     *
+     * @returns {boolean}
+     */
     function restoreFilterState() {
         const raw = sessionStorage.getItem('gameListState');
         if (!raw) return false;
-        sessionStorage.removeItem('gameListState'); // consume once
+        sessionStorage.removeItem('gameListState'); // NOTE: Consume saved state once.
         const s = JSON.parse(raw);
 
         searchInput.value          = s.search    || '';
@@ -214,7 +227,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    // ── AJAX ─────────────────────────────────────────────────────────────────
+    /**
+     * Fetch and render one page of games with current filters.
+     */
     function loadGames() {
         gamesContainer.innerHTML = '<p>Loading…</p>';
         pagination.innerHTML     = '';
@@ -231,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fd.append('perPage',      perPageSelect.value);
         fd.append('tagsIncluded', JSON.stringify([...includedTags]));
         fd.append('tagsExcluded', JSON.stringify([...excludedTags]));
+        fd.append('csrf_token',   csrfToken); // NOTE: Token validated server-side; request rejected with HTTP 403 on mismatch.
 
         fetch('fetch_games.php', { method: 'POST', body: fd })
             .then(async res => {
@@ -258,18 +274,30 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // ── STAR GAUGE ────────────────────────────────────────────────────────────
+    /**
+     * Build the rating gauge markup for a game card.
+     *
+     * @param {number|null|undefined} ratio
+     * @param {number|null|undefined} reviewCount
+     * @returns {string}
+     */
     function starGauge(ratio, reviewCount) {
         if (ratio === null || ratio === undefined) return '<span class="stars-na">No score</span>';
         const pct   = Math.round(ratio * 100);
         const width = (ratio * 100).toFixed(2);
         const title = reviewCount ? `${pct}% (${reviewCount} votes)` : `${pct}%`;
         return `<span class="stars-gauge" title="${title}">
-                    <span class="stars-empty">★★★★★</span>
+                    <span class="stars-empty">☆☆☆☆☆</span>
                     <span class="stars-filled" style="width:${width}%">★★★★★</span>
                 </span>`;
     }
 
+    /**
+     * Convert stored media path to a Fastly URL.
+     *
+     * @param {string} path
+     * @returns {string}
+     */
     function toFastlyMediaUrl(path) {
         const raw = String(path || '').trim();
         if (!raw) return '';
@@ -277,6 +305,11 @@ document.addEventListener('DOMContentLoaded', function () {
         return FASTLY_BASE + raw.replace(/^\/+/, '');
     }
 
+    /**
+     * Swap image source from Fastly to Akamai after image load failure.
+     *
+     * @param {HTMLImageElement} img
+     */
     window.fallbackToAkamai = function (img) {
         if (!img || !img.src || img.dataset.cdnFallbackDone === '1') return;
         if (!img.src.startsWith(FASTLY_BASE)) return;
@@ -284,7 +317,11 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = AKAMAI_BASE + img.src.slice(FASTLY_BASE.length);
     };
 
-    // ── RENDER CARDS ─────────────────────────────────────────────────────────
+    /**
+     * Render game cards in the grid.
+     *
+     * @param {Array<Object>} games
+     */
     function renderGames(games) {
         if (!games || games.length === 0) {
             gamesContainer.innerHTML = '<p>No games found.</p>';
@@ -319,7 +356,12 @@ document.addEventListener('DOMContentLoaded', function () {
         `).join('');
     }
 
-    // ── PAGINATION ────────────────────────────────────────────────────────────
+    /**
+     * Render pagination controls for the current result set.
+     *
+     * @param {number} total
+     * @param {number} perPage
+     */
     function renderPagination(total, perPage) {
         const totalPages = Math.ceil(total / perPage);
         if (totalPages <= 1) { pagination.innerHTML = ''; return; }
@@ -347,17 +389,29 @@ document.addEventListener('DOMContentLoaded', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    /**
+     * Escape plain text for safe HTML insertion.
+     *
+     * @param {string} str
+     * @returns {string}
+     */
     function escHtml(str) {
         const d = document.createElement('div');
         d.textContent = String(str);
         return d.innerHTML;
     }
 
+    /**
+     * Escape attribute text for safe HTML attribute insertion.
+     *
+     * @param {string} str
+     * @returns {string}
+     */
     function escAttr(str) {
         return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // Initial render + load
+    // [BOOT] Initial render and first fetch.
     renderTagList();
     renderTagPills();
     restoreFilterState();

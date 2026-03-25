@@ -1,12 +1,12 @@
 <?php
-// run it once manually each time you update the JSON file from the scraper 
+// NOTE: Run this script manually after refreshing the scraper JSON export.
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 use JsonMachine\Items;
 use JsonMachine\JsonDecoder\ExtJsonDecoder;
 
-// ─── DB CONNECTION (match your index.php credentials) ────────────────────────
+// [SECTION] DB CONNECTION
 require_once __DIR__ . '/config.php';
 
 try {
@@ -16,7 +16,10 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// ─── CREATE TABLE ─────────────────────────────────────────────────────────────
+// [SECTION] CREATE TABLE
+/**
+ * Ensure the steamgames table exists with expected schema.
+ */
 function createSteamGamesTable(PDO $conn): void {
     $sql = "CREATE TABLE IF NOT EXISTS steamgames (
         id               INT UNSIGNED  PRIMARY KEY,  -- Steam AppID (JSON key)
@@ -38,6 +41,11 @@ function createSteamGamesTable(PDO $conn): void {
     echo "Table 'steamgames' ready.\n";
 }
 
+/**
+ * Load mapping of Steam tag IDs to readable tag names.
+ *
+ * @return array<int, string>
+ */
 function loadTagIdToNameMap(string $taglistPath): array {
     if (!file_exists($taglistPath)) {
         return [];
@@ -65,6 +73,13 @@ function loadTagIdToNameMap(string $taglistPath): array {
     return $map;
 }
 
+/**
+ * Resolve game tags to normalized tag names.
+ *
+ * @param array<string, mixed> $game
+ * @param array<int, string> $tagMap
+ * @return array<int, string>
+ */
 function mapGameTagsToNames(array $game, array $tagMap): array {
     $tagNames = [];
 
@@ -96,6 +111,13 @@ function mapGameTagsToNames(array $game, array $tagMap): array {
     return array_values(array_unique($tagNames));
 }
 
+/**
+ * Derive top weighted genre names from tag weights.
+ *
+ * @param array<string, mixed> $game
+ * @param array<int, string> $tagMap
+ * @return array<int, string>
+ */
 function getTopTwoWeightedGenreNames(array $game, array $tagMap): array {
     $weightedTags = [];
     if (isset($game['tags']) && is_array($game['tags'])) {
@@ -122,6 +144,9 @@ function getTopTwoWeightedGenreNames(array $game, array $tagMap): array {
     return array_values(array_unique(array_column($top, 'name')));
 }
 
+/**
+ * Build a normalized relative asset path from format placeholders.
+ */
 function buildAssetPathFromFormat(?string $assetUrlFormat, string $filename): ?string {
     $filename = trim($filename);
     if ($filename === '') {
@@ -133,8 +158,7 @@ function buildAssetPathFromFormat(?string $assetUrlFormat, string $filename): ?s
         $path = str_replace(['${filename}', '${FILENAME}'], $filename, $assetUrlFormat);
         $path = ltrim($path, '/');
 
-        // Safety normalization: if a full steam/apps/... filename slips into the template,
-        // collapse duplicate app path segments and duplicated ?t query parameters.
+        // WARN: Normalize duplicated app path/query fragments from malformed templates.
         $path = preg_replace('#(steam/apps/\d+/)(?:steam/apps/\d+/)+#', '$1', $path) ?? $path;
         if (preg_match('/\?t=\d+\?t=\d+$/', $path)) {
             $path = preg_replace('/\?t=(\d+)\?t=\d+$/', '?t=$1', $path) ?? $path;
@@ -146,6 +170,9 @@ function buildAssetPathFromFormat(?string $assetUrlFormat, string $filename): ?s
     return $filename;
 }
 
+/**
+ * Extract only the file name component from an asset URL or path.
+ */
 function extractAssetLeafFilename(string $value): string {
     $value = trim($value);
     if ($value === '') {
@@ -160,6 +187,11 @@ function extractAssetLeafFilename(string $value): string {
     return basename($value);
 }
 
+/**
+ * Start a helper process that counts JSON items for progress estimation.
+ *
+ * @return array<string, mixed>|null
+ */
 function startParallelJsonCounter(string $jsonFilePath): ?array {
     if (!function_exists('proc_open')) {
         return null;
@@ -227,6 +259,9 @@ PHP;
     ];
 }
 
+/**
+ * Read latest total count produced by the helper counter.
+ */
 function refreshParallelJsonCounterTotal(?array &$counter): ?int {
     if ($counter === null) {
         return null;
@@ -248,6 +283,9 @@ function refreshParallelJsonCounterTotal(?array &$counter): ?int {
     return null;
 }
 
+/**
+ * Stop counter process and remove temporary files.
+ */
 function stopParallelJsonCounter(?array $counter): void {
     if ($counter === null) {
         return;
@@ -265,6 +303,9 @@ function stopParallelJsonCounter(?array $counter): void {
     }
 }
 
+/**
+ * Block until counter process exits.
+ */
 function waitParallelJsonCounter(?array &$counter): void {
     if ($counter === null) {
         return;
@@ -276,6 +317,9 @@ function waitParallelJsonCounter(?array &$counter): void {
     }
 }
 
+/**
+ * Format duration in seconds for progress output.
+ */
 function formatDurationSeconds(int $seconds): string {
     if ($seconds < 60) {
         return $seconds . 's';
@@ -292,7 +336,12 @@ function formatDurationSeconds(int $seconds): string {
     return $hours . 'h ' . $remMinutes . 'm ' . $remSeconds . 's';
 }
 
-// ─── IMPORT FUNCTION ──────────────────────────────────────────────────────────
+// [SECTION] IMPORT FUNCTION
+/**
+ * Stream games JSON and upsert records into the steamgames table.
+ *
+ * @param array<int, string> $tagMap
+ */
 function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap): void {
     if (!file_exists($jsonFilePath)) {
         die("File not found: $jsonFilePath\n");
@@ -300,7 +349,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
 
     $data = Items::fromFile($jsonFilePath, ['decoder' => new ExtJsonDecoder(true)]);
 
-    // ON DUPLICATE KEY UPDATE = safe to re-run after each scraper update
+    // NOTE: Upsert query keeps imports rerunnable after each scraper refresh.
     $sql = "INSERT INTO steamgames
                 (id, name, publication_date, developer, store,
                  genres, tags, description, percent_positive, review_count, banner, screenshots)
@@ -374,7 +423,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
             $publishedAt = date('Y-m-d', $releaseDate);
         }
 
-        // Developer from basic_info.developers if available.
+        // NOTE: Prefer developer names from basic_info when present.
         $developerNames = [];
         if (isset($game['basic_info']['developers']) && is_array($game['basic_info']['developers'])) {
             foreach ($game['basic_info']['developers'] as $dev) {
@@ -395,7 +444,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
         }
         $developer = !empty($developerNames) ? json_encode(array_values(array_unique($developerNames)), JSON_UNESCAPED_UNICODE) : null;
 
-        // Genres as top 2 weighted tag names.
+        // NOTE: Persist up to two top weighted genre names.
         $genreNames = getTopTwoWeightedGenreNames($game, $tagMap);
         $genres = !empty($genreNames) ? json_encode($genreNames, JSON_UNESCAPED_UNICODE) : null;
 
@@ -408,7 +457,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
             ? (string)$game['assets_without_overrides']['asset_url_format']
             : null;
 
-        // Store only relative asset path; webapp prepends CDN domain.
+        // NOTE: Store relative asset path; web app prepends CDN domain.
         $bannerFilename = isset($game['assets_without_overrides']['header'])
             ? (string)$game['assets_without_overrides']['header']
             : '';
@@ -417,7 +466,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
             $banner = "steam/apps/{$appId}/header.jpg";
         }
 
-        // Screenshots: store relative asset paths built from asset_url_format.
+        // NOTE: Store screenshot paths as relative assets built from asset_url_format.
         $screenshotUrls = [];
         $screenshotsData = null;
         if (isset($game['screenshots']) && is_array($game['screenshots'])) {
@@ -427,7 +476,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
                     return;
                 }
 
-                // If source already provides full relative screenshot path, keep it as-is.
+                // NOTE: Keep already-normalized relative screenshot paths as-is.
                 if (strpos($raw, 'steam/apps/') === 0) {
                     $screenshotUrls[] = $raw;
                     return;
@@ -438,7 +487,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
                     return;
                 }
 
-                // Build from normalized leaf filename only; asset_url_format provides the surrounding path.
+                // NOTE: Build from leaf filename and let the format provide parent path.
                 $candidate = $leafName;
 
                 $built = buildAssetPathFromFormat($assetUrlFormat, $candidate);
@@ -447,7 +496,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
                 }
             };
 
-            // Some payload uses all_ages_screenshots array
+            // NOTE: Some payloads use all_ages_screenshots bucket.
             if (isset($game['screenshots']['all_ages_screenshots']) && is_array($game['screenshots']['all_ages_screenshots'])) {
                 foreach ($game['screenshots']['all_ages_screenshots'] as $shot) {
                     if (is_array($shot) && !empty($shot['filename'])) {
@@ -504,7 +553,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
             ':screenshots'      => $screenshotsData,
         ]);
 
-        // MySQL rowCount: 1 = INSERT, 2 = UPDATE, 0 = no change
+        // NOTE: MySQL rowCount is 1 for insert, 2 for update, 0 for unchanged row.
         match ($stmt->rowCount()) {
             1       => $inserted++,
             2       => $updated++,
@@ -530,7 +579,7 @@ function importSteamGamesFromJson(PDO $conn, string $jsonFilePath, array $tagMap
     echo "Done - $inserted inserted, $updated updated.\n";
 }
 
-// ─── RUN ──────────────────────────────────────────────────────────────────────
+// [SECTION] RUN
 createSteamGamesTable($conn);
 $gamesFile = __DIR__ . '/databases/games.json';
 #importSteamGamesFromJson($conn, dirname(__DIR__) . '\importer\databases\games.json');

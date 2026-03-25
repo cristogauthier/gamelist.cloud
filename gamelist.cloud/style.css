@@ -1,4 +1,4 @@
-/* ─── RESET & VARIABLES ───────────────────────────────────────────────────── */
+/* [SECTION] RESET & VARIABLES */
 * {
     margin: 0;
     padding: 0;
@@ -14,9 +14,17 @@
     --text-muted:      #94a3b8;
     --border-color:    #334155;
     --hover-color:     #7c3aed;
+    --link-color:      #8b9fc2;
+    --link-hover:      #a5b8e0;
+    --steam-light:     #c6d4df;
+    --gold:            #f59e0b;
+    --green-light:     #4ade80;
+    --green-dark:      #22c55e;
+    --red-light:       #f87171;
+    --red-dark:        #ef4444;
 }
 
-/* ─── BASE ────────────────────────────────────────────────────────────────── */
+/* [SECTION] BASE */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-color);
@@ -25,7 +33,7 @@ body {
     min-height: 100vh;
 }
 
-/* ─── PAGE LAYOUT ─────────────────────────────────────────────────────────── */
+/* [SECTION] PAGE LAYOUT */
 body {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -50,7 +58,7 @@ body {
     min-height: 100vh;
 }
 
-/* ─── SIDEBAR ─────────────────────────────────────────────────────────────── */
+/* [SECTION] SIDEBAR */
 #sidebar h2 {
     font-size: 1.4rem;
     color: var(--primary-color);
@@ -90,7 +98,7 @@ body {
     border-color: var(--primary-color);
 }
 
-/* ─── RANGE SLIDER ────────────────────────────────────────────────────────── */
+/* [SECTION] RANGE SLIDER */
 input[type="range"] {
     width: 100%;
     height: 6px;
@@ -120,7 +128,7 @@ input[type="range"]::-moz-range-thumb {
     border: none;
 }
 
-/* ─── SIDEBAR BUTTONS ─────────────────────────────────────────────────────── */
+/* [SECTION] SIDEBAR BUTTONS */
 #applyFilters,
 #resetFilters {
     width: 100%;
@@ -155,7 +163,7 @@ input[type="range"]::-moz-range-thumb {
     color: var(--text-color);
 }
 
-/* ─── MAIN HEADER ─────────────────────────────────────────────────────────── */
+/* [SECTION] MAIN HEADER */
 #main h1 {
     font-size: 2rem;
     color: var(--primary-color);
@@ -171,14 +179,14 @@ input[type="range"]::-moz-range-thumb {
     margin-left: 8px;
 }
 
-/* ─── GAMES GRID ──────────────────────────────────────────────────────────── */
+/* [SECTION] GAMES GRID */
 #gamesContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
 }
 
-/* ─── GAME CARD ───────────────────────────────────────────────────────────── */
+/* [SECTION] GAME CARD */
 .game-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -196,16 +204,16 @@ input[type="range"]::-moz-range-thumb {
     border-color: var(--primary-color);
 }
 
-/* Banner image */
+/* NOTE: Banner image container with Steam's standard aspect ratio */
 .game-card img {
     width: 100%;
-    aspect-ratio: 460 / 215; /* Steam banner ratio */
+    aspect-ratio: 460 / 215; /* NOTE: Steam store standardized banner dimensions */
     object-fit: cover;
     display: block;
     background-color: var(--bg-color);
 }
 
-/* Text content below banner */
+/* NOTE: Container for game metadata and description below banner */
 .game-info {
     padding: 14px;
     display: flex;
@@ -220,13 +228,13 @@ input[type="range"]::-moz-range-thumb {
     line-height: 1.3;
 }
 
-/* Date · Developer line */
+/* NOTE: Metadata line showing publication date and developer */
 .game-card .meta {
     font-size: 0.82rem;
     color: var(--text-muted);
 }
 
-/* Genre pills */
+/* NOTE: Genre tags rendered as pill-shaped badges */
 .game-card .genres {
     display: flex;
     flex-wrap: wrap;
@@ -243,7 +251,7 @@ input[type="range"]::-moz-range-thumb {
     font-weight: 600;
 }
 
-/* Tag pills */
+/* NOTE: Searchable tag pills styled with border background */
 .game-card .tags {
     display: flex;
     flex-wrap: wrap;
@@ -258,7 +266,7 @@ input[type="range"]::-moz-range-thumb {
     font-size: 0.72rem;
 }
 
-/* Description */
+/* NOTE: Truncated description with webkit line-clamp for consistent height */
 .game-card .description {
     font-size: 0.83rem;
     color: var(--text-muted);
@@ -269,7 +277,7 @@ input[type="range"]::-moz-range-thumb {
     margin-top: 2px;
 }
 
-/* Score */
+/* NOTE: Positive review percentage and review count display */
 .game-card .score {
     font-size: 0.88rem;
     color: var(--text-muted);
@@ -278,7 +286,7 @@ input[type="range"]::-moz-range-thumb {
     border-top: 1px solid var(--border-color);
 }
 
-/* ─── LOADING / EMPTY STATES ──────────────────────────────────────────────── */
+/* [SECTION] LOADING / EMPTY STATES */
 #gamesContainer > p {
     grid-column: 1 / -1;
     text-align: center;
@@ -287,7 +295,7 @@ input[type="range"]::-moz-range-thumb {
     font-size: 1.1rem;
 }
 
-/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+/* [SECTION] RESPONSIVE */
 @media (max-width: 900px) {
     body {
         grid-template-columns: 1fr;
@@ -316,9 +324,9 @@ input[type="range"]::-moz-range-thumb {
     }
 }
 
-/* ─── DETAIL PAGE BODY OVERRIDE ──────────────────────────────────────────── */
+/* [SECTION] DETAIL PAGE BODY OVERRIDE */
 body.detail-page {
-    display: block; /* removes the sidebar grid */
+    display: block; /* NOTE: Detail page uses single-column layout without sidebar */
     background-color: var(--bg-color);
 }
 
@@ -328,7 +336,7 @@ body.detail-page {
     padding: 30px 24px 60px;
 }
 
-/* ─── BACK BUTTON ─────────────────────────────────────────────────────────── */
+/* [SECTION] BACK BUTTON */
 .back-btn {
     display: inline-block;
     margin-bottom: 24px;
@@ -343,7 +351,7 @@ body.detail-page {
     color: var(--secondary-color);
 }
 
-/* ─── HERO SECTION ────────────────────────────────────────────────────────── */
+/* [SECTION] HERO SECTION */
 .detail-hero {
     display: flex;
     gap: 28px;
@@ -384,7 +392,7 @@ body.detail-page {
     color: var(--text-muted);
 }
 
-/* ─── PILLS ───────────────────────────────────────────────────────────────── */
+/* [SECTION] PILLS */
 .detail-pills {
     display: flex;
     flex-wrap: wrap;
@@ -408,7 +416,7 @@ body.detail-page {
     color: var(--text-color);
 }
 
-/* ─── DETAIL SECTIONS ─────────────────────────────────────────────────────── */
+/* [SECTION] DETAIL SECTIONS */
 .detail-section {
     margin-bottom: 36px;
 }
@@ -427,7 +435,7 @@ body.detail-page {
     line-height: 1.7;
 }
 
-/* ─── SCREENSHOTS STRIP ───────────────────────────────────────────────────── */
+/* [SECTION] SCREENSHOTS STRIP */
 .screenshots-strip {
     display: flex;
     gap: 10px;
@@ -470,13 +478,13 @@ body.detail-page {
     opacity: 0.9;
 }
 
-/* ─── LIGHTBOX ────────────────────────────────────────────────────────────── */
+/* [SECTION] LIGHTBOX */
 .lightbox {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.9);
     z-index: 9999;
-    /* Use visibility + opacity instead of display toggle — safer with CSS grid body */
+    /* NOTE: Visibility and opacity avoid layout side effects from display toggling. */
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
@@ -505,7 +513,7 @@ body.detail-page {
 .lightbox-close,
 .lightbox-prev,
 .lightbox-next {
-    position: fixed; /* fixed, not absolute — avoids being clipped by any parent */
+    position: fixed; /* NOTE: Fixed positioning avoids clipping by parent containers. */
     background: rgba(255, 255, 255, 0.15);
     border: none;
     color: white;
@@ -533,7 +541,7 @@ body.detail-page {
 .lightbox-next  { right: 18px; top: 50%; transform: translateY(-50%); }
 
 
-/* ─── RESPONSIVE DETAIL ───────────────────────────────────────────────────── */
+/* [SECTION] RESPONSIVE DETAIL */
 @media (max-width: 700px) {
     .detail-hero {
         flex-direction: column;
@@ -545,12 +553,12 @@ body.detail-page {
     }
 }
 
-/* ─── STEAM LINK ──────────────────────────────────────────────────────────── */
+/* [SECTION] STEAM LINK */
 .steam-link {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    color: #c6d4df;
+    color: var(--steam-light);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
@@ -564,24 +572,12 @@ body.detail-page {
 .steam-icon {
     width: 18px;
     height: 18px;
-    flex-shrink: 0;
-    vertical-align: middle;
-    border-radius: 3px;
-}
-
-.steam-link:hover {
-    color: #c6d4df; /* Steam's signature light blue-grey */
-}
-
-.steam-icon {
-    width: 18px;
-    height: 18px;
     fill: currentColor;
     flex-shrink: 0;
     vertical-align: middle;
 }
 
-/* ─── PILL LINKS (genres & tags) ──────────────────────────────────────────── */
+/* [SECTION] PILL LINKS (genres & tags) */
 a.pill {
     text-decoration: none;
     transition: filter 0.2s, transform 0.15s;
@@ -598,20 +594,20 @@ a.pill-tag:hover {
     transform: translateY(-1px);
 }
 
-/* ─── DEVELOPER LINK ──────────────────────────────────────────────────────── */
+/* [SECTION] DEVELOPER LINK */
 .dev-link {
-    color: #8b9fc2; /* muted blue-grey, clearly a link but not aggressive */
+    color: var(--link-color);
     text-decoration: none;
-    border-bottom: 1px dotted #8b9fc2;
+    border-bottom: 1px dotted var(--link-color);
     transition: color 0.2s, border-color 0.2s;
 }
 
 .dev-link:hover {
-    color: #a5b8e0;
-    border-bottom-color: #a5b8e0;
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
 }
 
-/* ─── STAR GAUGE ──────────────────────────────────────────────────────────── */
+/* [SECTION] STAR GAUGE */
 .stars-gauge {
     position: relative;
     display: inline-block;
@@ -621,7 +617,7 @@ a.pill-tag:hover {
 
 .stars-empty {
     display: block;
-    color: #334155;       /* matches --border-color: empty stars */
+    color: var(--border-color);
     letter-spacing: 3px;
     font-size: 1rem;
 }
@@ -632,7 +628,7 @@ a.pill-tag:hover {
     left: 0;
     overflow: hidden;
     white-space: nowrap;
-    color: #f59e0b;       /* amber gold */
+    color: var(--gold);
     letter-spacing: 3px;
     font-size: 1rem;
 }
@@ -642,33 +638,33 @@ a.pill-tag:hover {
     font-size: 0.82rem;
 }
 
-/* Detail page — slightly larger gauge */
+/* [DETAIL] Slightly larger score gauge on detail page. */
 .detail-score .stars-empty,
 .detail-score .stars-filled {
     font-size: 1.3rem;
     letter-spacing: 4px;
 }
 
-/* ─── CARD PILL LINKS ─────────────────────────────────────────────────────── */
+/* [SECTION] CARD PILL LINKS */
 .game-card a.pill {
     text-decoration: none;
     transition: filter 0.15s, transform 0.15s;
 }
 
 .game-card a.pill-genre {
-    background-color: #4f52c9;
-    color: #dde1ff;
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .game-card a.pill-genre:hover {
-    background-color: var(--primary-color);
+    background-color: var(--hover-color);
     color: #fff;
     transform: translateY(-1px);
 }
 
 .game-card a.pill-tag {
     background-color: var(--border-color);
-    color: #b0bdd0;
+    color: var(--text-color);
 }
 
 .game-card a.pill-tag:hover {
@@ -677,20 +673,20 @@ a.pill-tag:hover {
     transform: translateY(-1px);
 }
 
-/* ─── CARD DEVELOPER LINK ─────────────────────────────────────────────────── */
+/* [SECTION] CARD DEVELOPER LINK */
 .card-dev-link {
-    color: #8b9fc2;
+    color: var(--link-color);
     text-decoration: none;
-    border-bottom: 1px dotted #8b9fc2;
+    border-bottom: 1px dotted var(--link-color);
     transition: color 0.2s, border-color 0.2s;
 }
 
 .card-dev-link:hover {
-    color: #a5b8e0;
-    border-bottom-color: #a5b8e0;
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
 }
 
-/* ─── SORT ROW ────────────────────────────────────────────────────────────── */
+/* [SECTION] SORT ROW */
 .sort-row {
     display: flex;
     gap: 8px;
@@ -722,7 +718,7 @@ a.pill-tag:hover {
     border-color: var(--primary-color);
 }
 
-/* ─── PAGINATION ──────────────────────────────────────────────────────────── */
+/* [SECTION] PAGINATION */
 .pagination {
     display: flex;
     justify-content: center;
@@ -769,7 +765,7 @@ a.pill-tag:hover {
     line-height: 36px;
 }
 
-/* ─── MAIN TOOLBAR (title + genre bar) ───────────────────────────────────── */
+/* [SECTION] MAIN TOOLBAR (title + genre bar) */
 #main-toolbar {
     display: flex;
     align-items: center;
@@ -812,7 +808,7 @@ a.pill-tag:hover {
     border-color: var(--primary-color);
 }
 
-/* ─── TAG FILTER COMPONENT ────────────────────────────────────────────────── */
+/* [SECTION] TAG FILTER COMPONENT */
 .tag-filter {
     display: flex;
     flex-direction: column;
@@ -889,14 +885,14 @@ a.pill-tag:hover {
 
 .inc-btn:hover, .inc-btn.active {
     background: rgba(34, 197, 94, 0.2);
-    border-color: #22c55e;
-    color: #22c55e;
+    border-color: var(--green-dark);
+    color: var(--green-dark);
 }
 
 .exc-btn:hover, .exc-btn.active {
     background: rgba(239, 68, 68, 0.2);
-    border-color: #ef4444;
-    color: #ef4444;
+    border-color: var(--red-dark);
+    color: var(--red-dark);
 }
 
 .tag-list-empty,
@@ -907,7 +903,7 @@ a.pill-tag:hover {
     padding: 10px 8px;
 }
 
-/* ─── TAG PILLS ───────────────────────────────────────────────────────────── */
+/* [SECTION] TAG PILLS */
 .tag-pills-section {
     display: flex;
     flex-direction: column;
@@ -922,8 +918,8 @@ a.pill-tag:hover {
     text-transform: uppercase;
 }
 
-.tag-inc-label { color: #22c55e; }
-.tag-exc-label { color: #ef4444; }
+.tag-inc-label { color: var(--green-dark); }
+.tag-exc-label { color: var(--red-dark); }
 
 .tag-pills-row {
     display: flex;
@@ -950,13 +946,13 @@ a.pill-tag:hover {
 
 .tpinc {
     background: rgba(34, 197, 94, 0.15);
-    color: #4ade80;
+    color: var(--green-light);
     border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .tpexc {
     background: rgba(239, 68, 68, 0.15);
-    color: #f87171;
+    color: var(--red-light);
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
@@ -973,3 +969,4 @@ a.pill-tag:hover {
 }
 
 .tp-remove:hover { opacity: 1; }
+

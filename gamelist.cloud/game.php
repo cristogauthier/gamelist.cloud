@@ -1,6 +1,11 @@
 <?php
-// ─── DB CONNECTION ────────────────────────────────────────────────────────────
+// [SECURITY] Restrict content sources; DuckDuckGo included for the Steam store favicon.
+// NOTE: unsafe-inline required for the embedded lightbox script block.
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; img-src 'self' https://shared.fastly.steamstatic.com https://shared.akamai.steamstatic.com https://external-content.duckduckgo.com; connect-src 'self'");
+
+// [DB] Open database connection.
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/common.php';
 
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
@@ -9,7 +14,7 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// ─── VALIDATE & FETCH ─────────────────────────────────────────────────────────
+// [INPUT] Validate requested game id and fetch record.
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     header('Location: index.php');
@@ -25,51 +30,7 @@ if (!$game) {
     exit;
 }
 
-function getGenreWhitelist(): array
-{
-    $genresJsonPath = __DIR__ . '/genres.json';
-    if (!is_file($genresJsonPath)) {
-        return [];
-    }
-
-    $decoded = json_decode((string) file_get_contents($genresJsonPath), true);
-    if (!is_array($decoded)) {
-        return [];
-    }
-
-    return array_values(array_filter($decoded, 'is_string'));
-}
-
-function lowerSafe(string $value): string
-{
-    return function_exists('mb_strtolower') ? mb_strtolower($value, 'UTF-8') : strtolower($value);
-}
-
-function deriveGenresFromTags(array $tags, array $genreWhitelist): array
-{
-    $tagLookup = [];
-
-    $genres = [];
-    foreach ($tags as $tag) {
-        if (!is_string($tag)) {
-            continue;
-        }
-        $key = lowerSafe(trim($tag));
-        if ($key !== '') {
-            $tagLookup[$key] = true;
-        }
-    }
-
-    foreach ($genreWhitelist as $genre) {
-        if (isset($tagLookup[lowerSafe($genre)])) {
-            $genres[] = $genre;
-        }
-    }
-
-    return $genres;
-}
-
-// ─── DECODE JSON COLUMNS ──────────────────────────────────────────────────────
+// [DECODE] Normalize JSON columns into arrays for rendering.
 $developers = json_decode($game['developer'], true) ?? [];
 $tagsRaw = json_decode($game['tags'], true) ?? [];
 $screenshots = json_decode($game['screenshots'], true) ?? [];
@@ -77,8 +38,11 @@ $tags = is_array($tagsRaw) ? array_values($tagsRaw) : [];
 $genres = deriveGenresFromTags($tags, getGenreWhitelist());
 $percentPositive = $game['percent_positive'] !== null ? (int) $game['percent_positive'] : null;
 $reviewCount = $game['review_count'] !== null ? (int) $game['review_count'] : null;
-$ratio = $percentPositive !== null ? $percentPositive / 100 : null;  // 0–1 float for starGauge
+$ratio = $percentPositive !== null ? $percentPositive / 100 : null;  // NOTE: 0-1 ratio used by starGauge.
 
+/**
+ * Convert a stored media path to a Fastly URL.
+ */
 function mediaFastlyUrl(?string $path): string
 {
     $path = is_string($path) ? trim($path) : '';
@@ -91,6 +55,12 @@ function mediaFastlyUrl(?string $path): string
     return 'https://shared.fastly.steamstatic.com/store_item_assets/' . ltrim($path, '/');
 }
 
+/**
+ * Build the review score gauge HTML.
+ *
+ * @param float|null $ratio
+ * @param int|null $reviewCount
+ */
 function starGauge($ratio, $reviewCount)
 {
     if ($ratio === null) {
@@ -119,10 +89,10 @@ function starGauge($ratio, $reviewCount)
 
     <div id="detail-wrapper">
 
-        <!-- ── BACK BUTTON ───────────────────────────────────────────────────── -->
+        <!-- Back navigation -->
         <a href="index.php" class="back-btn">← Back to list</a>
 
-        <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+        <!-- Hero section -->
         <div class="detail-hero">
             <img src="<?= htmlspecialchars(mediaFastlyUrl($game['banner'] ?? '')) ?>"
                 alt="<?= htmlspecialchars($game['name']) ?>" onerror="fallbackToAkamai(this)" class="detail-banner">
@@ -144,7 +114,7 @@ function starGauge($ratio, $reviewCount)
                     <span class="detail-score"><?= starGauge($ratio, $reviewCount) ?></span>
                 </p>
 
-                <!-- Genres → link to index with genre filter -->
+                <!-- Genre links route to list filter -->
                 <div class="detail-pills">
                     <?php foreach ($genres as $g): ?>
                         <a href="index.php?genre=<?= urlencode($g) ?>"
@@ -152,14 +122,14 @@ function starGauge($ratio, $reviewCount)
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Tags → link to index with tag filter -->
+                <!-- Tag links route to list filter -->
                 <div class="detail-pills">
                     <?php foreach ($tags as $t): ?>
                         <a href="index.php?tag=<?= urlencode($t) ?>" class="pill pill-tag"><?= htmlspecialchars($t) ?></a>
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Developers → link to index with developer filter -->
+                <!-- Developer links route to list filter -->
                 <p class="detail-developer">
                     Developed by
                     <?php foreach ($developers as $i => $dev): ?>
@@ -172,7 +142,7 @@ function starGauge($ratio, $reviewCount)
         </div>
 
 
-        <!-- ── DESCRIPTION ───────────────────────────────────────────────────── -->
+        <!-- Description -->
         <?php if (!empty($game['description'])): ?>
             <section class="detail-section">
                 <h2>About</h2>
@@ -180,7 +150,7 @@ function starGauge($ratio, $reviewCount)
             </section>
         <?php endif; ?>
 
-        <!-- ── SCREENSHOTS ───────────────────────────────────────────────────── -->
+        <!-- Screenshots -->
         <?php if (!empty($screenshots)): ?>
             <section class="detail-section">
                 <h2>Screenshots</h2>
@@ -197,7 +167,7 @@ function starGauge($ratio, $reviewCount)
 
     </div><!-- /#detail-wrapper -->
 
-    <!-- ── LIGHTBOX ──────────────────────────────────────────────────────────── -->
+    <!-- Screenshot lightbox -->
     <div id="lightbox" class="lightbox">
         <button class="lightbox-close" id="lightboxClose">✕</button>
         <button class="lightbox-prev" id="lightboxPrev">&#8592;</button>
@@ -239,7 +209,7 @@ function starGauge($ratio, $reviewCount)
 
             function close() {
                 lightbox.classList.remove('active');
-                // Clear src after fade-out transition
+                // NOTE: Clear image source after fade-out to avoid stale frame flashes.
                 setTimeout(function () { lbImg.src = ''; }, 250);
                 document.body.style.overflow = '';
             }
@@ -249,19 +219,19 @@ function starGauge($ratio, $reviewCount)
                 lbImg.src = thumbs[current].dataset.src;
             }
 
-            // Screenshot thumb click listeners
+            // [EVENTS] Open lightbox from screenshot thumbnails.
             thumbs.forEach((thumb, idx) => {
                 thumb.addEventListener('click', function () {
                     open(idx);
                 });
             });
 
-            // Lightbox controls
+            // [EVENTS] Wire lightbox control buttons.
             document.getElementById('lightboxClose').addEventListener('click', close);
             document.getElementById('lightboxPrev').addEventListener('click', () => navigate(-1));
             document.getElementById('lightboxNext').addEventListener('click', () => navigate(1));
 
-            // Keyboard navigation
+            // [EVENTS] Support keyboard navigation while lightbox is active.
             document.addEventListener('keydown', function (e) {
                 if (!lightbox.classList.contains('active')) return;
                 if (e.key === 'Escape') close();
@@ -269,7 +239,7 @@ function starGauge($ratio, $reviewCount)
                 if (e.key === 'ArrowRight') navigate(1);
             });
 
-            // Click outside to close
+            // [EVENTS] Close when clicking outside the image.
             lightbox.addEventListener('click', function (e) {
                 if (e.target === lightbox) close();
             });
