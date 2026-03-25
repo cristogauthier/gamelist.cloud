@@ -1,7 +1,7 @@
 <?php
 // [SECURITY] Restrict content sources; DuckDuckGo included for the Steam store favicon.
-// NOTE: unsafe-inline required for the embedded lightbox script block.
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; img-src 'self' https://shared.fastly.steamstatic.com https://shared.akamai.steamstatic.com https://external-content.duckduckgo.com; connect-src 'self'");
+// NOTE: unsafe-inline required for the embedded lightbox script and dynamic style attributes.
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'; img-src 'self' https://shared.fastly.steamstatic.com https://shared.akamai.steamstatic.com https://external-content.duckduckgo.com; connect-src 'self'");
 
 // [DB] Open database connection.
 require_once __DIR__ . '/config.php';

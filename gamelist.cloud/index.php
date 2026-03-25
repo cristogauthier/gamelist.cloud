@@ -6,8 +6,10 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 // [SECURITY] Restrict content sources to avoid XSS via injected scripts or framing.
-// NOTE: unsafe-inline required for the inline ALL_TAGS script block below.
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; img-src 'self' https://shared.fastly.steamstatic.com https://shared.akamai.steamstatic.com; connect-src 'self'");
+// NOTE: unsafe-inline required for the inline ALL_TAGS script and dynamic style attributes.
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'; img-src 'self' https://shared.fastly.steamstatic.com https://shared.akamai.steamstatic.com; connect-src 'self'");
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 
 // [DB] Open database connection.
 require_once __DIR__ . '/config.php';

@@ -248,7 +248,12 @@ document.addEventListener('DOMContentLoaded', function () {
         fd.append('tagsExcluded', JSON.stringify([...excludedTags]));
         fd.append('csrf_token',   csrfToken); // NOTE: Token validated server-side; request rejected with HTTP 403 on mismatch.
 
-        fetch('fetch_games.php', { method: 'POST', body: fd })
+        fetch('fetch_games.php', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'X-CSRF-Token': csrfToken },
+            body: fd
+        })
             .then(async res => {
                 const text = await res.text();
                 if (!res.ok) {

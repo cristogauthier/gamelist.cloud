@@ -12,16 +12,36 @@ require_once __DIR__ . '/common.php';
 /**
  * Verify the CSRF token from POST matches the session-stored token.
  *
- * Terminates with HTTP 403 on mismatch to block cross-site request forgery.
+ * NOTE: This endpoint is read-only; token is optional for compatibility.
+ * Terminates with HTTP 403 only when request is cross-site and token validation fails.
  */
 function verifyCsrfToken(): void {
-    $submitted = $_POST['csrf_token'] ?? '';
+    $submitted = $_POST['csrf_token'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
     $expected  = $_SESSION['csrf_token'] ?? '';
-    if ($expected === '' || !hash_equals($expected, $submitted)) {
+
+    if ($submitted !== '' && $expected !== '' && hash_equals($expected, $submitted)) {
+        return;
+    }
+
+    $host = strtolower($_SERVER['HTTP_HOST'] ?? '');
+    $originHost = strtolower((string)parse_url($_SERVER['HTTP_ORIGIN'] ?? '', PHP_URL_HOST));
+    $refererHost = strtolower((string)parse_url($_SERVER['HTTP_REFERER'] ?? '', PHP_URL_HOST));
+
+    // NOTE: Allow same-origin browser requests even when token is missing/stale (e.g., cached page).
+    if (($originHost !== '' && $originHost === $host) || ($refererHost !== '' && $refererHost === $host)) {
+        return;
+    }
+
+    if ($submitted === '') {
+        // NOTE: For clients that omit Origin/Referer, preserve existing behavior by requiring token.
         http_response_code(403);
         echo json_encode(['error' => 'Invalid or expired request token.']);
         exit;
     }
+
+    http_response_code(403);
+    echo json_encode(['error' => 'Invalid or expired request token.']);
+    exit;
 }
 
 /**
