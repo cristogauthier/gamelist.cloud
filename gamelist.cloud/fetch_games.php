@@ -70,8 +70,14 @@ function validateInputLengths(string &$search, string &$developer): void {
         echo json_encode(['error' => 'Input exceeds maximum allowed length.']);
         exit;
     }
-    $search    = mb_substr($search,    0, $softLimit, 'UTF-8');
-    $developer = mb_substr($developer, 0, $softLimit, 'UTF-8');
+    if (function_exists('mb_substr')) {
+        $search    = mb_substr($search,    0, $softLimit, 'UTF-8');
+        $developer = mb_substr($developer, 0, $softLimit, 'UTF-8');
+    } else {
+        // NOTE: Fallback keeps app functional on hosts without mbstring.
+        $search    = substr($search,    0, $softLimit);
+        $developer = substr($developer, 0, $softLimit);
+    }
 }
 
 $clientIp = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
