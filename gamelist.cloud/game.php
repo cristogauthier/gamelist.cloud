@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // [SECURITY] Restrict content sources; DuckDuckGo included for the Steam store favicon.
 // NOTE: unsafe-inline required for the embedded lightbox script and dynamic style attributes.
 header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'; img-src 'self' https://shared.fastly.steamstatic.com https://shared.akamai.steamstatic.com https://external-content.duckduckgo.com; connect-src 'self'");
@@ -6,6 +11,7 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-i
 // [DB] Open database connection.
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/common.php';
+require_once __DIR__ . '/auth.php';
 
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
@@ -38,7 +44,8 @@ $tags = is_array($tagsRaw) ? array_values($tagsRaw) : [];
 $genres = deriveGenresFromTags($tags, getGenreWhitelist());
 $percentPositive = $game['percent_positive'] !== null ? (int) $game['percent_positive'] : null;
 $reviewCount = $game['review_count'] !== null ? (int) $game['review_count'] : null;
-$ratio = $percentPositive !== null ? $percentPositive / 100 : null;  // NOTE: 0-1 ratio used by starGauge.
+$ratio       = $percentPositive !== null ? $percentPositive / 100 : null;  // NOTE: 0-1 ratio used by starGauge.
+$currentUser = sessionUser();
 
 /**
  * Convert a stored media path to a Fastly URL.
@@ -89,8 +96,29 @@ function starGauge($ratio, $reviewCount)
 
     <div id="detail-wrapper">
 
-        <!-- Back navigation -->
-        <a href="index.php" class="back-btn">← Back to list</a>
+        <div class="detail-nav">
+            <!-- Back navigation -->
+            <a href="index.php" class="back-btn">&#8592; Back to list</a>
+
+            <!-- Auth navigation -->
+            <div class="auth-nav auth-nav-inline">
+                <?php if ($currentUser !== null): ?>
+                    <span class="auth-username"><?= htmlspecialchars($currentUser['username']) ?></span>
+                    <div class="auth-links">
+                        <a href="change_password.php" class="auth-link">Change Password</a>
+                        <form method="POST" action="logout.php" class="auth-logout-form">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+                            <button type="submit" class="auth-logout-btn">Sign Out</button>
+                        </form>
+                    </div>
+                <?php else: ?>
+                    <div class="auth-links">
+                        <a href="login.php" class="auth-link">Sign In</a>
+                        <a href="register.php" class="auth-link auth-register-link">Register</a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
 
         <!-- Hero section -->
         <div class="detail-hero">

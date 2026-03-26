@@ -13,6 +13,10 @@ header('Pragma: no-cache');
 
 // [DB] Open database connection.
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/common.php';
+require_once __DIR__ . '/auth.php';
+
+$currentUser = sessionUser();
 
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
@@ -59,6 +63,25 @@ sort($allTags);
 <body>
 
 <div id="sidebar">
+    <!-- Auth navigation -->
+    <div class="auth-nav">
+        <?php if ($currentUser !== null): ?>
+            <span class="auth-username"><?= htmlspecialchars($currentUser['username']) ?></span>
+            <div class="auth-links">
+                <a href="change_password.php" class="auth-link">Change Password</a>
+                <form method="POST" action="logout.php" class="auth-logout-form">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+                    <button type="submit" class="auth-logout-btn">Sign Out</button>
+                </form>
+            </div>
+        <?php else: ?>
+            <div class="auth-links">
+                <a href="login.php" class="auth-link">Sign In</a>
+                <a href="register.php" class="auth-link auth-register-link">Register</a>
+            </div>
+        <?php endif; ?>
+    </div>
+
     <h2>Filters</h2>
 
     <label for="search">Search title</label>
