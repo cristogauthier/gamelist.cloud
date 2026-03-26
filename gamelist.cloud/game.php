@@ -81,6 +81,9 @@ function starGauge($ratio, $reviewCount)
                 <span class="stars-filled" style="width:' . $width . '%">★★★★★</span>
             </span>';
 }
+
+// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
+$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +92,7 @@ function starGauge($ratio, $reviewCount)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($game['name']) ?> – Steam Games DB</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 
 <body class="detail-page">

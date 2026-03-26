@@ -70,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
+$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register – Steam Games DB</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body class="auth-page">
 
@@ -87,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="auth-notice" role="note" aria-label="Important account notice">
         <p class="auth-notice-title">Before you register</p>
         <ul class="auth-notice-list">
-            <li>This app is a portfolio project and is not intended for sensitive personal data.</li>
+            <li>This app is a portfolio project and will not guarantee the security of your personal data.</li>
             <li>Security and privacy controls are limited compared with production-grade services.</li>
             <li>Use a unique password here. Do not reuse credentials from your email, banking, or other important accounts.</li>
             <li>Account and password recovery is not available yet.</li>

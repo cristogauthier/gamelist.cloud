@@ -50,6 +50,9 @@ while ($row = $tagQuery->fetch(PDO::FETCH_ASSOC)) {
 }
 $allTags = array_unique($allTags);
 sort($allTags);
+
+// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
+$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +61,7 @@ sort($allTags);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <title>Steam Games Database</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body>
 

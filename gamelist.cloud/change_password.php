@@ -69,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
+$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password – Steam Games DB</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body class="auth-page">
 
