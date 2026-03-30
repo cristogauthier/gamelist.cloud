@@ -9,8 +9,8 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-i
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
 
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../auth.php';
 
 // [GUARD] Require an authenticated session; redirect guests to login.
 requireLogin();
@@ -70,8 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
-$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
+// NOTE: Bust asset cache on deploy by appending file modification timestamp.
+$commonCssVersion = (string) (@filemtime(__DIR__ . '/../assets/css/common.css') ?: time());
+$authCssVersion   = (string) (@filemtime(__DIR__ . '/../assets/css/auth.css') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +80,8 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password – Steam Games DB</title>
-    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="../assets/css/common.css?v=<?= htmlspecialchars($commonCssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="../assets/css/auth.css?v=<?= htmlspecialchars($authCssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body class="auth-page">
 
@@ -123,7 +125,7 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
         <button type="submit" class="auth-btn">Save password</button>
     </form>
 
-    <p class="auth-alt"><a href="index.php">← Back to games</a></p>
+    <p class="auth-alt"><a href="../index.php">← Back to games</a></p>
 </div>
 
 </body>

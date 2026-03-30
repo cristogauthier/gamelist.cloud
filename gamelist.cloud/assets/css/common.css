@@ -1,0 +1,132 @@
+/* Generated from legacy style.css during structure refactor. */
+/* Keep section labels intact for grep/search consistency. */
+
+/* [SECTION] RESET & VARIABLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color:   #6366f1;
+    --secondary-color: #8b5cf6;
+    --bg-color:        #0f172a;
+    --card-bg:         #1e293b;
+    --text-color:      #e2e8f0;
+    --text-muted:      #94a3b8;
+    --border-color:    #334155;
+    --hover-color:     #7c3aed;
+    --link-color:      #8b9fc2;
+    --link-hover:      #a5b8e0;
+    --steam-light:     #c6d4df;
+    --gold:            #f59e0b;
+    --green-light:     #4ade80;
+    --green-dark:      #22c55e;
+    --red-light:       #f87171;
+    --red-dark:        #ef4444;
+}
+
+/* [SECTION] BASE */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* [SECTION] AUTH NAV (sidebar and detail page) */
+.auth-nav {
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.auth-username {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.auth-link {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.auth-link:hover {
+    color: var(--primary-color);
+}
+
+.auth-register-link {
+    color: var(--primary-color);
+}
+
+.auth-register-link:hover {
+    color: var(--secondary-color);
+}
+
+.auth-logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+.auth-logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: inherit;
+    transition: color 0.2s;
+}
+
+.auth-logout-btn:hover {
+    color: var(--red-light);
+}
+
+/* [SECTION] DETAIL NAV */
+/* NOTE: Flex row wrapping the back link and auth nav on the detail page. */
+.detail-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* NOTE: margin-bottom managed by .detail-nav; remove from the back button itself. */
+.detail-nav .back-btn {
+    margin-bottom: 0;
+}
+
+.auth-nav-inline {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.auth-nav-inline .auth-username {
+    display: inline;
+    margin-bottom: 0;
+    margin-right: 6px;
+}
+

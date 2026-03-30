@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const sortBySelect   = document.getElementById('sortBy');
     const sortDirBtn     = document.getElementById('sortDir');
     const perPageSelect  = document.getElementById('perPage');
+    const favoritesOnlyInput = document.getElementById('favoritesOnly');
     const applyBtn       = document.getElementById('applyFilters');
     const resetBtn       = document.getElementById('resetFilters');
+    const openFiltersBtn = document.getElementById('openFilters');
+    const closeFiltersBtn = document.getElementById('closeFilters');
     const gamesContainer = document.getElementById('gamesContainer');
     const resultCount    = document.getElementById('resultCount');
     const pagination     = document.getElementById('pagination');
@@ -31,6 +34,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let currentPage = 1;
     let sortDir     = 'DESC';
+    let favoritesOnly = false;
+
+    // [MOBILE] Toggle off-canvas filter drawer for small screens.
+    function setFiltersOpen(isOpen) {
+        document.body.classList.toggle('filters-open', isOpen);
+        if (openFiltersBtn) {
+            openFiltersBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+    }
+
+    openFiltersBtn?.addEventListener('click', () => setFiltersOpen(true));
+    closeFiltersBtn?.addEventListener('click', () => setFiltersOpen(false));
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setFiltersOpen(false);
+    });
+
+    // NOTE: Ensure drawer state is reset when returning to desktop layout.
+    window.addEventListener('resize', function () {
+        if (!window.matchMedia('(max-width: 900px)').matches) {
+            setFiltersOpen(false);
+        }
+    });
 
     /**
      * Render searchable tag options with include/exclude controls.
@@ -137,10 +163,22 @@ document.addEventListener('DOMContentLoaded', function () {
     minVotesInput.addEventListener('input', () => {
         votesValueSpan.textContent = minVotesInput.value;
     });
-    applyBtn.addEventListener('click',          () => { currentPage = 1; loadGames(); });
+    applyBtn.addEventListener('click',          () => {
+        currentPage = 1;
+        loadGames();
+        // NOTE: Close the drawer after applying filters on mobile.
+        if (window.matchMedia('(max-width: 900px)').matches) {
+            setFiltersOpen(false);
+        }
+    });
     genreSelect.addEventListener('change',      () => { currentPage = 1; loadGames(); });
     sortBySelect.addEventListener('change',     () => { currentPage = 1; loadGames(); });
     perPageSelect.addEventListener('change',    () => { currentPage = 1; loadGames(); });
+    favoritesOnlyInput?.addEventListener('change', () => {
+        favoritesOnly = favoritesOnlyInput.checked;
+        currentPage = 1;
+        loadGames();
+    });
     [searchInput, developerInput].forEach(el =>
         el.addEventListener('keypress', e => { if (e.key === 'Enter') { currentPage = 1; loadGames(); } })
     );
@@ -157,6 +195,10 @@ document.addEventListener('DOMContentLoaded', function () {
         perPageSelect.value        = '20';
         sortDir                    = 'DESC';
         sortDirBtn.textContent     = '↓';
+        favoritesOnly              = false;
+        if (favoritesOnlyInput) {
+            favoritesOnlyInput.checked = false;
+        }
         includedTags.clear();
         excludedTags.clear();
         renderTagList();
@@ -189,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
             sortDir:   sortDir,
             perPage:   perPageSelect.value,
             page:      currentPage,
+            favoritesOnly: favoritesOnly,
             tagsIncluded: [...includedTags],
             tagsExcluded: [...excludedTags],
         };
@@ -204,7 +247,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const raw = sessionStorage.getItem('gameListState');
         if (!raw) return false;
         sessionStorage.removeItem('gameListState'); // NOTE: Consume saved state once.
-        const s = JSON.parse(raw);
+        let s;
+        try {
+            s = JSON.parse(raw);
+        } catch (e) {
+            // NOTE: Ignore corrupted stored filter state and continue with defaults.
+            return false;
+        }
 
         searchInput.value          = s.search    || '';
         developerInput.value       = s.developer || '';
@@ -218,6 +267,10 @@ document.addEventListener('DOMContentLoaded', function () {
         currentPage                = s.page      || 1;
         sortDir                    = s.sortDir   || 'DESC';
         sortDirBtn.textContent     = sortDir === 'DESC' ? '↓' : '↑';
+        favoritesOnly              = s.favoritesOnly === true;
+        if (favoritesOnlyInput) {
+            favoritesOnlyInput.checked = favoritesOnly;
+        }
 
         includedTags = new Set(s.tagsIncluded || []);
         excludedTags = new Set(s.tagsExcluded || []);
@@ -244,11 +297,12 @@ document.addEventListener('DOMContentLoaded', function () {
         fd.append('sortDir',      sortDir);
         fd.append('page',         currentPage);
         fd.append('perPage',      perPageSelect.value);
+        fd.append('favoritesOnly', favoritesOnly ? '1' : '0');
         fd.append('tagsIncluded', JSON.stringify([...includedTags]));
         fd.append('tagsExcluded', JSON.stringify([...excludedTags]));
         fd.append('csrf_token',   csrfToken); // NOTE: Token validated server-side; request rejected with HTTP 403 on mismatch.
 
-        fetch('fetch_games.php', {
+        fetch('api/fetch_games.php', {
             method: 'POST',
             credentials: 'same-origin',
             headers: { 'X-CSRF-Token': csrfToken },
@@ -257,17 +311,17 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(async res => {
                 const text = await res.text();
                 if (!res.ok) {
-                    throw new Error(`fetch_games.php error ${res.status}: ${text}`);
+                    throw new Error(`api/fetch_games.php error ${res.status}: ${text}`);
                 }
                 try {
                     return JSON.parse(text);
                 } catch (e) {
-                    throw new Error(`Invalid JSON from fetch_games.php:\n${text}`);
+                    throw new Error(`Invalid JSON from api/fetch_games.php:\n${text}`);
                 }
             })
             .then(data => {
                 if (!data || !Array.isArray(data.games)) {
-                    throw new Error('Unexpected payload from fetch_games.php: ' + JSON.stringify(data));
+                    throw new Error('Unexpected payload from api/fetch_games.php: ' + JSON.stringify(data));
                 }
                 renderGames(data.games);
                 renderPagination(data.total, parseInt(perPageSelect.value));
@@ -333,14 +387,14 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         gamesContainer.innerHTML = games.map(game => `
-            <div class="game-card" data-id="${game.id}">
+            <div class="game-card${game.is_favorited ? ' is-favorited' : ''}" data-id="${game.id}">
                 <img src="${escAttr(toFastlyMediaUrl(game.banner || ''))}" alt="${escHtml(game.name)}" loading="lazy" onerror="window.fallbackToAkamai(this)">
                 <div class="game-info">
                     <h3>${escHtml(game.name)}</h3>
                     <p class="meta">
                         ${escHtml(game.publication_date || 'Unknown')}
                         &nbsp;·&nbsp;
-                        ${game.developer.map(d =>
+                        ${(Array.isArray(game.developer) ? game.developer : []).map(d =>
                             `<a href="index.php?developer=${encodeURIComponent(d)}" class="card-dev-link">${escHtml(d)}</a>`
                         ).join(', ') || 'Unknown'}
                     </p>

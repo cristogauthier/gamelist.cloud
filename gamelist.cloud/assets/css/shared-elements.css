@@ -1,0 +1,71 @@
+/* Generated from legacy style.css during structure refactor. */
+/* Keep section labels intact for grep/search consistency. */
+
+/* [SECTION] PILL LINKS (genres & tags) */
+a.pill {
+    text-decoration: none;
+    transition: filter 0.2s, transform 0.15s;
+    display: inline-block;
+}
+
+a.pill-genre:hover {
+    filter: brightness(1.25);
+    transform: translateY(-1px);
+}
+
+a.pill-tag:hover {
+    filter: brightness(1.4);
+    transform: translateY(-1px);
+}
+
+/* [SECTION] DEVELOPER LINK */
+.dev-link {
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--link-color);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.dev-link:hover {
+    color: var(--link-hover);
+    border-bottom-color: var(--link-hover);
+}
+
+/* [SECTION] STAR GAUGE */
+.stars-gauge {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.stars-empty {
+    display: block;
+    color: var(--border-color);
+    letter-spacing: 3px;
+    font-size: 1rem;
+}
+
+.stars-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--gold);
+    letter-spacing: 3px;
+    font-size: 1rem;
+}
+
+.stars-na {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+/* [DETAIL] Slightly larger score gauge on detail page. */
+.detail-score .stars-empty,
+.detail-score .stars-filled {
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+}
+

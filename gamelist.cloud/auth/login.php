@@ -9,12 +9,12 @@ header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-i
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
 
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../auth.php';
 
 // [GUARD] Redirect already-authenticated users to the main page.
 if (sessionUser() !== null) {
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit;
 }
 
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->prepare("UPDATE users SET last_login = NOW() WHERE id = :id")
                      ->execute([':id' => $user['id']]);
                 loginUser((int)$user['id'], $user['username']);
-                header('Location: index.php');
+                header('Location: ../index.php');
                 exit;
             }
         } catch (PDOException $e) {
@@ -70,8 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
-$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
+// NOTE: Bust asset cache on deploy by appending file modification timestamp.
+$commonCssVersion = (string) (@filemtime(__DIR__ . '/../assets/css/common.css') ?: time());
+$authCssVersion   = (string) (@filemtime(__DIR__ . '/../assets/css/auth.css') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +80,8 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In – Steam Games DB</title>
-    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="../assets/css/common.css?v=<?= htmlspecialchars($commonCssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="../assets/css/auth.css?v=<?= htmlspecialchars($authCssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body class="auth-page">
 

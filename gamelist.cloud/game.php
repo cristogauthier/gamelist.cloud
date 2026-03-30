@@ -46,6 +46,16 @@ $percentPositive = $game['percent_positive'] !== null ? (int) $game['percent_pos
 $reviewCount = $game['review_count'] !== null ? (int) $game['review_count'] : null;
 $ratio       = $percentPositive !== null ? $percentPositive / 100 : null;  // NOTE: 0-1 ratio used by starGauge.
 $currentUser = sessionUser();
+$isFavorited = false;
+
+if ($currentUser !== null) {
+    $favoriteCheckStmt = $conn->prepare('SELECT 1 FROM user_favorites WHERE user_id = :user_id AND game_id = :game_id LIMIT 1');
+    $favoriteCheckStmt->execute([
+        ':user_id' => (int)$currentUser['user_id'],
+        ':game_id' => (int)$game['id'],
+    ]);
+    $isFavorited = (bool)$favoriteCheckStmt->fetchColumn();
+}
 
 /**
  * Convert a stored media path to a Fastly URL.
@@ -82,8 +92,10 @@ function starGauge($ratio, $reviewCount)
             </span>';
 }
 
-// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
-$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
+// NOTE: Bust asset cache on deploy by appending file modification timestamp.
+$commonCssVersion = (string) (@filemtime(__DIR__ . '/assets/css/common.css') ?: time());
+$sharedCssVersion = (string) (@filemtime(__DIR__ . '/assets/css/shared-elements.css') ?: time());
+$detailCssVersion = (string) (@filemtime(__DIR__ . '/assets/css/detail.css') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,8 +103,11 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <title><?= htmlspecialchars($game['name']) ?> – Steam Games DB</title>
-    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="assets/css/common.css?v=<?= htmlspecialchars($commonCssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="assets/css/shared-elements.css?v=<?= htmlspecialchars($sharedCssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="assets/css/detail.css?v=<?= htmlspecialchars($detailCssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 
 <body class="detail-page">
@@ -102,25 +117,6 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
         <div class="detail-nav">
             <!-- Back navigation -->
             <a href="index.php" class="back-btn">&#8592; Back to list</a>
-
-            <!-- Auth navigation -->
-            <div class="auth-nav auth-nav-inline">
-                <?php if ($currentUser !== null): ?>
-                    <span class="auth-username"><?= htmlspecialchars($currentUser['username']) ?></span>
-                    <div class="auth-links">
-                        <a href="change_password.php" class="auth-link">Change Password</a>
-                        <form method="POST" action="logout.php" class="auth-logout-form">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
-                            <button type="submit" class="auth-logout-btn">Sign Out</button>
-                        </form>
-                    </div>
-                <?php else: ?>
-                    <div class="auth-links">
-                        <a href="login.php" class="auth-link">Sign In</a>
-                        <a href="register.php" class="auth-link auth-register-link">Register</a>
-                    </div>
-                <?php endif; ?>
-            </div>
         </div>
 
         <!-- Hero section -->
@@ -130,6 +126,25 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
 
             <div class="detail-hero-info">
                 <h1><?= htmlspecialchars($game['name']) ?></h1>
+
+                <?php if ($currentUser !== null): ?>
+                    <div class="favorite-controls">
+                        <button type="button"
+                            id="favoriteToggle"
+                            class="favorite-toggle<?= $isFavorited ? ' is-active' : '' ?>"
+                            data-game-id="<?= (int)$game['id'] ?>"
+                            data-is-favorited="<?= $isFavorited ? '1' : '0' ?>"
+                            aria-label="Toggle favorite"
+                            title="Toggle favorite for this game">
+                            <span class="favorite-icon" aria-hidden="true"><?= $isFavorited ? '♥' : '♡' ?></span>
+                        </button>
+                        <span id="favoriteFeedback" class="favorite-feedback" aria-live="polite"></span>
+                    </div>
+                <?php else: ?>
+                    <p class="favorite-guest-note">
+                        <a href="auth/login.php" class="auth-link">Sign in</a> to save this game to your favorites.
+                    </p>
+                <?php endif; ?>
 
                 <p class="detail-meta">
                     <span>📅 <?= htmlspecialchars($game['publication_date'] ?? 'Unknown') ?></span>
@@ -210,6 +225,7 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
         (function () {
             const FASTLY_BASE = 'https://shared.fastly.steamstatic.com/store_item_assets/';
             const AKAMAI_BASE = 'https://shared.akamai.steamstatic.com/store_item_assets/';
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 
             window.fallbackToAkamai = function (img) {
                 if (!img || !img.src || img.dataset.cdnFallbackDone === '1') {
@@ -273,6 +289,73 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
             // [EVENTS] Close when clicking outside the image.
             lightbox.addEventListener('click', function (e) {
                 if (e.target === lightbox) close();
+            });
+
+            // [EVENTS] Toggle favorite state for authenticated users.
+            const favoriteToggle = document.getElementById('favoriteToggle');
+            const favoriteFeedback = document.getElementById('favoriteFeedback');
+
+            function setFavoriteVisualState(isFavorited) {
+                if (!favoriteToggle) {
+                    return;
+                }
+                favoriteToggle.dataset.isFavorited = isFavorited ? '1' : '0';
+                favoriteToggle.classList.toggle('is-active', isFavorited);
+                const icon = favoriteToggle.querySelector('.favorite-icon');
+                if (icon) {
+                    icon.textContent = isFavorited ? '♥' : '♡';
+                }
+                favoriteToggle.setAttribute(
+                    'title',
+                    isFavorited ? 'Click to remove from favorites' : 'Click to add to favorites'
+                );
+            }
+
+            function setFavoriteFeedback(message, isError) {
+                if (!favoriteFeedback) {
+                    return;
+                }
+                favoriteFeedback.textContent = message;
+                favoriteFeedback.classList.toggle('is-error', !!isError);
+            }
+
+            favoriteToggle?.addEventListener('click', function () {
+                const gameId = favoriteToggle.dataset.gameId;
+                const isFavorited = favoriteToggle.dataset.isFavorited === '1';
+                const endpoint = isFavorited ? 'fav/remove.php' : 'fav/add.php';
+
+                favoriteToggle.disabled = true;
+
+                const fd = new FormData();
+                fd.append('game_id', gameId || '0');
+                fd.append('csrf_token', csrfToken);
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: { 'X-CSRF-Token': csrfToken },
+                    body: fd,
+                })
+                    .then(async (res) => {
+                        const text = await res.text();
+                        let payload = null;
+                        try {
+                            payload = JSON.parse(text);
+                        } catch (e) {
+                            throw new Error('Invalid favorites response.');
+                        }
+                        if (!res.ok || !payload || payload.success !== true) {
+                            throw new Error(payload?.error || 'Could not update favorite state.');
+                        }
+                        setFavoriteVisualState(!!payload.isFavorited);
+                        setFavoriteFeedback(payload.isFavorited ? 'Added to favorites.' : 'Removed from favorites.', false);
+                    })
+                    .catch((err) => {
+                        setFavoriteFeedback(err.message || 'Could not update favorite state.', true);
+                    })
+                    .finally(() => {
+                        favoriteToggle.disabled = false;
+                    });
             });
         })();
     </script>

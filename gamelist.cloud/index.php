@@ -51,8 +51,11 @@ while ($row = $tagQuery->fetch(PDO::FETCH_ASSOC)) {
 $allTags = array_unique($allTags);
 sort($allTags);
 
-// NOTE: Bust CSS cache on deploy by appending file modification timestamp.
-$cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
+// NOTE: Bust asset cache on deploy by appending file modification timestamp.
+$commonCssVersion = (string) (@filemtime(__DIR__ . '/assets/css/common.css') ?: time());
+$sharedCssVersion = (string) (@filemtime(__DIR__ . '/assets/css/shared-elements.css') ?: time());
+$indexCssVersion  = (string) (@filemtime(__DIR__ . '/assets/css/index.css') ?: time());
+$appJsVersion     = (string) (@filemtime(__DIR__ . '/assets/js/app.js') ?: time());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +64,9 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <title>Steam Games Database</title>
-    <link rel="stylesheet" href="style.css?v=<?= htmlspecialchars($cssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="assets/css/common.css?v=<?= htmlspecialchars($commonCssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="assets/css/shared-elements.css?v=<?= htmlspecialchars($sharedCssVersion, ENT_QUOTES, 'UTF-8') ?>">
+    <link rel="stylesheet" href="assets/css/index.css?v=<?= htmlspecialchars($indexCssVersion, ENT_QUOTES, 'UTF-8') ?>">
 </head>
 <body>
 
@@ -71,21 +76,23 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
         <?php if ($currentUser !== null): ?>
             <span class="auth-username"><?= htmlspecialchars($currentUser['username']) ?></span>
             <div class="auth-links">
-                <a href="change_password.php" class="auth-link">Change Password</a>
-                <form method="POST" action="logout.php" class="auth-logout-form">
+                <a href="auth/change_password.php" class="auth-link">Change Password</a>
+                <form method="POST" action="auth/logout.php" class="auth-logout-form">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
                     <button type="submit" class="auth-logout-btn">Sign Out</button>
                 </form>
             </div>
         <?php else: ?>
             <div class="auth-links">
-                <a href="login.php" class="auth-link">Sign In</a>
-                <a href="register.php" class="auth-link auth-register-link">Register</a>
+                <a href="auth/login.php" class="auth-link">Sign In</a>
+                <a href="auth/register.php" class="auth-link auth-register-link">Register</a>
             </div>
         <?php endif; ?>
     </div>
 
     <h2>Filters</h2>
+    <!-- Mobile filter close control -->
+    <button id="closeFilters" class="mobile-filter-close" type="button" aria-label="Close filters">×</button>
 
     <label for="search">Search title</label>
     <input type="text" id="search" placeholder="e.g. Touryst...">
@@ -105,6 +112,14 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
             <div id="excludedTagsContainer" class="tag-pills-row"></div>
         </div>
     </div>
+
+    <?php if ($currentUser !== null): ?>
+        <!-- Favorites filter available for authenticated users only -->
+        <label class="fav-filter-label" for="favoritesOnly">
+            <input type="checkbox" id="favoritesOnly">
+            Favorites only
+        </label>
+    <?php endif; ?>
 
 
     <label for="minScore">Min score: <span id="scoreValue">0</span>%</label>
@@ -143,6 +158,7 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
         <div id="main-toolbar">
         <h1>Games <span id="resultCount"></span></h1>
         <div class="genre-bar">
+            <button id="openFilters" class="mobile-filter-btn" type="button" aria-expanded="false" aria-controls="sidebar">Filters</button>
             <select id="genre">
                 <option value="">All genres</option>
                 <?php foreach ($allGenres as $g): ?>
@@ -155,7 +171,7 @@ $cssVersion = (string) (@filemtime(__DIR__ . '/style.css') ?: time());
     <div id="pagination"></div>
 </div>
 
-<script src="script.js"></script>
+<script src="assets/js/app.js?v=<?= htmlspecialchars($appJsVersion, ENT_QUOTES, 'UTF-8') ?>"></script>
 <script>window.ALL_TAGS = <?= json_encode(array_values($allTags), JSON_UNESCAPED_UNICODE) ?>;</script>
 
 </body>

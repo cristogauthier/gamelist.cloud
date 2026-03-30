@@ -4,8 +4,9 @@ header('Content-Type: application/json');
 ini_set('display_errors', '0');
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
-require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/common.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../common.php';
+require_once __DIR__ . '/../auth.php';
 
 // [GUARD] Request validation — runs before DB connection or any expensive work.
 
@@ -131,6 +132,7 @@ try {
     $sortBy    = $_POST['sortBy']  ?? 'weighted';
     $sortDir   = strtoupper($_POST['sortDir'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
     $page      = max(1, (int)($_POST['page']    ?? 1));
+    $favoritesOnly = isset($_POST['favoritesOnly']) && (string)$_POST['favoritesOnly'] === '1';
     $perPage   = in_array((int)($_POST['perPage'] ?? 20), [10, 20, 50, 100])
                  ? (int)$_POST['perPage'] : 20;
     $offset    = ($page - 1) * $perPage;
@@ -151,6 +153,9 @@ $tagsIncluded = is_array($tagsIncluded)
 $tagsExcluded = is_array($tagsExcluded)
     ? array_values(array_filter($tagsExcluded, 'is_string'))
     : [];
+
+$currentUser = sessionUser();
+$currentUserId = $currentUser !== null ? (int)$currentUser['user_id'] : 0;
 
 // [WHERE] Build SQL predicates from active filters.
 $conditions = [];
@@ -195,6 +200,12 @@ foreach ($tagsExcluded as $i => $tag) {
     $params[$key] = '%"' . str_replace('"', '', $tag) . '"%';
 }
 
+if ($favoritesOnly && $currentUser !== null) {
+    // NOTE: EXISTS keeps filtering efficient with the (user_id, game_id) unique key.
+    $conditions[] = "EXISTS (SELECT 1 FROM user_favorites uf WHERE uf.user_id = :favUserId AND uf.game_id = steamgames.id)";
+    $params[':favUserId'] = $currentUserId;
+}
+
 $where = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
 
@@ -232,15 +243,40 @@ $stmt->bindValue(':offset', $offset,  PDO::PARAM_INT);
 $stmt->execute();
 $games = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$favoriteGameLookup = [];
+if ($currentUser !== null && count($games) > 0) {
+    // [FAVORITES] Fetch per-page favorite ids in one query for card highlighting.
+    $pageIds = array_map(static fn(array $row): int => (int)$row['id'], $games);
+    $placeholders = [];
+    $favoriteParams = [':favUserIdLookup' => $currentUserId];
+    foreach ($pageIds as $i => $pageId) {
+        $placeholder = ':favGameId' . $i;
+        $placeholders[] = $placeholder;
+        $favoriteParams[$placeholder] = $pageId;
+    }
+    $favoriteSql = 'SELECT game_id FROM user_favorites WHERE user_id = :favUserIdLookup AND game_id IN (' . implode(', ', $placeholders) . ')';
+    $favoriteStmt = $conn->prepare($favoriteSql);
+    foreach ($favoriteParams as $k => $v) {
+        $favoriteStmt->bindValue($k, $v, PDO::PARAM_INT);
+    }
+    $favoriteStmt->execute();
+    foreach ($favoriteStmt->fetchAll(PDO::FETCH_ASSOC) as $favoriteRow) {
+        $favoriteGameLookup[(int)$favoriteRow['game_id']] = true;
+    }
+}
+
 // [DECODE] Normalize JSON columns to typed response fields.
 foreach ($games as &$game) {
-    $game['developer']   = is_string($game['developer']) ? (json_decode($game['developer'], true) ?? []) : [];
+    $developerArr        = is_string($game['developer']) ? json_decode($game['developer'], true) : [];
+    $game['developer']   = is_array($developerArr) ? array_values(array_filter($developerArr, 'is_string')) : [];
     $tagsArr             = is_string($game['tags']) ? json_decode($game['tags'], true) : [];
-    $game['tags']        = is_array($tagsArr) ? array_values($tagsArr) : [];
+    $game['tags']        = is_array($tagsArr) ? array_values(array_filter($tagsArr, 'is_string')) : [];
     $game['genres']      = deriveGenresFromTags($game['tags'], $genreWhitelist);
-    $game['screenshots'] = is_string($game['screenshots']) ? (json_decode($game['screenshots'], true) ?? []) : [];
+    $screenshotsArr      = is_string($game['screenshots']) ? json_decode($game['screenshots'], true) : [];
+    $game['screenshots'] = is_array($screenshotsArr) ? array_values(array_filter($screenshotsArr, 'is_string')) : [];
     $game['percent_positive'] = $game['percent_positive'] !== null ? (int)$game['percent_positive'] : 0;
     $game['review_count']     = $game['review_count'] !== null ? (int)$game['review_count'] : 0;
+    $game['is_favorited']     = isset($favoriteGameLookup[(int)$game['id']]);
 }
 unset($game);
 
