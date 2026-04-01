@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const ALL_TAGS            = window.ALL_TAGS || [];
     let   includedTags        = new Set();
     let   excludedTags        = new Set();
+    let   tagCounts           = {};
+    let   hasTagCounts        = false;
 
     let currentPage = 1;
     let sortDir     = 'DESC';
@@ -62,32 +64,49 @@ document.addEventListener('DOMContentLoaded', function () {
      * Render searchable tag options with include/exclude controls.
      */
     function renderTagList() {
-        const q        = tagSearchInput.value.trim().toLowerCase();
+        if (!hasTagCounts) {
+            tagListEl.innerHTML = '<p class="tag-list-empty">Loading tags…</p>';
+            return;
+        }
+
+        const q = tagSearchInput.value.trim().toLowerCase();
+
+        const ranked = ALL_TAGS
+            .filter(tag => !includedTags.has(tag) && !excludedTags.has(tag) && (tagCounts[tag] ?? 0) > 0)
+            .map(tag => ({
+                tag,
+                count: tagCounts[tag] ?? 0,
+            }))
+            .sort((a, b) => {
+                if (b.count !== a.count) return b.count - a.count;
+                return a.tag.localeCompare(b.tag);
+            });
+
+        const topByCount = ranked.slice(0, 50);
         const filtered = q
-            ? ALL_TAGS.filter(t => t.toLowerCase().includes(q))
-            : ALL_TAGS;
-        const visible  = filtered.slice(0, 60);
+            ? topByCount.filter(item => item.tag.toLowerCase().includes(q))
+            : topByCount;
+        const visible = filtered.sort((a, b) => a.tag.localeCompare(b.tag));
 
         if (visible.length === 0) {
             tagListEl.innerHTML = '<p class="tag-list-empty">No tags found</p>';
             return;
         }
 
-        tagListEl.innerHTML = visible.map(tag => {
-            const inc = includedTags.has(tag);
-            const exc = excludedTags.has(tag);
-            return `<div class="tag-list-item${inc ? ' is-inc' : exc ? ' is-exc' : ''}">
-                <span class="tag-list-name">${escHtml(tag)}</span>
-                <button class="tlbtn inc-btn${inc ? ' active' : ''}"
-                        data-tag="${escAttr(tag)}" title="Include">＋</button>
-                <button class="tlbtn exc-btn${exc ? ' active' : ''}"
-                        data-tag="${escAttr(tag)}" title="Exclude">－</button>
+        tagListEl.innerHTML = visible.map(item => {
+            return `<div class="tag-list-item">
+                <span class="tag-list-name">${escHtml(item.tag)}</span>
+            <span class="tag-list-count" title="Matching entries">(${escHtml(String(item.count))})</span>
+                <button class="tlbtn inc-btn"
+                        data-tag="${escAttr(item.tag)}" title="Include">＋</button>
+                <button class="tlbtn exc-btn"
+                        data-tag="${escAttr(item.tag)}" title="Exclude">－</button>
             </div>`;
         }).join('');
 
-        if (filtered.length > 60) {
+        if (ranked.length > 50 && q === '') {
             tagListEl.innerHTML +=
-                `<p class="tag-list-more">+${filtered.length - 60} more — refine your search</p>`;
+                `<p class="tag-list-more">Showing top 50 by remaining results</p>`;
         }
     }
 
@@ -323,6 +342,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!data || !Array.isArray(data.games)) {
                     throw new Error('Unexpected payload from api/fetch_games.php: ' + JSON.stringify(data));
                 }
+                tagCounts = normalizeTagCounts(data.tagCounts);
+                hasTagCounts = true;
+                renderTagList();
                 renderGames(data.games);
                 renderPagination(data.total, parseInt(perPageSelect.value));
                 resultCount.textContent = `(${data.total} total)`;
@@ -468,6 +490,28 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     function escAttr(str) {
         return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    /**
+     * Normalize server tag count payload into a safe string->number map.
+     *
+     * @param {unknown} raw
+     * @returns {Object<string, number>}
+     */
+    function normalizeTagCounts(raw) {
+        if (!raw || typeof raw !== 'object') {
+            return {};
+        }
+
+        const normalized = {};
+        for (const [key, value] of Object.entries(raw)) {
+            if (typeof key !== 'string' || !key) {
+                continue;
+            }
+            const parsed = Number.parseInt(String(value), 10);
+            normalized[key] = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+        }
+        return normalized;
     }
 
     // [BOOT] Initial render and first fetch.

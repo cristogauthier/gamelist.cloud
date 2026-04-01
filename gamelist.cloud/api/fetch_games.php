@@ -208,6 +208,34 @@ if ($favoritesOnly && $currentUser !== null) {
 
 $where = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
+// [TAG COUNTS] Aggregate per-tag counts for the full filtered set (before pagination).
+$tagCounts = [];
+$tagCountStmt = $conn->prepare("SELECT tags FROM steamgames $where");
+$tagCountStmt->execute($params);
+while ($tagRow = $tagCountStmt->fetch(PDO::FETCH_ASSOC)) {
+    if (!isset($tagRow['tags']) || !is_string($tagRow['tags'])) {
+        continue;
+    }
+    $decodedTags = json_decode($tagRow['tags'], true);
+    if (!is_array($decodedTags)) {
+        continue;
+    }
+
+    // NOTE: Deduplicate tags inside one game row so each game contributes at most 1 per tag.
+    $rowTagSeen = [];
+    foreach ($decodedTags as $tagValue) {
+        if (!is_string($tagValue)) {
+            continue;
+        }
+        $tagName = trim($tagValue);
+        if ($tagName === '' || isset($rowTagSeen[$tagName])) {
+            continue;
+        }
+        $rowTagSeen[$tagName] = true;
+        $tagCounts[$tagName] = ($tagCounts[$tagName] ?? 0) + 1;
+    }
+}
+
 
 // [SORT] Use weighted ranking by default.
 // NOTE: Weighted score biases toward strong rating plus review volume.
@@ -280,7 +308,7 @@ foreach ($games as &$game) {
 }
 unset($game);
 
-    $payload = json_encode(['total' => $total, 'games' => $games], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    $payload = json_encode(['total' => $total, 'games' => $games, 'tagCounts' => $tagCounts], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
     if ($payload === false) {
         http_response_code(500);
         echo json_encode(['error' => 'JSON encode failed']);

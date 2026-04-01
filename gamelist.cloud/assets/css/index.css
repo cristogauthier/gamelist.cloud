@@ -612,6 +612,15 @@ input[type="range"]::-moz-range-thumb {
     text-overflow: ellipsis;
 }
 
+.tag-list-count {
+    flex-shrink: 0;
+    margin-right: 2px;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
 .tlbtn {
     flex-shrink: 0;
     width: 24px;
